@@ -1,0 +1,72 @@
+<div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+          <div class="d-flex px-2 py-1">
+          </div>
+            <div class="card-header pb-0">
+              <h6>Event list</h6>
+              
+                        
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">ID</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Name</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Date</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">People Qty</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Status</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Winner</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @events.each do | event|%>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">                          
+                          <div class="d-flex flex-column justify-content-right">
+                            <h6 class="mb-0 text-sm"><%=event.id%></h6>                            
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"><%=event.name%></p>
+                        
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%=event.eventDate.strftime("%d/%m/%Y")%></span>
+                      </td>                      
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"> <%=event.people%></span>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                      <%if event.status=='Open' %>
+                        <span class="badge badge-sm bg-gradient-success"><%=event.status%></span>
+                      <%else%>
+                        <span class="badge badge-sm bg-gradient-secondary"><%=event.status%></span>
+                      <%end%>
+                      </td>
+                      <td>
+                        <%if !event.player.nil? %>
+                          <p class="text-xs font-weight-bold mb-0"><%=event.try(:player).try(:name)%></p>
+                          <p class="text-xs text-secondary mb-0"><%=event.try(:winner)%> pts</p>
+                        <%end%>
+                      </td>
+                      <td class="align-middle">
+                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          Edit
+                        </a>
+                      </td>
+                    </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

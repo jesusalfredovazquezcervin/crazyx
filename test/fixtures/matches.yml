@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event: one
+  playerOne: 1
+  pointsOne: 1
+  playerTwo: 1
+  pointsTwo: 1
+  playerThree: 1
+  pointsThree: 1
+  playerFour: 1
+  pointsFour: 1
+
+two:
+  event: two
+  playerOne: 1
+  pointsOne: 1
+  playerTwo: 1
+  pointsTwo: 1
+  playerThree: 1
+  pointsThree: 1
+  playerFour: 1
+  pointsFour: 1

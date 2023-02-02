@@ -1,0 +1,62 @@
+<%= form_with(model: match) do |form| %>
+  <% if match.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
+      <ul>
+        <% match.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :event_id, style: "display: block" %>
+    <%= form.text_field :event_id %>
+  </div>
+
+  <div>
+    <%= form.label :playerOne, style: "display: block" %>
+    <%= form.number_field :playerOne %>
+  </div>
+
+  <div>
+    <%= form.label :pointsOne, style: "display: block" %>
+    <%= form.number_field :pointsOne %>
+  </div>
+
+  <div>
+    <%= form.label :playerTwo, style: "display: block" %>
+    <%= form.number_field :playerTwo %>
+  </div>
+
+  <div>
+    <%= form.label :pointsTwo, style: "display: block" %>
+    <%= form.number_field :pointsTwo %>
+  </div>
+
+  <div>
+    <%= form.label :playerThree, style: "display: block" %>
+    <%= form.number_field :playerThree %>
+  </div>
+
+  <div>
+    <%= form.label :pointsThree, style: "display: block" %>
+    <%= form.number_field :pointsThree %>
+  </div>
+
+  <div>
+    <%= form.label :playerFour, style: "display: block" %>
+    <%= form.number_field :playerFour %>
+  </div>
+
+  <div>
+    <%= form.label :pointsFour, style: "display: block" %>
+    <%= form.number_field :pointsFour %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
