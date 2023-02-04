@@ -1,32 +1,130 @@
 <div id="<%= dom_id player %>">
-  <p>
-    <strong>Name:</strong>
-    <%= player.name %>
-  </p>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-body p-3">
+          <div class="row gx-4">
+            <div class="col-auto">
+              <div class="avatar avatar-xl position-relative">
+                <%= image_tag("eduardogarcia.jpg", class: "w-100 border-radius-lg shadow-sm")%>
+              </div>
+            </div>
+            <div class="col-auto my-auto">
+            <div class="h-100">
+                <h5 class="mb-1">
+                  <%=player.name.titleize%> &nbsp;&nbsp;&nbsp;&nbsp; Total Points:&nbsp; <%=player.totalScore%>
+                    <i class="ni ni-chart-bar-32 text-success text-sm opacity-10"></i>
+                </h5>
+                <p class="mb-0 font-weight-bold text-sm">
+                  Category: <%=player.category.to_i.ordinalize%>
+                </p>
+              </div>
+            </div>
+            
+              <div class="nav-wrapper position-relative end-0">
+                <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="true">
+                      <i class="ni ni-app"></i>
+                      <span class="ms-2">App</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                      <i class="ni ni-email-83"></i>
+                      <span class="ms-2">Messages</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
+                      <i class="ni ni-settings-gear-65"></i>
+                      <span class="ms-2">Settings</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <br>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header pb-0">
+          <div class="d-flex align-items-center">
+            <p class="mb-0">Player Profile and Stats</p>
+            <%= link_to "Edit this player", edit_player_path(@player), class: "btn btn-primary btn-sm ms-auto" %>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="text-uppercase text-sm">Player Information</p>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Lefthanded</label>
+                <p class="text-uppercase text-sm"><%= player.leftHanded? ? 'Yes':'No' %></p>
+                
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Cellphone</label>
+                <p class="text-uppercase text-sm"><%= player.cellphone %></p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Birth date</label>
+                <p class="text-uppercase text-sm"><%= player.birthDate.strftime("%d/%m/%Y")%> &nbsp;&nbsp;  (<%=player.age%> Years) </p>
+              </div>
+            </div>          
+          </div>
 
-  <p>
-    <strong>Category:</strong>
-    <%= player.category %>
-  </p>
-
-  <p>
-    <strong>Lefthanded:</strong>
-    <%= player.leftHanded %>
-  </p>
-
-  <p>
-    <strong>Birthdate:</strong>
-    <%= player.birthDate %>
-  </p>
-
-  <p>
-    <strong>Eventscore:</strong>
-    <%= player.eventScore %>
-  </p>
-
-  <p>
-    <strong>Totalscore:</strong>
-    <%= player.totalScore %>
-  </p>
-
+          <hr class="horizontal dark">
+          <p class="text-uppercase text-sm">Player stats</p>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Total Points</label>
+                <p class="text-uppercase text-sm"><%=player.totalScore%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Events played</label>
+                <p class="text-uppercase text-sm"><%=player.eventsPlayed%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Events won</label>
+                <p class="text-uppercase text-sm"><%=player.events.count%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Points per event (Average)</label>
+                <p class="text-uppercase text-sm"><%=player.average%></p>
+              </div>
+            </div>        
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Rank</label>
+                <p class="text-uppercase text-sm"><%=player.rank%></p>
+              </div>
+            </div>
+            <div class="card-header pb-0">
+          <div class="d-flex align-items-center">            
+            <%= link_to "See all players", players_path, class: "btn btn-primary btn-sm ms-auto" %>            
+          </div>
+        </div>
+          </div>      
+        </div>
+      </div>
+    </div>
+  
+  </div>
 </div>
