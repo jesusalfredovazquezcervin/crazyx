@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_192522) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_045746) do
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.date "eventDate"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_192522) do
     t.integer "totalScore"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cellphone"
   end
 
   create_table "scores", force: :cascade do |t|

@@ -28,4 +28,5 @@ MatchPlayer.create(event_id:1,player_id:5,status: 'OnBoard')
 MatchPlayer.create(event_id:1,player_id:6,status: 'OnBoard')
 MatchPlayer.create(event_id:1,player_id:7,status: 'OnBoard')
 
+Score.create(event_id: 2, player_id: 2, points: 18)
 
