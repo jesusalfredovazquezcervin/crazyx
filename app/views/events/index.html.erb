@@ -4,9 +4,10 @@
           <div class="d-flex px-2 py-1">
           </div>
             <div class="card-header pb-0">
-              <h6>Event list</h6>
-              
-                        
+              <div class="d-flex align-items-center">
+                <p class="mb-0">Event list</p>
+                <%= link_to "New Event", new_event_path, class: "btn btn-primary btn-sm ms-auto" %>            
+              </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
