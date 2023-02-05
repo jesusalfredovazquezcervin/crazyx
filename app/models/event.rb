@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
     STATUS= %w[Open Closed] #Status
-    belongs_to :player
+    belongs_to :player, optional: true
 
 
     
