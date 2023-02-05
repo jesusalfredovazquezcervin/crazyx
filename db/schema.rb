@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_04_045746) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_05_021322) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.date "eventDate"
@@ -19,13 +22,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_045746) do
     t.integer "winner"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "player_id"
+    t.bigint "player_id"
     t.index ["player_id"], name: "index_events_on_player_id"
   end
 
   create_table "match_players", force: :cascade do |t|
-    t.integer "event_id", null: false
-    t.integer "player_id", null: false
+    t.bigint "event_id", null: false
+    t.bigint "player_id", null: false
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,7 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_045746) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "event_id", null: false
+    t.bigint "event_id", null: false
     t.integer "playerOne"
     t.integer "pointsOne"
     t.integer "playerTwo"
@@ -61,8 +64,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_04_045746) do
   end
 
   create_table "scores", force: :cascade do |t|
-    t.integer "event_id", null: false
-    t.integer "player_id", null: false
+    t.bigint "event_id", null: false
+    t.bigint "player_id", null: false
     t.integer "points"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
