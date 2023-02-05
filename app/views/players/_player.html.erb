@@ -1,4 +1,4 @@
-<div id="<%= dom_id player %>">
+ <div id="<%= dom_id player %>">
   <div class="row">
     <div class="col-md-8">
       <div class="card shadow-lg">
@@ -9,12 +9,12 @@
                 <%= image_tag("eduardogarcia.jpg", class: "w-100 border-radius-lg shadow-sm")%>
               </div>
             </div>
-            <div class="col-auto my-auto">
+            <div class="col-auto my-auto">        
             <div class="h-100">
-                <h5 class="mb-1">
-                  <%=player.name.titleize%> &nbsp;&nbsp;&nbsp;&nbsp; Total Points:&nbsp; <%=player.totalScore%>
-                    <i class="ni ni-chart-bar-32 text-success text-sm opacity-10"></i>
-                </h5>
+            <p class="h4">
+              <%=player.name.titleize%> &nbsp;&nbsp;&nbsp;&nbsp; Total Points:&nbsp; <%=player.totalScore%> 
+              <i class="ni ni-chart-bar-32 text-success text-sm opacity-10"></i>
+            </p>                
                 <p class="mb-0 font-weight-bold text-sm">
                   Category: <%=player.category.to_i.ordinalize%>
                 </p>
