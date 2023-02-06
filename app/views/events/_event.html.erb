@@ -3,7 +3,7 @@
       <div class="col-md-8">
           <div class="card">
               <div class="card-header pb-0">
-                  <div class="d-flex align-items-center">                    
+                  <div >                    
                       <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>                      
                   </div>
               </div>
@@ -48,11 +48,30 @@
                     </div>
                     <hr class="horizontal dark">
                     <div class="card-header pb-0">
-                      <div class="d-flex align-items-center">                    
-                        <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %> &nbsp;&nbsp;&nbsp;
-                        <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "class: btn btn-warning btn-sm ms-auto" %>
-                      </div>
+                        
+                            <div class="row">
+                                <div class="col-sm">
+                                <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %>
+                            
+                                </div>
+                                <div class="col-sm">
+                            <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "class: btn btn-warning btn-sm ms-auto" %>
+                                </div>
+                                <div class="col-sm">
+                                <span></span>
+                                </div>
+                                <div class="col-sm">
+                                <span></span>
+                                </div>
+                            </div>
+                        
+                        
+                            
+                          
+                        
                     </div>
+                    
+                    
                     
                 </div>
               
