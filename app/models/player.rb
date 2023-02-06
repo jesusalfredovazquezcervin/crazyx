@@ -20,9 +20,13 @@ class Player < ApplicationRecord
     
     def average 
         # return the mean points per event
+        average = 0
         scores_p2 = Score.where(player_id: self.id)
-        point_scores_p2=scores_p2.collect{|s| s.points}
-        return (point_scores_p2.reduce(:+).to_f / point_scores_p2.size).to_i
+        if !scores_p2.empty?
+            point_scores_p2=scores_p2.collect{|s| s.points}
+            average = (point_scores_p2.reduce(:+).to_f / point_scores_p2.size).to_i
+        end
+        return average
     end
 
     def rank
