@@ -1,47 +1,73 @@
-<%= form_with(model: player) do |form| %>
-  <% if player.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(player.errors.count, "error") %> prohibited this player from being saved:</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div >                    
+                    <%= link_to "Players list", players_path, class: "btn btn-primary btn-sm ms-auto" %>
+                </div>
+            </div>
+            <%= form_with(model: player) do |f| %>
+              <% if player.errors.any? %>
+                <div style="color: red">
+                  <h2><%= pluralize(player.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-        <% player.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+                  <ul>
+                    <% player.errors.each do |error| %>
+                      <li><%= error.full_message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
+              <div class="card-body">                          
+                  <div class="row">
+                      <div class="col-md-8">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Player name</label>                              
+                              <%= f.text_field :name, class: 'form-control', :required => true, placeholder: "Name of the player {Juan Perez Lopez}" %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Cellphone</label>                              
+                              <%= f.text_field :cellphone, class: 'form-control', :required => true, placeholder: "This will be his identifier" %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Category</label>
+                              <%= f.select :category, options_for_select(Player::CATEGORY.collect { |category|
+                                                                         [category.to_i.ordinalize] }, player.category), {}, {class:"dropdown" } %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">                                                                                                                        
+                              <%= f.label "Left handed", "Left handed", value: "true"  %>
+                              <%= f.radio_button :leftHanded, true %>
+                              <%= f.label "Right handed", "Right handed", value: "false" %>
+                              <%= f.radio_button :leftHanded, false, checked: true %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Birth date</label>                              
+                              <%= f.date_field :birthDate, class: 'form-control'%>
+                          </div>
+                      </div>
 
-  <div>
-    <%= form.label :category, style: "display: block" %>
-    <%= form.text_field :category %>
-  </div>
+                  </div>
+                  <hr class="horizontal dark">
+                  <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">                      
+                      <%= button_tag(type: 'submit', class: "btn btn-success btn-sm ms-auto") do %>
+                        <i class="fa fa-database"></i> Save
+                      <% end %>
+                    </div>
+                  </div>
+                  
+              </div>
+            <% end %>
 
-  <div>
-    <%= form.label :leftHanded, style: "display: block" %>
-    <%= form.check_box :leftHanded %>
-  </div>
-
-  <div>
-    <%= form.label :birthDate, style: "display: block" %>
-    <%= form.date_field :birthDate %>
-  </div>
-
-  <div>
-    <%= form.label :eventScore, style: "display: block" %>
-    <%= form.number_field :eventScore %>
-  </div>
-
-  <div>
-    <%= form.label :totalScore, style: "display: block" %>
-    <%= form.number_field :totalScore %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+        </div>
+    </div>                
+</div>
