@@ -245,8 +245,22 @@
     </nav>
     <!-- End Navbar -->
     <div class="container-fluid py-4">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <% unless notice.nil? %>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert" style= "color:white" >
+        <strong>
+          <%= notice %>
+          <%= alert %>
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>      
+    <% end %>
+
+      
+    
+      
+      
       <%= yield %>
       <%= render "layouts/footer"%>
     </div>
