@@ -2,7 +2,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header pb-0">
-                <div class="d-flex align-items-center">                    
+                <div >                    
                     <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>
                 </div>
             </div>
@@ -21,22 +21,22 @@
 
               <div class="card-body">                          
                   <div class="row">
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Event name</label>                              
-                              <%= f.text_field :name, class: 'form-control', :required => true %>
+                              <%= f.text_field :name, class: 'form-control', :required => true, placeholder: "Name for the event {Seis loco familia Perez}" %>
                           </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Event date</label>
                               <%= f.date_field :eventDate, class: 'form-control', :required => true %>
                           </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-8">
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Players (Qty)</label>
-                              <%= f.number_field :people, class: 'form-control', :required => true %>
+                              <%= f.number_field :people, class: 'form-control', :required => true, :step => 4, min: 4, placeholder: "Multiples of 4 {4, 8, 12, 16...}" %>
                           </div>
                       </div>                      
                   </div>
