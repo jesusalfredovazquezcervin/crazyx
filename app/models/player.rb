@@ -1,5 +1,5 @@
 class Player < ApplicationRecord
-    CATEGORY= %w[1st 2nd 3rd 4th 5th] 
+    CATEGORY= %w[1 2 3 4 5] 
     has_many :events
     has_many :MatchPlayers
     def updateTotalScore 

@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
 
   # GET /players or /players.json
   def index
-    @players = Player.all
+    @players = Player.all.sort_by{|p| p.totalScore}.reverse
   end
 
   # GET /players/1 or /players/1.json
@@ -65,6 +65,6 @@ class PlayersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def player_params
-      params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore)
+      params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore, :cellphone)
     end
 end
