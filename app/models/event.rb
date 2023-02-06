@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
     STATUS= %w[Open Closed] #Status
     belongs_to :player, optional: true
-
+    attribute :status, :string, default: 'Open'
 
     
     def getPlayersPoints
