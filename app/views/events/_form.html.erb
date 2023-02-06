@@ -1,42 +1,57 @@
-<%= form_with(model: event) do |form| %>
-  <% if event.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="d-flex align-items-center">                    
+                    <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>
+                </div>
+            </div>
+            <%= form_with(model: event) do |f| %>
+              <% if event.errors.any? %>
+                <div style="color: red">
+                  <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-        <% event.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+                  <ul>
+                    <% event.errors.each do |error| %>
+                      <li><%= error.full_message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
+              <div class="card-body">                          
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Event name</label>                              
+                              <%= f.text_field :name, class: 'form-control', :required => true %>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Event date</label>
+                              <%= f.date_field :eventDate, class: 'form-control', :required => true %>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Players (Qty)</label>
+                              <%= f.number_field :people, class: 'form-control', :required => true %>
+                          </div>
+                      </div>                      
+                  </div>
+                  <hr class="horizontal dark">
+                  <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">                      
+                      <%= button_tag(type: 'submit', class: "btn btn-success btn-sm ms-auto") do %>
+                        <i class="fa fa-database"></i> Save
+                      <% end %>
+                    </div>
+                  </div>
+                  
+              </div>
+            <% end %>
 
-  <div>
-    <%= form.label :eventDate, style: "display: block" %>
-    <%= form.date_field :eventDate %>
-  </div>
-
-  <div>
-    <%= form.label :people, style: "display: block" %>
-    <%= form.number_field :people %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div>
-    <%= form.label :winner, style: "display: block" %>
-    <%= form.number_field :winner %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+        </div>
+    </div>                
+</div>

@@ -34,9 +34,8 @@
                           </div>
                         </div>
                       </td>
-                      <td>
-                        <p class="text-xs font-weight-bold mb-0"><%=event.name%></p>
-                        
+                      <td>                        
+                        <%= link_to event.name, event, class: "text-xs font-weight-bold mb-0" %>                                                  
                       </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"><%=event.eventDate.strftime("%d/%m/%Y")%></span>
@@ -57,10 +56,11 @@
                           <p class="text-xs text-secondary mb-0">Won by &nbsp;<%=event.try(:winner)%> pts</p>
                         <%end%>
                       </td>
-                      <td class="align-middle">
-                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                          Edit
-                        </a>
+                      <td>
+                        <%= link_to "Edit", edit_event_path(event),  class: "btn btn-link btn-sm ms-auto" %> 
+                      </td>
+                      <td>                        
+                        <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-link btn-sm ms-auto" %>
                       </td>
                     </tr>
                     <%end%>

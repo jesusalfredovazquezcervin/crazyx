@@ -1,27 +1,64 @@
 <div id="<%= dom_id event %>">
-  <p>
-    <strong>Name:</strong>
-    <%= event.name %>
-  </p>
+  <div class="row">
+      <div class="col-md-8">
+          <div class="card">
+              <div class="card-header pb-0">
+                  <div class="d-flex align-items-center">                    
+                      <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>                      
+                  </div>
+              </div>
+              
 
-  <p>
-    <strong>Eventdate:</strong>
-    <%= event.eventDate %>
-  </p>
+                <div class="card-body">                          
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Event name:</label>                              
+                                <label for="example-text-input" class="form-control-label"><%= event.name %></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Event date</label>
+                                <label for="example-text-input" class="form-control-label"><%= event.eventDate.strftime("%d/%m/%Y") %></label>                              
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Players (Qty)</label>
+                                <label for="example-text-input" class="form-control-label"><%= event.people %></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Status</label>
+                                <label for="example-text-input" class="form-control-label"><%= event.status %></label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Winner</label>
+                                <%if !event.player.nil? %>
+                                  <%= link_to event.try(:player).try(:name), event.try(:player), class: "text-xs font-weight-bold mb-0" %>                          
+                                  <p class="text-xs text-secondary mb-0">Won by &nbsp;<%=event.try(:winner)%> pts</p>
+                                <%end%>
 
-  <p>
-    <strong>People:</strong>
-    <%= event.people %>
-  </p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="horizontal dark">
+                    <div class="card-header pb-0">
+                      <div class="d-flex align-items-center">                    
+                        <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %> &nbsp;&nbsp;&nbsp;
+                        <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "class: btn btn-warning btn-sm ms-auto" %>
+                      </div>
+                    </div>
+                    
+                </div>
+              
 
-  <p>
-    <strong>Status:</strong>
-    <%= event.status %>
-  </p>
-
-  <p>
-    <strong>Winner:</strong>
-    <%= event.winner %>
-  </p>
+          </div>
+      </div>                
+  </div>
 
 </div>
