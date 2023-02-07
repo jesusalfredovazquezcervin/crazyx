@@ -22,7 +22,7 @@
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Status</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Winner</th>
                       <th class="text-secondary opacity-7"></th>
-                      <th class="text-secondary opacity-7"></th>
+                      
                     </tr>
                   </thead>
                   <tbody>
@@ -58,11 +58,10 @@
                         <%end%>
                       </td>
                       <td>
-                        <%= link_to "Edit", edit_event_path(event),  class: "btn btn-link btn-sm ms-auto" %> 
-                      </td>
-                      <td>                        
-                        <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn btn-link btn-sm ms-auto" %>
-                      </td>
+                        <%= link_to "Edit", edit_event_path(event), class: "text-xs text-primary mb-0" %> |
+                        <%= link_to "Share", edit_event_path(event),  class: "text-xs text-primary mb-0" %> |                       
+                        <%= link_to "Delete", event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "text-xs text-primary mb-0" %>
+                      </td>                                            
                     </tr>
                     <%end%>
                   </tbody>
