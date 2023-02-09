@@ -8,7 +8,7 @@ class MatchPlayer < ApplicationRecord
     #Set the status to the MatchPlayer depending on the qty players who have been signed in into the event
     event = Event.find(self.event_id)
     #We get the onboard players
-    obPlayers = MatchPlayer.where(event_id: event.id).select{|mp| mp.status== 'onBoard'}.count
+    obPlayers = MatchPlayer.where(event_id: event.id).select{|mp| mp.status== 'OnBoard'}.count
     if obPlayers < event.people
       self.status = 'OnBoard'
     elsif obPlayers >= event.people
