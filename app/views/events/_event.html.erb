@@ -4,7 +4,7 @@
           <div class="card">
               <div class="card-header pb-0">
                   <div >                    
-                      <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>                      
+                      <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>
                   </div>
               </div>
               
@@ -45,39 +45,63 @@
 
                             </div>
                         </div>
-                    </div>
-                    <hr class="horizontal dark">
-                    <div class="card-header pb-0">
-                        
-                            <div class="row">
-                                <div class="col-sm">
-                                <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %>
-                            
-                                </div>
-                                <div class="col-sm">
+                    </div>                                                                    
+                </div>
+                <div class="card-header pb-3">                        
+                    <div class="row">
+                        <div class="col-md-2">
+                            <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %>
+                        </div>
+                        <div class="col-md-2">
                             <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "class: btn btn-warning btn-sm ms-auto" %>
-                                </div>
-                                <div class="col-sm">
-                                <span></span>
-                                </div>
-                                <div class="col-sm">
-                                <span></span>
-                                </div>
-                            </div>
+                        </div>
                         
-                        
-                            
-                          
-                        
-                    </div>
-                    
-                    
-                    
+                    </div>                        
                 </div>
               
 
           </div>
       </div>                
   </div>
+  <div class="col-md-8">
+    <br>
+  </div>
+  
 
+
+    <div class="row">        
+        <div class="col-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-control-label" for="basic-url">Add a player</label>
+                        <%= link_to "Add player", new_match_player_path(event), class: "btn btn-success mb-0" %>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <div class="form-group">
+                        <label class="form-control-label" for="basic-url">Your event URL</label>
+                        <div class="input-group">
+                        <span class="input-group-text" id="basic-addon3"> <%= new_match_player_url(event, :only_path => false) %></span>                    
+                        <button class="btn btn-info mb-0" type="button" id="button-addon2">Share event</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+
+
+
+
+    
 </div>
