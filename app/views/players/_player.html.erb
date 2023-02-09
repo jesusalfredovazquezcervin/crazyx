@@ -112,10 +112,35 @@
             </div>        
             <div class="col-md-3">
               <div class="form-group">
-                <label for="example-text-input" class="form-control-label">Rank</label>
-                <p class="text-uppercase text-sm"><%=player.rank%></p>
+                <label for="example-text-input" class="form-control-label">General rank</label>
+                <p class="text-uppercase text-sm"><%=player.generalRank%></p>
               </div>
             </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Category rank</label>
+                <p class="text-uppercase text-sm"><%=player.categoryRank%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Won matches</label>
+                <p class="text-uppercase text-sm"><%=player.wonMatches%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Lost matches</label>
+                <p class="text-uppercase text-sm"><%=player.lostMatches%></p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="example-text-input" class="form-control-label">Win ratio</label>
+                <p class="text-uppercase text-sm"><%=player.winRatio%>%</p>
+              </div>
+            </div>
+
             <div class="card-header pb-0">
           <div class="d-flex align-items-center">            
             <%= link_to "See all players", players_path, class: "btn btn-primary btn-sm ms-auto" %>            
