@@ -2,6 +2,8 @@ class Player < ApplicationRecord
     CATEGORY= %w[1 2 3 4 5] 
     has_many :events
     has_many :MatchPlayers
+    validates :cellphone, uniqueness: true
+
     def updateTotalScore 
         #Compute all the gainned points and update the totalScore field
         total_score = Score.where(player_id: self.id).collect{|score| score.points }.sum
@@ -29,11 +31,14 @@ class Player < ApplicationRecord
         return average
     end
 
-    def rank
+    def generalRank
+        #return the rank over all the players
         rank=0
         players = Player.all
         players.each{ |p|
-            p.updateTotalScore            
+            if p.totalScore.nil?
+                p.updateTotalScore            
+            end
         }
 
         rankings=Player.pluck(:id, :totalScore)
@@ -46,5 +51,49 @@ class Player < ApplicationRecord
         return rank
     end
 
-    
+    def categoryRank
+        #return the rank over your category
+        rank=0
+        category = self.category
+        players = Player.all.where(category: category)
+        players.each{ |p|
+            if p.totalScore.nil?
+                p.updateTotalScore
+            end
+        }
+
+        players = Player.all.where(category: category)
+        rankings=players.pluck(:id, :totalScore)
+        
+        rankings.sort_by{|totalScore|
+            rank+=1
+            break if totalScore[0]== self.id
+        }
+        #puts "The rank for the player id -> #{self.id} is -> #{rank}"
+        return rank
+    end
+    def wonMatches 
+        #return the number of won matches
+        return 3
+    end
+    def lostMatches 
+        #return the number of lost matches
+        return 5
+    end
+    def winRatio 
+        #returns the win ratio
+        ratio = 0.0
+        player = Player.find(self.id)
+        lost = player.lostMatches.to_f
+        won = player.wonMatches.to_f
+        
+        if lost == 0 && won == 0
+            return 0
+        elsif lost == 0 && won > 0
+            return 1
+        else            
+            ratio = won/lost
+            return ratio * 100
+        end 
+    end
 end
