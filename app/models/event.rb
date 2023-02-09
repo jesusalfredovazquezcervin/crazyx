@@ -50,5 +50,11 @@ class Event < ApplicationRecord
         }
 
     end
-
+    def onlyLeft
+        #return the number of places left for the event {ej: Event people max = 12, players onboard = 4, onlyLeft= 12-4 = 8}
+        event = Event.find(self.id)
+        #We get the onboard players
+        obPlayers = MatchPlayer.where(event_id: event.id, status: "OnBoard").count
+        return event.people - obPlayers
+    end
 end
