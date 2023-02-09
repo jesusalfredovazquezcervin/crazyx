@@ -59,7 +59,7 @@
                       </td>
                       <td>
                         <%= link_to "Edit", edit_event_path(event), class: "text-xs text-primary mb-0" %> |
-                        <%= link_to "Share", edit_event_path(event),  class: "text-xs text-primary mb-0" %> |                       
+                        <%= link_to "Share", event,  class: "text-xs text-primary mb-0" %> |                       
                         <%= link_to "Delete", event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "text-xs text-primary mb-0" %>
                       </td>                                            
                     </tr>
