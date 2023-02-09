@@ -8,11 +8,14 @@ class MatchPlayersController < ApplicationController
 
   # GET /match_players/1 or /match_players/1.json
   def show
+    render layout: "empty"
   end
 
   # GET /match_players/new
   def new
     @match_player = MatchPlayer.new
+    @event = Event.find(params[:id])
+    render layout: "empty"
   end
 
   # GET /match_players/1/edit
@@ -22,10 +25,10 @@ class MatchPlayersController < ApplicationController
   # POST /match_players or /match_players.json
   def create
     @match_player = MatchPlayer.new(match_player_params)
-
+    @match_player.setStatus
     respond_to do |format|
       if @match_player.save
-        format.html { redirect_to match_player_url(@match_player), notice: "Match player was successfully created." }
+        format.html { redirect_to match_player_url(@match_player), notice: "You have joined succesfully to the event"}
         format.json { render :show, status: :created, location: @match_player }
       else
         format.html { render :new, status: :unprocessable_entity }
