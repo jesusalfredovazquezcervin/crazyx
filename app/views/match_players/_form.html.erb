@@ -22,10 +22,10 @@
             </div>
             <div class="card-header">
               <ul class="list-group">
-                <li class="list-group-item">Event: <strong>Seis loko</strong></li>
-                <li class="list-group-item">Date: <strong>14 de marzo 2023</strong></li>
-                <li class="list-group-item">Time: <strong>20:00 - 22:00</strong></li>
-                <li class="list-group-item">Players: <strong>12</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
+                <li class="list-group-item">Event: <strong><%=event.name%></strong></li>
+                <li class="list-group-item">Date: <strong><%=event.eventDate.strftime("%d/%m/%Y") %> </strong></li>
+                <li class="list-group-item">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> </strong></li>
+                <li class="list-group-item">Players: <strong><%=event.people%> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
                 <li class="list-group-item">Category: <strong>4a - 5a</strong></li>
               </ul>              
             </div>

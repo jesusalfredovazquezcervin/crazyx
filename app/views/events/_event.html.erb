@@ -17,25 +17,31 @@
                                 <label for="example-text-input" class="form-control-label"><%= event.name %></label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Event date:</label>
-                                <label for="example-text-input" class="form-control-label"><%= event.eventDate.strftime("%d/%m/%Y") %></label>                              
+                                <label for="example-text-input" class="form-control-label"><%= event.eventDate.strftime("%d/%m/%Y") %></label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Scheduled:</label>
+                                <label for="example-text-input" class="form-control-label"><%= event.timeIni.strftime("%H:%M")%> - <%= event.timeEnd.strftime("%H:%M")%></label>
+                            </div>
+                        </div>                        
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Players (Qty):</label>
                                 <label for="example-text-input" class="form-control-label"><%= event.people %></label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Status:</label>
                                 <label for="example-text-input" class="form-control-label"><%= event.status %></label>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Winner:</label>
                                 <%if !event.player.nil? %>

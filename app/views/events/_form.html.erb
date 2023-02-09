@@ -35,6 +35,18 @@
                       </div>
                       <div class="col-md-8">
                           <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">Start time</label>
+                              <%= f.time_field :timeIni, class: 'form-control', :required => true %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">
+                              <label for="example-text-input" class="form-control-label">End time</label>
+                              <%= f.time_field :timeEnd, class: 'form-control', :required => true %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
+                          <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Players (Qty)</label>
                               <%= f.number_field :people, class: 'form-control', :required => true, :step => 4, min: 4, placeholder: "Multiples of 4 {4, 8, 12, 16...}" %>
                           </div>

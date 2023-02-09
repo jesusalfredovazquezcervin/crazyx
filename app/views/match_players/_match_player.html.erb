@@ -36,7 +36,7 @@
                     <h6 class="mb-3 text-sm"><%=@match_player.player.name.titleize%></h6>
                     <span class="mb-2 text-xs">Event: <span class="text-dark font-weight-bold ms-sm-2"><%=@match_player.event.name%></span></span>
                     <span class="mb-2 text-xs">Date: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.eventDate.strftime("%d/%m/%Y")%></span></span>
-                    <span class="mb-2 text-xs">Time: <span class="text-dark ms-sm-2 font-weight-bold">12:00 - 14:00 hrs</span></span>
+                    <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.timeIni.strftime("%H:%M")%> - <%=@match_player.event.timeEnd.strftime("%H:%M")%> Hrs</span></span>
                     <span class="mb-2 text-xs">Players: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.people%></span></span>
                     <span class="mb-2 text-xs">Category: <span class="text-dark font-weight-bold ms-sm-2">4a - 5a</span></span>                  
                   </div>                  
