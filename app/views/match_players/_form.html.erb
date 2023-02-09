@@ -1,32 +1,83 @@
-<%= form_with(model: match_player) do |form| %>
-  <% if match_player.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(match_player.errors.count, "error") %> prohibited this match_player from being saved:</h2>
-
-      <ul>
-        <% match_player.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="row>
+    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg">
+      <span ></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <h1 class="text-white mb-2 mt-5">&nbsp;</h1>
+            <p class="text-lead text-white">&nbsp;</p>
+            
+          </div>
+        </div>
+      </div>
     </div>
-  <% end %>
 
-  <div>
-    <%= form.label :event_id, style: "display: block" %>
-    <%= form.text_field :event_id %>
-  </div>
 
-  <div>
-    <%= form.label :player_id, style: "display: block" %>
-    <%= form.text_field :player_id %>
-  </div>
+    <div class="container">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+          <div class="card z-index-0">
+            <div class="card-header text-center pt-4">
+              <h5>Join event</h5>              
+            </div>
+            <div class="card-header">
+              <ul class="list-group">
+                <li class="list-group-item">Event: <strong>Seis loko</strong></li>
+                <li class="list-group-item">Date: <strong>14 de marzo 2023</strong></li>
+                <li class="list-group-item">Time: <strong>20:00 - 22:00</strong></li>
+                <li class="list-group-item">Players: <strong>12</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
+                <li class="list-group-item">Category: <strong>4a - 5a</strong></li>
+              </ul>              
+            </div>
+            <div class="card-body">
+              <%= form_with(model: match_player) do |f| %>
+                <% if match_player.errors.any? %>
+                  <div style="color: red">
+                    <h2><%= pluralize(match_player.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
-  </div>
+                    <ul>
+                      <% match_player.errors.each do |error| %>
+                        <li><%= error.full_message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+                <div class="mb-3">
+                
+                <p class="text-s mt-3 mb-0">Type your cellphone or full name</p>
+                <br>
+                  <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
+                  
+                  <%= f.select :player_id, options_for_select(Player.order(:name).collect { |player|
+                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control m-b",  required: true} %>
 
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+                  <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
+                        <i class="fa fa-database"></i> Join event
+                      <% end %>
+                  
+                                                      
+                </div>
+                
+                <p class="text-sm mt-3 mb-0">Your cellphone does not appear? <a href="javascript:;" class="text-dark font-weight-bolder">Register here</a></p>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+  <script type="text/javascript">
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        //$('.js-example-basic-single').select2();
+        $('#select2_player_id').select2();
+        $('#select2_event_id').select2();
+
+        $('#select2_player_id_mobile').select2();
+    });
+  </script>
