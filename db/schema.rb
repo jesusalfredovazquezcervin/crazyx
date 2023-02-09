@@ -23,8 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_040649) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "player_id"
-    t.date "timeIni"
-    t.date "timeEnd"
+    t.time "timeIni"
+    t.time "timeEnd"
     t.index ["player_id"], name: "index_events_on_player_id"
   end
 
