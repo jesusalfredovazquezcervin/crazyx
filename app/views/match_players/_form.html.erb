@@ -29,6 +29,8 @@
                 <li class="list-group-item">Category: <strong>4a - 5a</strong></li>
               </ul>              
             </div>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Players joined</button>
             <div class="card-body">
               <%= form_with(model: match_player) do |f| %>
                 <% if match_player.errors.any? %>
@@ -42,22 +44,16 @@
                     </ul>
                   </div>
                 <% end %>
-                <div class="mb-3">
-                
-                <p class="text-s mt-3 mb-0">Type your cellphone or full name</p>
-                <br>
+                <div class="mb-3">                
+                  <p class="text-s mt-3 mb-0">Type your cellphone or full name</p>                
                   <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
                   
                   <%= f.select :player_id, options_for_select(Player.order(:name).collect { |player|
                                                                    [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control m-b",  required: true} %>
-
                   <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
                         <i class="fa fa-database"></i> Join event
-                      <% end %>
-                  
-                                                      
+                  <% end %>
                 </div>
-                
                 <p class="text-sm mt-3 mb-0">Your cellphone does not appear? <a href="javascript:;" class="text-dark font-weight-bolder">Register here</a></p>
               <%end%>
             </div>
@@ -67,6 +63,85 @@
     </div>
   
 </div>
+
+
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">        
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Player</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Joined</th>                  
+                </tr>
+              </thead>
+              <tbody>
+                <% (event.match_player.all.sort_by{|p| p.created_at}).each do | mp|%>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <div>
+                          <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-xs"><%=mp.player.name.titleize%></h6>
+                          <p class="text-xs text-secondary mb-0"><%=mp.player.totalScore%> points</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <p class="text-xs font-weight-bold mb-0"><%= mp.created_at%></p>
+                      
+                    </td>                  
+                  </tr>
+                <%end%>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn bg-gradient-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
