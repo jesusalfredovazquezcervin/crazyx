@@ -3,6 +3,8 @@ class MatchPlayer < ApplicationRecord
   belongs_to :event
   belongs_to :player
   STATUS= %w[OnBoard OnHold Canceled] #Status
+  validates :player, uniqueness: { scope: :event,
+   message: "This player is already enroled on the event" }
 
   def setStatus 
     #Set the status to the MatchPlayer depending on the qty players who have been signed in into the event
