@@ -13,8 +13,11 @@ class MatchPlayersController < ApplicationController
 
   # GET /match_players/new
   def new
+    #logger.debug "hello ID----> #{params}"
+    
+    
+    @event = Event.find(params[:id])    
     @match_player = MatchPlayer.new
-    @event = Event.find(params[:id])
     render layout: "empty"
   end
 
@@ -24,14 +27,27 @@ class MatchPlayersController < ApplicationController
 
   # POST /match_players or /match_players.json
   def create
-    @match_player = MatchPlayer.new(match_player_params)
-    @match_player.setStatus
-    respond_to do |format|
-      if @match_player.save
-        format.html { redirect_to match_player_url(@match_player), notice: "You have joined succesfully to the event"}
+    #logger.debug "hello here we have the event id----> #{match_player_params[:event_id]}"
+    #@match_player = MatchPlayer.new(match_player_params)
+    #@match_player.setStatus
+    #logger.debug "----------------- The status of the player is ----> #{@match_player.status}"
+
+    #Validations
+    mp = MatchPlayer.create(match_player_params)
+    respond_to do |format|      
+      if !mp.errors.messages.any?      
+        mp.setStatus
+        logger.debug "----------------- The status of the player is ----> #{mp.status}"
+        mp.save!
+        logger.debug "-----------The id of the player saved is ---------------> #{mp.id}"
+        format.html { redirect_to match_player_url(mp), notice: "You have joined succesfully to the event"}
         format.json { render :show, status: :created, location: @match_player }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        event_id =  match_player_params[:event_id]
+        #format.html { render :new, status: :unprocessable_entity}
+        #flash[:notice] = result_saving.errors.full_messages.to_sentence
+        #flash[:notice]="some error"        
+        format.html {redirect_to new_match_player_url(event_id), notice: mp.errors}
         format.json { render json: @match_player.errors, status: :unprocessable_entity }
       end
     end
