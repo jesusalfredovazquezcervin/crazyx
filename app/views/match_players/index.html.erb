@@ -1,14 +1,89 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Match players</h1>
-
+<h3 style= "color: white">Enrolled players</h3>
 <div id="match_players">
-  <% @match_players.each do |match_player| %>
-    <%= render match_player %>
-    <p>
-      <%= link_to "Show this match player", match_player %>
-    </p>
-  <% end %>
+  <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+          <div class="d-flex px-2 py-1">
+          </div>
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="h4">Event:&nbsp;</p>
+                <p class="h4"><%= @event.name.titleize%></p>
+                <%= link_to "Enrroll new player", new_match_player_path(@event), class: "btn btn-primary btn-sm ms-auto" %>
+              </div>
+              <div class="d-flex align-items-center">
+                <p class="h4">Date:&nbsp;</p>
+                <p class="h4"><%=local_time(@event.created_at, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%>  </p>
+              </div>
+              <div class="d-flex align-items-center">
+                <p class="h4">Maximum players: <%=@event.people%></p>                
+              </div>
+            </div>
+            
+            
+<div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>                      
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">#</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">Player</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">Status</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">Enrolled date</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">&nbsp;&nbsp;&nbsp;</th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @match_players.all.sort_by{|mp| mp.created_at}.each.with_index(1).each do | mp, i |%>
+                    <tr>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0"><%=i%></p>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                          <div class="d-flex flex-column justify-content-right">
+                            <h6 class="mb-0 text-sm"><%=mp.player.name.titleize%></h6>
+                            <p class="text-xs text-secondary mb-0"><%=mp.player.cellphone%></p>
+                          </div>
+                        </div>
+                      </td>
+                      <td>                        
+                        <div class="d-flex flex-column justify-content-center">
+                          <%if mp.status=='OnBoard' %>
+                            <span class="badge badge-sm bg-gradient-success"><%=mp.status%></span>
+                          <%else%>
+                            <span class="badge badge-sm bg-gradient-danger"><%=mp.status%></span>
+                          <%end%>                          
+                        </div>                        
+                      </td>
+                      <td>
+
+                        <div class="d-flex flex-column justify-content-left"> 
+                            <h6 class="mb-0 text-sm"><%= local_time(mp.created_at, %"%d/%m/%Y %H:%M:%S")%></h6>
+                          
+                          </div>
+                        </div>                      
+                      </td>
+                      <td>
+                        <div class="d-flex flex-column justify-content-left"> 
+                          <%= link_to "Quit", mp, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "text-xs text-primary mb-0" %>
+                        </div>
+                      </td>
+                    </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+            
+
+            
+
+          </div>
+        </div>
+      </div>
 </div>
 
 

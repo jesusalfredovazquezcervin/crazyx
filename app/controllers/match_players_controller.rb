@@ -3,7 +3,8 @@ class MatchPlayersController < ApplicationController
 
   # GET /match_players or /match_players.json
   def index
-    @match_players = MatchPlayer.all
+    @match_players = MatchPlayer.where(event_id: params[:id])
+    @event = Event.find(params[:id])
   end
 
   # GET /match_players/1 or /match_players/1.json
