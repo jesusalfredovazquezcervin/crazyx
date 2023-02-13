@@ -1,6 +1,5 @@
 class MatchPlayersController < ApplicationController
-  before_action :set_match_player, only: %i[ show edit update destroy ]
-
+  before_action :set_match_player, only: %i[ show edit update destroy ]  
   # GET /match_players or /match_players.json
   def index
     @match_players = MatchPlayer.where(event_id: params[:id])
@@ -76,7 +75,6 @@ class MatchPlayersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_match_player
