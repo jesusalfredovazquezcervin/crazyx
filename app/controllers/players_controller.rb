@@ -22,6 +22,7 @@ class PlayersController < ApplicationController
   # POST /players or /players.json
   def create
     @player = Player.new(player_params)
+    @player.cellphone = @player.cellphone.gsub(/\s+/, "")
 
     respond_to do |format|
       if @player.save
@@ -36,6 +37,10 @@ class PlayersController < ApplicationController
 
   # PATCH/PUT /players/1 or /players/1.json
   def update
+    clean_cellphone = params[:player][:cellphone].gsub(/\s+/, "")
+    #player_params[:cellphone] = "11111"
+    params[:player][:cellphone] = clean_cellphone
+    #logger.debug "-------------params------> #{params[:player][:cellphone]}"
     respond_to do |format|
       if @player.update(player_params)
         format.html { redirect_to player_url(@player), notice: "Player was successfully updated." }
