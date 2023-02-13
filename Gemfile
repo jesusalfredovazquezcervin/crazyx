@@ -75,3 +75,4 @@ group :test do
   gem "webdrivers"
 end
 gem 'local_time'
+gem 'twilio-ruby', '~> 5.74.3'
