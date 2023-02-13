@@ -4,7 +4,7 @@ class MatchPlayer < ApplicationRecord
   belongs_to :player
   STATUS= %w[OnBoard OnHold Canceled] #Status
   validates :player, uniqueness: { scope: :event, message: "This player is already enroled on the event" }
-  after_destroy :set_player_status 
+  after_destroy :set_player_status
 
   def setStatus 
     #Set the status to the MatchPlayer depending on the qty players who have been signed in into the event
@@ -21,17 +21,42 @@ class MatchPlayer < ApplicationRecord
     #update the status (to onboard) of the first onhold player of the event
     #Note: this method will only change the status if the player had OnBoard Status
     event = Event.find(self.event_id)
-    puts "Changing player status NHOLD ------>   ONBOARD #{self.id}"
-    
     if (event.onlyLeft == 1) && (MatchPlayer.where(event_id: event.id, status: "OnHold").count >=1 )
       mp = MatchPlayer.where(event_id:event.id, status: "OnHold").sort_by{|mp| mp.created_at}.first
+      
+      # Player who change status
+      @player = mp.player
+      puts "-----------------------------------------------------------------------------------"
+      puts "The player #{@player.id} - #{@player.name} has changed status from 'OnHold' to 'OnBoard's"
+      puts "-----------------------------------------------------------------------------------"
       mp.status = 'OnBoard'
-      mp.save!
-    end
-    
-
-
-
+      send_sms_status_change if mp.save!
+    end    
   end
+
+  def send_sms_status_change
+    #This method will send an sms message to the 'OnHold' player 
+    #notifiying him that now he is a new 'OnBoard' Player.
+    # Hello John, You're now OnBoard! for the Padel event Seis Loco on  23/03/2023 at 12:00-14:00. Be on time!.
+    event = Event.find(self.event_id)
+    account_sid = 'ACc08ca94532b4f7c849560154f0269a40' 
+    auth_token = '9dfec69d0c13fcfe9bb89748c7617421' 
+    @client = Twilio::REST::Client.new(account_sid, auth_token) 
+    cellphone = "+52" << @player.cellphone #'+524461327380'
+    message = @client.messages.create(body: "Hello #{@player.name.titleize}, You are now OnBoard! for the Padel event: #{event.name} on #{event.eventDate.strftime('%d/%m/%Y')} from #{event.timeIni} to #{event.timeEnd}",  messaging_service_sid: 'MGbb8cfa4182eb40f0613808722637f813', to: cellphone) 
+    puts "-----------------------------------------------------------------------------------"
+    puts "Sending sms to: #{@player.cellphone} - #{@player.name.titleize}  - message id ->> #{message.sid}"
+    puts "-----------------------------------------------------------------------------------"
+  end
+
+  #def addVerifiedCallerId
+    #this method adds a new caller Id such as my girl mobile phone number 442 3279641
+  #  account_sid = 'ACc08ca94532b4f7c849560154f0269a40'
+  #  auth_token = '9dfec69d0c13fcfe9bb89748c7617421'
+  #  @client = Twilio::REST::Client.new(account_sid, auth_token)
+  #  validation_request = @client.validation_requests.create(friendly_name: 'My girl mobile number',phone_number: '+524423279641')
+  #  puts validation_request.friendly_name
+  #end
+
 end
 
