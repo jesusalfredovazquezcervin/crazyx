@@ -4,6 +4,8 @@ class Player < ApplicationRecord
     has_many :MatchPlayers
     has_many :VerificationCodes
     validates :cellphone, uniqueness: true
+    attribute  :totalScore, default: 0
+    attribute  :eventScore, default: 0
 
     def updateTotalScore 
         #Compute all the gainned points and update the totalScore field
