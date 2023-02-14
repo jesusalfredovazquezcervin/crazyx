@@ -78,7 +78,9 @@
             <div class="col-md-4">
               <div class="form-group">
                 <label for="example-text-input" class="form-control-label">Birth date</label>
-                <p class="text-uppercase text-sm"><%= player.birthDate.strftime("%d/%m/%Y")%> &nbsp;&nbsp;  (<%=player.age%> Years) </p>
+                <%if !player.birthDate.nil?%>
+                  <p class="text-uppercase text-sm"><%= player.birthDate.strftime("%d/%m/%Y")%> &nbsp;&nbsp;  (<%=player.age%> Years) </p>
+                <%end%>
               </div>
             </div>          
           </div>
