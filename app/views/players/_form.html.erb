@@ -37,7 +37,7 @@
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Category</label>
                               <%= f.select :category, options_for_select(Player::CATEGORY.collect { |category|
-                                                                         [category.to_i.ordinalize] }, player.category), {}, {class:"dropdown" } %>
+                                                                         [category.to_i.ordinalize] }, player.category), {}, {id: 'select2_category',class:"form-control m-b",  required: true} %>
                           </div>
                       </div>
                       <div class="col-md-8">
@@ -71,3 +71,10 @@
         </div>
     </div>                
 </div>
+<script type="text/javascript">
+  // In your Javascript (external .js resource or <script> tag)
+  $(document).ready(function() {
+      //$('.js-example-basic-single').select2();
+      $('#select2_category').select2();      
+  });
+</script>
