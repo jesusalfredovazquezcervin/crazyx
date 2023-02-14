@@ -2,6 +2,7 @@ class Player < ApplicationRecord
     CATEGORY= %w[1 2 3 4 5] 
     has_many :events
     has_many :MatchPlayers
+    has_many :VerificationCodes
     validates :cellphone, uniqueness: true
 
     def updateTotalScore 
