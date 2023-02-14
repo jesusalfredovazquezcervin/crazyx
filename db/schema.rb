@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_040649) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_210527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,10 +75,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_040649) do
     t.index ["player_id"], name: "index_scores_on_player_id"
   end
 
+  create_table "verification_codes", force: :cascade do |t|
+    t.integer "code"
+    t.boolean "used"
+    t.bigint "player_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_verification_codes_on_player_id"
+  end
+
   add_foreign_key "events", "players"
   add_foreign_key "match_players", "events"
   add_foreign_key "match_players", "players"
   add_foreign_key "matches", "events"
   add_foreign_key "scores", "events"
   add_foreign_key "scores", "players"
+  add_foreign_key "verification_codes", "players"
 end
