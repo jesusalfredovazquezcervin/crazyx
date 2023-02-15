@@ -58,10 +58,18 @@
                         <%end%>
                       </td>
                       <td>
-                        <%= link_to "Edit", edit_event_path(event), class: "text-xs text-primary mb-0" %> |
-                        <%= link_to "Share", event,  class: "text-xs text-primary mb-0" %> |                       
-                        <%= link_to "Delete", event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "text-xs text-primary mb-0" %> |
-                        <%= link_to "Players", players_enrroled_path(event), class: "text-xs text-primary mb-0" %>
+                        <div class="dropdown">
+                          <button type="button" class="btn btn-sm bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Action
+                          </button>
+                          <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                            <li><%= link_to "Edit", edit_event_path(event), class:"dropdown-item border-radius-md"%></li>
+                            <li><%= link_to "Share", event, class:"dropdown-item border-radius-md"%></li>
+                            <li><%= link_to "Delete", event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"dropdown-item border-radius-md" %></li>
+                            <li><%= link_to "Players", players_enrroled_path(event), class:"dropdown-item border-radius-md"%></li>
+                            <li><%= link_to "Role playing", players_enrroled_path(event), class:"dropdown-item border-radius-md"%></li>
+                          </ul>
+                        </div>
                       </td>                                            
                     </tr>
                     <%end%>
