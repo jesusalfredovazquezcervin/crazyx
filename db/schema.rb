@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_210527) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_15_163857) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "combinations", force: :cascade do |t|
+    t.string "combination"
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_combinations_on_event_id"
+  end
 
   create_table "events", force: :cascade do |t|
     t.string "name"
@@ -50,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_210527) do
     t.integer "pointsFour"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "round"
     t.index ["event_id"], name: "index_matches_on_event_id"
   end
 
@@ -84,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_210527) do
     t.index ["player_id"], name: "index_verification_codes_on_player_id"
   end
 
+  add_foreign_key "combinations", "events"
   add_foreign_key "events", "players"
   add_foreign_key "match_players", "events"
   add_foreign_key "match_players", "players"
