@@ -1,3 +1,0 @@
-class Combination < ApplicationRecord
-  belongs_to :event
-end
