@@ -58,4 +58,93 @@ class Event < ApplicationRecord
         obPlayers = MatchPlayer.where(event_id: event.id, status: "OnBoard").count
         return event.people - obPlayers
     end
+
+    def create_round_of_matches
+        # Create a set of matches per round depending on the total players for the event (event.people)
+        # Example: People = 12. Ergo we need 3 matches (each match 4 different person) per round
+        # So this method will generate 3 matches each 4 different person.
+        
+        event = Event.find(self.id)
+        #We create the round robbin
+        rounds = round_robin
+        puts "The max num of round is -> #{rounds.size}"
+        #Find which round goes?
+        num_round=0 
+        rounds_created=Match.select("round").group("round")
+        if rounds_created.any?
+            num_round = rounds_created.sort_by{|m| m.round}.last.round     
+        end
+
+        #round_to_create = [[7, 1], [4, 2], [14, 5], [15, 16], [18, 6], [17, 19]]
+        #round = [[P1, P2],[P3, P4],      [P1, P2], [P3, P4],       [P1, P2], [P3, P4]]
+        if num_round >= rounds.size
+            position = num_round%rounds.size
+        else
+            position = num_round
+        end
+
+        round_to_create = rounds[position]
+        len = round_to_create.size - 1
+        
+        #  loop principal que barre todos los elementos de una ronda
+        playerOne, playerTwo, playerThree, playerFour = 0
+        (0..len).each.with_index{|p, i|    
+
+            if i.even?
+                puts "#{i} - We are in the EVEN pair of id players"
+                puts "New 'match' instance"
+                
+                # [7, 1]
+                # [P1, P2]
+                puts "Asignation to match.playerOne with -----> #{round_to_create[p][0]}"
+                puts "Asignation to match.playerTwo with -----> #{round_to_create[p][1]}"
+                playerOne = round_to_create[p][0]
+                playerTwo = round_to_create[p][1]
+                puts "[ #{playerOne}, #{playerTwo} ]"
+                puts ""
+            end
+            
+            if i.odd?
+                #entonces guardamos match
+                puts "#{i} - We are now in the ODD pair of id players"
+                puts "Asignation to match.playerThree with -----> #{round_to_create[p][0]}"
+                puts "Asignation to match.playerFour with -----> #{round_to_create[p][1]}"
+                playerThree = round_to_create[p][0]
+                playerFour = round_to_create[p][1]
+                puts "[ #{playerThree}, #{playerFour} ]"
+                Match.create(event_id: self.id, playerOne: playerOne, playerTwo: playerTwo, playerThree: playerThree, playerFour: playerFour, round: num_round+1 )
+                
+                #Clear the players
+                playerOne, playerTwo, playerThree, playerFour = 0
+                #puts "And save match ---> #{saved}, In this point there is no 'match' instance!"
+                puts "And save match, In this point there is no 'match' instance!"
+                puts ""
+            end
+        }
+        
+        return "Round number #{num_round+1} of matches created ---> #{round_to_create}"
+    end
+    
+    
+    
+    require "round_robin_tournament"
+    def round_robin 
+        # Compute all the possible teams for each day in the classroom
+        match_players = MatchPlayer.where(event_id: self.id, status: "OnBoard")
+        players = match_players.collect{|mp| mp.player_id}
+        #NOTE: players is a collection of number sorted always in the same way
+        # If you want to add another pint of randomness, then you have to pass to the RoundRobinTournament method the player list shuffled
+        
+        teams = RoundRobinTournament.schedule(players)
+
+        # Print for each day, each team
+        teams.each_with_index do |day, index|
+            day_teams = day.map { |team| "(#{team.first}, #{team.last})" }.join(", ")
+            #puts "Day #{index + 1}: #{day_teams}"
+        end
+        teams.each{|m| m.shuffle!}
+        #puts teams
+        return teams
+    end
+
 end
