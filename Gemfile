@@ -76,3 +76,6 @@ group :test do
 end
 gem 'local_time'
 gem 'twilio-ruby', '~> 5.74.3'
+
+# To create the combination of matches between 2 players
+gem 'round_robin_tournament'

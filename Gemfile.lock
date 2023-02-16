@@ -172,6 +172,7 @@ GEM
     reline (0.3.2)
       io-console (~> 0.5)
     rexml (3.2.5)
+    round_robin_tournament (0.1.1)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.8.0)
@@ -229,6 +230,7 @@ DEPENDENCIES
   pg
   puma (~> 5.0)
   rails (~> 7.0.4)
+  round_robin_tournament
   selenium-webdriver
   sprockets-rails
   stimulus-rails
