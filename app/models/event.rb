@@ -3,6 +3,7 @@ class Event < ApplicationRecord
     belongs_to :player, optional: true
     attribute :status, :string, default: 'Open'
     has_many :match_player
+    has_many :matches
 
     
     def getPlayersPoints
@@ -69,11 +70,11 @@ class Event < ApplicationRecord
         rounds = round_robin
         puts "The max num of round is -> #{rounds.size}"
         #Find which round goes?
-        num_round=0 
-        rounds_created=Match.select("round").group("round")
-        if rounds_created.any?
-            num_round = rounds_created.sort_by{|m| m.round}.last.round     
-        end
+        num_round=get_num_rounds 
+        #rounds_created=Match.select("round").group("round")
+        #if rounds_created.any?
+        #    num_round = rounds_created.sort_by{|m| m.round}.last.round     
+        #end
 
         #round_to_create = [[7, 1], [4, 2], [14, 5], [15, 16], [18, 6], [17, 19]]
         #round = [[P1, P2],[P3, P4],      [P1, P2], [P3, P4],       [P1, P2], [P3, P4]]
@@ -147,4 +148,13 @@ class Event < ApplicationRecord
         return teams
     end
 
+    def get_num_rounds
+        #returns the number of total rounds created for the event
+        num_round=0 
+        rounds_created=Match.where(event: self.id).select("round").group("round")
+        if rounds_created.any?
+            num_round = rounds_created.sort_by{|m| m.round}.last.round     
+        end
+        return num_round
+    end
 end
