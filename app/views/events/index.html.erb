@@ -66,8 +66,8 @@
                             <li><%= link_to "Edit", edit_event_path(event), class:"dropdown-item border-radius-md"%></li>
                             <li><%= link_to "Share", event, class:"dropdown-item border-radius-md"%></li>
                             <li><%= link_to "Delete", event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"dropdown-item border-radius-md" %></li>
-                            <li><%= link_to "Players", players_enrroled_path(event), class:"dropdown-item border-radius-md"%></li>
-                            <li><%= link_to "Role playing", players_enrroled_path(event), class:"dropdown-item border-radius-md"%></li>
+                            <li><%= link_to "Players", players_enrroled_path(event), class:"dropdown-item border-radius-md"%></li>                            
+                            <li><%= link_to "See the matches", event_matches_path(event), class:"dropdown-item border-radius-md"%></li>
                           </ul>
                         </div>
                       </td>                                            
