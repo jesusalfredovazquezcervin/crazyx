@@ -1,14 +1,246 @@
-<p style="color: green"><%= notice %></p>
+<h3 style= "color: white">Event matches</h3>
 
-<h1>Matches</h1>
+  <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="d-flex px-2 py-1">
+            </div>
+              <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                  <p class="h4">Event:&nbsp;</p>
+                  <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]</p>
+                  <%= link_to "Create new round", new_match_player_path(@event), class: "btn btn-primary btn-sm ms-auto" %>
+                </div>
+                <div class="d-flex align-items-center">
+                  <p class="h4">Date:&nbsp;</p>
+                  <p class="h4"><%=local_time(@event.created_at, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%>  </p>
+                </div>
+                <div class="d-flex align-items-center">
+                  <p class="h4">Maximum players: <%=@event.people%></p>                
+                </div>
+              </div>
+              
+              
+              
+              <div class="card mb-4">
+                <div class="d-flex px-2 py-1">
+                </div>
+                <div class="card-header pb-0">
+                  <div class="d-flex align-items-center">
 
-<div id="matches">
-  <% @matches.each do |match| %>
-    <%= render match %>
-    <p>
-      <%= link_to "Show this match", match %>
-    </p>
-  <% end %>
-</div>
 
-<%= link_to "New match", new_match_path %>
+
+                      <!-- TABS SECTION  -->
+
+                      <div class="nav-wrapper position-relative end-0">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                          <!-- We loop throughout the number of generated rounds-->
+                          <%  @event.get_num_rounds.times do |r| %>
+                              <li class="<%= r == 0 ? ("active"):("") %>">
+                              <li class="nav-item" role = "presentation">
+                              <button class="nav-link <%= r == 0 ? ("active"):("") %>" id="tab-<%=r+1%>" data-bs-toggle="tab" data-bs-target="#tab-<%=r+1%>-pane" type="button" role="tab" aria-controls="tab-<%=r+1%>-pane" aria-selected="true">Round <%=r+1%></button>
+                          <%end%>
+                        </ul>
+                        <div class="d-flex px-2 py-1"></div>
+                        <div class="tab-content" id="myTabContent">
+                          <%  @event.get_num_rounds.times do |round| %>
+                            <div class="tab-pane fade <%= round == 0 ? ("show active"):("") %> " id="tab-<%=round+1%>-pane" role="tabpanel" aria-labelledby="tab-<%=round+1%>" tabindex="0">
+                              <div class="panel-body" id= "pn-tab-<%=round+1%>">
+
+                                <div class="container" id="container-pb-<%=round+1%>">
+                                  <%  @event.matches.where(round: round + 1 ).each_with_index do |match, index| %>
+                                    
+                                      <%if (index%3) == 0 %>
+                                        <div class="row">
+                                      <%end%>
+                                        
+
+
+
+
+
+
+                                        <div class="col-sm" id="card-1-tab-<%=round+1%>-m<%=index+1%>">
+                                        <div class="card" id="crd-1-tab-<%=round+1%>-m<%=index+1%>">
+                                          <div class="card-body pt-2" id="cb-card-1-tab-<%=round+1%>-m<%=index+1%>">
+                                            <div class="container" id="contaiiner-cb-card-1-tab-<%=round+1%>-m<%=index+1%>">
+                                              <div class="card-body pt-2" id="cb-space-card-1-tab-<%=round+1%>-m<%=index+1%>">
+                                              </div>
+                                              <!-- TEAM 1  - CARD N - TAB N -->
+                                              <div class="row" id="row-crd-rnd-<%=round+1%>-<%=index+1%>-t1">
+                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerOne%>-t1">
+                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                </div>
+                                                <div class="col-sm">
+                                                  <div class="progress-wrapper">
+                                                    <div class="progress-info">
+                                                      <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold"><h6 class="text-sm text-center">Team 1</h6></span>
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress">
+                                                      <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerTwo%>-t1">
+                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                </div>
+                                              </div>
+                                              <div class="row" id="row-crd-names-<%=round+1%>-m-<%=match.playerOne%>-t1">
+                                                <div class="col-sm">                                          
+                                                  <h6 class="mb-0 text-xs"><%=Player.find(match.playerOne).name.titleize%></h6>
+                                                </div>
+                                                <div class="col-sm-3">                                                    
+                                                </div>
+                                                <div class="col-sm">
+                                                  <h6 class="mb-0 text-xs"><%=Player.find(match.playerTwo).name.titleize%></h6>
+                                                </div>                                                  
+                                              </div>
+                                              <div class="card-body pt-2-versus-<%=round+1%>-m-<%=index+1%>-t1">
+                                                <h6 class="text-sm text-center">VS</h6>
+                                              </div>
+
+
+                                              <!-- TEAM 2  - CARD N - TAB N -->
+                                              <div class="row" id="row-crd-rnd-<%=round+1%>-<%=index+1%>-t2">
+                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerThree%>-t2">
+                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                </div>
+                                                <div class="col-sm">
+                                                  <div class="progress-wrapper">
+                                                    <div class="progress-info">
+                                                      <div class="progress-percentage">
+                                                        <span class="text-sm font-weight-bold"><h6 class="text-sm text-center">Team 2</h6></span>
+                                                      </div>
+                                                    </div>
+                                                    <div class="progress">
+                                                      <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerFour%>-t2">
+                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                </div>
+                                              </div>
+
+                                              <div class="row" id="row-crd-names-<%=round+1%>-m-<%=match.playerThree%>-t2">
+                                                  <div class="col-sm">                                          
+                                                    <h6 class="mb-0 text-xs"><%=Player.find(match.playerThree).name.titleize%></h6>
+                                                  </div>
+                                                  <div class="col-sm-3">                                                    
+                                                  </div>
+                                                  <div class="col-sm">
+                                                    <h6 class="mb-0 text-xs"><%=Player.find(match.playerFour).name.titleize%></h6>
+                                                  </div>                                                  
+                                              </div>
+                                              <div class="card-body pt-2" id="cb-space-final-<%=round+1%>-<%=index+1%>-t2">
+                                              </div>
+
+                                              <!-- RESULTS-->
+                                              <div class="row">
+                                                <div class="col-sm text-center">                                          
+                                                  <h5>Results</h6>
+                                                </div>                                                                                  
+                                              </div>
+
+                                              <div class="row">
+                                                <div class="col-sm">
+                                                  <p class="h5 text-start"> Team 1:</p>
+                                                </div>
+                                                <div class="col-sm">
+                                                  <% case match.match_result %>
+                                                    <%when 0%>
+                                                      <button class="btn btn-info"><strong><%=match.pointsOne%> points </strong></button>
+                                                    <%when 1%>
+                                                      <button class="btn btn-success"><strong><%=match.pointsOne%> points </strong></button>
+                                                    <%when 2%>
+                                                      <button class="btn btn-danger"><strong><%=match.pointsOne%> points </strong></button>
+                                                    <%when -1%>
+                                                      <button class="btn btn-secondary"><strong> - </strong></button>
+                                                  <%end%>
+                                                    
+                                                </div>                                                
+                                                
+                                                
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-sm">
+                                                  <p class="h5 text-start"> Team 2:</p>
+                                                </div>
+                                                <div class="col-sm">
+                                                  <% case match.match_result %>
+                                                    <%when 0%>
+                                                      <button class="btn btn-info"><strong><%=match.pointsThree%> points </strong></button>
+                                                    <%when 1%>
+                                                      <button class="btn btn-danger"><strong><%=match.pointsThree%> points </strong></button>
+                                                    <%when 2%>
+                                                      <button class="btn btn-success"><strong><%=match.pointsThree%> points </strong></button>
+                                                    <%when -1%>
+                                                      <button class="btn btn-secondary"><strong> - </strong></button>
+                                                  <%end%>
+                                                </div>
+                                              </div>
+
+                                              <div class="row">                                        
+                                                <div class="col-sm text-center">
+                                                  <%= link_to "Edit Results", edit_match_path(match), class: "btn btn-lg btn-primary" %>
+                                                </div>
+                                              </div>
+
+
+
+
+
+
+
+
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        
+
+
+
+
+
+
+
+                                      <%if (index%2)==0 && (index>0) %>
+                                        </div>
+                                      <%end%>
+
+                                      
+                                      
+
+                                      
+                                      
+                                      
+                                    
+                                  <%end%>
+                                </div>
+                                
+                              </div>
+                            </div>
+                            
+                            
+
+
+                          <%end%>
+
+
+
+
+                                
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+  </div>
+
+
