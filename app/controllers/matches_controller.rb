@@ -1,9 +1,8 @@
 class MatchesController < ApplicationController
-  before_action :set_match, only: %i[ show edit update destroy ]
+  before_action :set_match, only: %i[ show edit update ]
 
   # GET /matches or /matches.json
   def index
-    #@matches = Match.all
     @event = Event.find(params[:id])
     @matches = @event.matches
   end
@@ -50,12 +49,29 @@ class MatchesController < ApplicationController
   end
 
   # DELETE /matches/1 or /matches/1.json
-  def destroy
-    @match.destroy
+  def destroy    
+    #logger.debug "------------------------------------------"
+    #logger.debug "this are the params #{params}"
+    Match.where(event_id: params[:event_id], round: params[:round]).destroy_all
 
     respond_to do |format|
-      format.html { redirect_to matches_url, notice: "Match was successfully destroyed." }
+      format.html { redirect_to event_matches_url(params[:event_id]), notice: "Round #{params[:round]} was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # PATCH/PUT /matches/1 or /matches/1.json
+  def create_round_of_matches
+    #Calls to the create_round_of_matches event over the event and then returns to rounds of the event
+    @event = Event.find(params[:event_id])
+    respond_to do |format|
+      if @event.create_round_of_matches
+        format.html { redirect_to event_matches_url(params[:event_id]), notice: "Round created successfully!" }
+        format.json { render :show, status: :ok, location: @event }
+      else
+        format.html { redirect_to event_matches_url(params[:event_id]), notice: "An error ocurred during the round creation!" }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
     end
   end
 
