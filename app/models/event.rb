@@ -64,11 +64,11 @@ class Event < ApplicationRecord
         # Create a set of matches per round depending on the total players for the event (event.people)
         # Example: People = 12. Ergo we need 3 matches (each match 4 different person) per round
         # So this method will generate 3 matches each 4 different person.
-        
+        result = false
         event = Event.find(self.id)
         #We create the round robbin
         rounds = round_robin
-        puts "The max num of round is -> #{rounds.size}"
+        #puts "The max num of round is -> #{rounds.size}"
         #Find which round goes?
         num_round=get_num_rounds 
         #rounds_created=Match.select("round").group("round")
@@ -92,13 +92,13 @@ class Event < ApplicationRecord
         (0..len).each.with_index{|p, i|    
 
             if i.even?
-                puts "#{i} - We are in the EVEN pair of id players"
-                puts "New 'match' instance"
+                #puts "#{i} - We are in the EVEN pair of id players"
+                #puts "New 'match' instance"
                 
                 # [7, 1]
                 # [P1, P2]
-                puts "Asignation to match.playerOne with -----> #{round_to_create[p][0]}"
-                puts "Asignation to match.playerTwo with -----> #{round_to_create[p][1]}"
+                #puts "Asignation to match.playerOne with -----> #{round_to_create[p][0]}"
+                #puts "Asignation to match.playerTwo with -----> #{round_to_create[p][1]}"
                 playerOne = round_to_create[p][0]
                 playerTwo = round_to_create[p][1]
                 puts "[ #{playerOne}, #{playerTwo} ]"
@@ -107,9 +107,9 @@ class Event < ApplicationRecord
             
             if i.odd?
                 #entonces guardamos match
-                puts "#{i} - We are now in the ODD pair of id players"
-                puts "Asignation to match.playerThree with -----> #{round_to_create[p][0]}"
-                puts "Asignation to match.playerFour with -----> #{round_to_create[p][1]}"
+                #puts "#{i} - We are now in the ODD pair of id players"
+                #puts "Asignation to match.playerThree with -----> #{round_to_create[p][0]}"
+                #puts "Asignation to match.playerFour with -----> #{round_to_create[p][1]}"
                 playerThree = round_to_create[p][0]
                 playerFour = round_to_create[p][1]
                 puts "[ #{playerThree}, #{playerFour} ]"
@@ -118,12 +118,13 @@ class Event < ApplicationRecord
                 #Clear the players
                 playerOne, playerTwo, playerThree, playerFour = 0
                 #puts "And save match ---> #{saved}, In this point there is no 'match' instance!"
-                puts "And save match, In this point there is no 'match' instance!"
-                puts ""
+                #puts "And save match, In this point there is no 'match' instance!"
+                #puts ""
             end
         }
-        
-        return "Round number #{num_round+1} of matches created ---> #{round_to_create}"
+        #puts "Round number #{num_round+1} of matches created ---> #{round_to_create}"
+        result = true if get_num_rounds > num_round
+        return result
     end
     
     
