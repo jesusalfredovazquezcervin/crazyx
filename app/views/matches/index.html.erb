@@ -9,7 +9,7 @@
                 <div class="d-flex align-items-center">
                   <p class="h4">Event:&nbsp;</p>
                   <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]</p>
-                  <%= link_to "Create new round", new_match_player_path(@event), class: "btn btn-primary btn-sm ms-auto" %>
+                  <%= link_to "Create new round", create_round_of_matches_path(@event), class: "btn btn-primary btn-sm ms-auto" %>
                 </div>
                 <div class="d-flex align-items-center">
                   <p class="h4">Date:&nbsp;</p>
@@ -36,40 +36,38 @@
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                           <!-- We loop throughout the number of generated rounds-->
-                          <%  @event.get_num_rounds.times do |r| %>
-                              <li class="<%= r == 0 ? ("active"):("") %>">
+                          <%  @event.matches.select("round").group("round").sort_by{|m| m.round}.collect{|m| m.round}.each_with_index do |r, i| %>
+                              <li class="<%= i == 0 ? ("active"):("") %>">
                               <li class="nav-item" role = "presentation">
-                              <button class="nav-link <%= r == 0 ? ("active"):("") %>" id="tab-<%=r+1%>" data-bs-toggle="tab" data-bs-target="#tab-<%=r+1%>-pane" type="button" role="tab" aria-controls="tab-<%=r+1%>-pane" aria-selected="true">Round <%=r+1%></button>
+                              <button class="nav-link <%= i == 0 ? ("active"):("") %>" id="tab-<%=r%>" data-bs-toggle="tab" data-bs-target="#tab-<%=r%>-pane" type="button" role="tab" aria-controls="tab-<%=r%>-pane" aria-selected="true">Round <%=r%></button>
                           <%end%>
                         </ul>
                         <div class="d-flex px-2 py-1"></div>
                         <div class="tab-content" id="myTabContent">
-                          <%  @event.get_num_rounds.times do |round| %>
-                            <div class="tab-pane fade <%= round == 0 ? ("show active"):("") %> " id="tab-<%=round+1%>-pane" role="tabpanel" aria-labelledby="tab-<%=round+1%>" tabindex="0">
-                              <div class="panel-body" id= "pn-tab-<%=round+1%>">
+                          <%  @event.matches.select("round").group("round").sort_by{|m| m.round}.collect{|m| m.round}.each_with_index do |round, i| %>                            
+                            <div class="tab-pane fade <%= i == 0 ? ("show active"):("") %> " id="tab-<%=round%>-pane" role="tabpanel" aria-labelledby="tab-<%=round%>" tabindex="0">
+                              <div class="panel-body" id= "pn-tab-<%=round%>">
+                                <div class="card-header pb-0">
+                                  <div class="d-flex align-items-center">
+                                    <%= link_to "Delete round #{round}", matches_destroy_round_path(@event.id, round), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger btn-sm ms-auto" %>
+                                  </div>
+                                </div>
 
-                                <div class="container" id="container-pb-<%=round+1%>">
-                                  <%  @event.matches.where(round: round + 1 ).each_with_index do |match, index| %>
+                                <div class="container" id="container-pb-<%=round%>">
+                                  <%  @event.matches.where(round: round).each_with_index do |match, index| %>
                                     
                                       <%if (index%3) == 0 %>
                                         <div class="row">
-                                      <%end%>
-                                        
-
-
-
-
-
-
-                                        <div class="col-sm" id="card-1-tab-<%=round+1%>-m<%=index+1%>">
-                                        <div class="card" id="crd-1-tab-<%=round+1%>-m<%=index+1%>">
-                                          <div class="card-body pt-2" id="cb-card-1-tab-<%=round+1%>-m<%=index+1%>">
-                                            <div class="container" id="contaiiner-cb-card-1-tab-<%=round+1%>-m<%=index+1%>">
-                                              <div class="card-body pt-2" id="cb-space-card-1-tab-<%=round+1%>-m<%=index+1%>">
+                                      <%end%>                                        
+                                        <div class="col-sm" id="card-1-tab-<%=round%>-m<%=index%>">
+                                        <div class="card" id="crd-1-tab-<%=round%>-m<%=index%>">
+                                          <div class="card-body pt-2" id="cb-card-1-tab-<%=round%>-m<%=index%>">
+                                            <div class="container" id="contaiiner-cb-card-1-tab-<%=round%>-m<%=index%>">
+                                              <div class="card-body pt-2" id="cb-space-card-1-tab-<%=round%>-m<%=index%>">
                                               </div>
                                               <!-- TEAM 1  - CARD N - TAB N -->
-                                              <div class="row" id="row-crd-rnd-<%=round+1%>-<%=index+1%>-t1">
-                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerOne%>-t1">
+                                              <div class="row" id="row-crd-rnd-<%=round%>-<%=index%>-t1">
+                                                <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerOne%>-t1">
                                                   <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
                                                 </div>
                                                 <div class="col-sm">
@@ -84,13 +82,13 @@
                                                     </div>
                                                   </div>
                                                 </div>
-                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerTwo%>-t1">
+                                                <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerTwo%>-t1">
                                                   <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
                                                 </div>
                                               </div>
-                                              <div class="row" id="row-crd-names-<%=round+1%>-m-<%=match.playerOne%>-t1">
+                                              <div class="row" id="row-crd-names-<%=round%>-m-<%=match.playerOne%>-t1">
                                                 <div class="col-sm">                                          
-                                                  <h6 class="mb-0 text-xs"><%=Player.find(match.playerOne).name.titleize%></h6>
+                                                  <h6 class="mb-0 text-xs"><%= Player.find(match.playerOne).name.titleize%></h6>
                                                 </div>
                                                 <div class="col-sm-3">                                                    
                                                 </div>
@@ -98,14 +96,14 @@
                                                   <h6 class="mb-0 text-xs"><%=Player.find(match.playerTwo).name.titleize%></h6>
                                                 </div>                                                  
                                               </div>
-                                              <div class="card-body pt-2-versus-<%=round+1%>-m-<%=index+1%>-t1">
+                                              <div class="card-body pt-2-versus-<%=round%>-m-<%=index%>-t1">
                                                 <h6 class="text-sm text-center">VS</h6>
                                               </div>
 
 
                                               <!-- TEAM 2  - CARD N - TAB N -->
-                                              <div class="row" id="row-crd-rnd-<%=round+1%>-<%=index+1%>-t2">
-                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerThree%>-t2">
+                                              <div class="row" id="row-crd-rnd-<%=round%>-<%=index%>-t2">
+                                                <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerThree%>-t2">
                                                   <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
                                                 </div>
                                                 <div class="col-sm">
@@ -120,12 +118,12 @@
                                                     </div>
                                                   </div>
                                                 </div>
-                                                <div class="col-sm" id="div-pic-r-<%=round+1%>player-<%=match.playerFour%>-t2">
+                                                <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerFour%>-t2">
                                                   <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
                                                 </div>
                                               </div>
 
-                                              <div class="row" id="row-crd-names-<%=round+1%>-m-<%=match.playerThree%>-t2">
+                                              <div class="row" id="row-crd-names-<%=round%>-m-<%=match.playerThree%>-t2">
                                                   <div class="col-sm">                                          
                                                     <h6 class="mb-0 text-xs"><%=Player.find(match.playerThree).name.titleize%></h6>
                                                   </div>
@@ -135,7 +133,7 @@
                                                     <h6 class="mb-0 text-xs"><%=Player.find(match.playerFour).name.titleize%></h6>
                                                   </div>                                                  
                                               </div>
-                                              <div class="card-body pt-2" id="cb-space-final-<%=round+1%>-<%=index+1%>-t2">
+                                              <div class="card-body pt-2" id="cb-space-final-<%=round%>-<%=index%>-t2">
                                               </div>
 
                                               <!-- RESULTS-->
