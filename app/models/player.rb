@@ -9,7 +9,7 @@ class Player < ApplicationRecord
 
     def updateTotalScore 
         #Compute all the gainned points and update the totalScore field
-        total_score = Score.where(player_id: self.id).collect{|score| score.points }.sum
+        total_score = Score.where(player_id: self.id).sum(:points)#Score.where(player_id: self.id).collect{|score| score.points }.sum
         self.totalScore = total_score
         self.save!
     end
@@ -75,9 +75,37 @@ class Player < ApplicationRecord
         #puts "The rank for the player id -> #{self.id} is -> #{rank}"
         return rank
     end
-    def wonMatches 
-        #return the number of won matches
-        return 3
+    def won_lost_draw_matches 
+        #return a dictionary with the total number of won|lost|tied matches
+
+        won_lost_draw = {won: 0, lost: 0, tied: 0}
+        
+        #We count the matches result whe the player is PlayerOne or Two
+        matches = Match.where(playerOne: self.id).or(Match.where(playerTwo: self.id))
+        matches.each{|m|
+            if m.pointsOne == m.pointsThree
+                won_lost_draw[:tied] = won_lost_draw[:tied] + 1
+            elsif m.pointsOne > m.pointsThree
+                won_lost_draw[:won] = won_lost_draw[:won] + 1
+            elsif m.pointsOne < m.pointsThree
+                won_lost_draw[:lost] = won_lost_draw[:lost] + 1
+            end
+        }
+
+        #We count the matches result whe the player is PlayerThree or Four
+        matches = Match.where(playerThree: self.id).or(Match.where(playerFour: self.id))
+        matches.each{|m|
+            if m.pointsOne == m.pointsThree
+                won_lost_draw[:tied] = won_lost_draw[:tied] + 1
+            elsif m.pointsThree > m.pointsOne
+                won_lost_draw[:won] = won_lost_draw[:won] +1 
+            elsif m.pointsThree < m.pointsOne
+                won_lost_draw[:lost] = won_lost_draw[:lost] + 1
+            end
+        }
+
+
+        return won_lost_draw
     end
     def lostMatches 
         #return the number of lost matches
@@ -85,17 +113,18 @@ class Player < ApplicationRecord
     end
     def winRatio 
         #returns the win ratio
+        won_lost_draw_matches = self.won_lost_draw_matches
         ratio = 0.0
         player = Player.find(self.id)
-        lost = player.lostMatches.to_f
-        won = player.wonMatches.to_f
+        lost = player.won_lost_draw_matches[:lost].to_f
+        won = player.won_lost_draw_matches[:won].to_f
         
         if lost == 0 && won == 0
             return 0
         elsif lost == 0 && won > 0
             return 1
         else            
-            ratio = won/lost
+            ratio = lost/won
             return ratio * 100
         end 
     end
