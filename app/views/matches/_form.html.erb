@@ -1,62 +1,69 @@
-<%= form_with(model: match) do |form| %>
-  <% if match.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
 
-      <ul>
-        <% match.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <!-- Modal -->    
+              <div class="card card-plain">
+                <div class="card-header pb-0 text-right">
+                    <h3 class="font-weight-bolder text-primary text-gradient">Match results (Editing for Round 1 - Match 1)</h3>
+                    <p class="mb-0">Capture the results of the match</p>
+                </div>
+                <div class="card-body pb-3">
+                  <%= form_with(model: match) do |f| %>
+                    <% if match.errors.any? %>
+                      <div style="color: red">
+                        <h2><%= pluralize(match.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+                        <ul>
+                          <% match.errors.each do |error| %>
+                            <li><%= error.full_message %></li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    <% end %>
+                                        
+                    <div class="d-flex px-2 py-1">
+                      <div class="col-sm">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Team 1</h6>                          
+                        </div>
+                      </div>
+                      <div class="col-sm">
+                        <div class="d-flex flex-column justify-content-center">                          
+                          <p class="text-xs text-secondary mb-0"><%=Player.find(match.playerOne).name.titleize%></p>
+                          <p class="text-xs text-secondary mb-0"><%=Player.find(match.playerTwo).name.titleize%></p>
+                        </div>
+                      </div>                      
+                    </div>
+                    <div class="input-group mb-3">
+                      <%= f.number_field :pointsOne, class: "form-control", max: 6, min: 0 %>
+                    </div>
+                    <div class="d-flex px-2 py-1">
+                      <div class="col-sm">
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="mb-0 text-sm">Team 1</h6>                          
+                        </div>
+                      </div>
+                      <div class="col-sm">
+                        <div class="d-flex flex-column justify-content-center">                          
+                          <p class="text-xs text-secondary mb-0"><%=Player.find(match.playerThree).name.titleize%></p>
+                          <p class="text-xs text-secondary mb-0"><%=Player.find(match.playerFour).name.titleize%></p>
+                        </div>
+                      </div>                      
+                    </div>
+                    <div class="input-group mb-3">
+                      <%= f.number_field :pointsThree, class: "form-control", max: 6, min: 0 %>
+                    </div>
+
+                    <%= button_tag(type: 'submit', class:"btn bg-gradient-primary btn-lg btn-rounded w-100 mt-4 mb-0") do %>
+                        <i class="fa fa-database"></i> Save Results
+                    <% end %>
+                  <% end %>
+
+                  
+                </div>                
+                <div class="modal-footer">
+                  <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>        
+                </div>
+              </div>
+            
+      
     </div>
-  <% end %>
-
-  <div>
-    <%= form.label :event_id, style: "display: block" %>
-    <%= form.text_field :event_id %>
-  </div>
-
-  <div>
-    <%= form.label :playerOne, style: "display: block" %>
-    <%= form.number_field :playerOne %>
-  </div>
-
-  <div>
-    <%= form.label :pointsOne, style: "display: block" %>
-    <%= form.number_field :pointsOne %>
-  </div>
-
-  <div>
-    <%= form.label :playerTwo, style: "display: block" %>
-    <%= form.number_field :playerTwo %>
-  </div>
-
-  <div>
-    <%= form.label :pointsTwo, style: "display: block" %>
-    <%= form.number_field :pointsTwo %>
-  </div>
-
-  <div>
-    <%= form.label :playerThree, style: "display: block" %>
-    <%= form.number_field :playerThree %>
-  </div>
-
-  <div>
-    <%= form.label :pointsThree, style: "display: block" %>
-    <%= form.number_field :pointsThree %>
-  </div>
-
-  <div>
-    <%= form.label :playerFour, style: "display: block" %>
-    <%= form.number_field :playerFour %>
-  </div>
-
-  <div>
-    <%= form.label :pointsFour, style: "display: block" %>
-    <%= form.number_field :pointsFour %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+  

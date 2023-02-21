@@ -1,10 +1,5 @@
-<h1>Editing match</h1>
+<%= render "remote_modal", title: "" do %>
 
-<%= render "form", match: @match %>
+  <%= render "form", match: @match %>
 
-<br>
-
-<div>
-  <%= link_to "Show this match", @match %> |
-  <%= link_to "Back to matches", matches_path %>
-</div>
+<% end %>
