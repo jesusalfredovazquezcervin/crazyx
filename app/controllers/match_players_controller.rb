@@ -37,9 +37,9 @@ class MatchPlayersController < ApplicationController
     respond_to do |format|      
       if !mp.errors.messages.any?      
         mp.setStatus
-        logger.debug "----------------- The status of the player is ----> #{mp.status}"
+        #logger.debug "----------------- The status of the player is ----> #{mp.status}"
         mp.save!
-        logger.debug "-----------The id of the player saved is ---------------> #{mp.id}"
+        #logger.debug "-----------The id of the player saved is ---------------> #{mp.id}"
         format.html { redirect_to match_player_url(mp), notice: "You have joined succesfully to the event"}
         format.json { render :show, status: :created, location: @match_player }
       else
