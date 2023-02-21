@@ -37,13 +37,16 @@ class MatchesController < ApplicationController
 
   # PATCH/PUT /matches/1 or /matches/1.json
   def update
+    params[:match][:pointsTwo]= params[:match][:pointsOne]
+    params[:match][:pointsFour]= params[:match][:pointsThree]    
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to match_url(@match), notice: "Match was successfully updated." }
+        format.html { redirect_to event_matches_url(@match.event_id), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @match.errors, status: :unprocessable_entity }
+        format.turbo_stream { render :form_update, status: :unprocessable_entity }
       end
     end
   end
