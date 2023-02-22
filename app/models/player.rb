@@ -78,7 +78,7 @@ class Player < ApplicationRecord
     def won_lost_draw_matches 
         #return a dictionary with the total number of won|lost|tied matches
 
-        won_lost_draw = {won: 0, lost: 0, tied: 0}
+        won_lost_draw = {total: 0, won: 0, lost: 0, tied: 0}
         
         #We count the matches result whe the player is PlayerOne or Two
         matches = Match.where(playerOne: self.id).or(Match.where(playerTwo: self.id))
@@ -103,6 +103,7 @@ class Player < ApplicationRecord
                 won_lost_draw[:lost] = won_lost_draw[:lost] + 1
             end
         }
+        won_lost_draw[:total] = won_lost_draw[:tied] + won_lost_draw[:won] + won_lost_draw[:lost]
 
 
         return won_lost_draw
@@ -111,7 +112,7 @@ class Player < ApplicationRecord
         #return the number of lost matches
         return 5
     end
-    def winRatio 
+    def winRate 
         #returns the win ratio
         won_lost_draw_matches = self.won_lost_draw_matches
         ratio = 0.0
@@ -124,8 +125,8 @@ class Player < ApplicationRecord
         elsif lost == 0 && won > 0
             return 1
         else            
-            ratio = lost/won
-            return ratio * 100
+            rate = won/won_lost_draw_matches[:total].to_f
+            return rate * 100
         end 
     end
 end
