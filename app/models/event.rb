@@ -4,6 +4,7 @@ class Event < ApplicationRecord
     attribute :status, :string, default: 'Open'
     has_many :match_player
     has_many :matches
+    has_many :score
 
     
     def getPlayersPoints
@@ -157,5 +158,5 @@ class Event < ApplicationRecord
             num_round = rounds_created.sort_by{|m| m.round}.last.round     
         end
         return num_round
-    end
+    end    
 end
