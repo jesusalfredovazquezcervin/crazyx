@@ -125,9 +125,12 @@
                                               </div>
                                               <div class="d-flex flex-column justify-content-center">
                                                   <p class="text-s text-secondary mb-0">
-                                                    <%=i.ordinalize%></span> - <%=score.player.name.titleize%>
+                                                    
                                                     <%if i==1%>
+                                                      <strong><%=i.ordinalize%> - <%=score.player.name.titleize%></strong>
                                                       <i class="fa fa-trophy cursor-pointer"></i>
+                                                    <%else%>
+                                                    <%=i.ordinalize%> - <%=score.player.name.titleize%>
                                                     <%end%>
                                                   </p>                                                  
                                                   <p class="text-xs text-secondary mb-0">
@@ -164,6 +167,8 @@
         
         <%= yield %>
         <%= turbo_frame_tag "remote_modal", target: "_top" %>
+        <%= turbo_frame_tag "validation_codes_modal", target: "_top" %>
+        
         <%= render "layouts/footer"%>
       </div>
     </main>
