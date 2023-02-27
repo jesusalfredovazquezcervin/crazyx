@@ -1,7 +1,7 @@
 class Match < ApplicationRecord
   belongs_to :event
   after_save :save_score_four_players
-
+  after_destroy :save_score_four_players
   def match_result
     #returns if the match is: {even(0) Team1(1) Team2(2)} Team 
     #Team 1.- PlayerOne|PlayerTwo Team 2.- PlayerThree|PlayerFour
