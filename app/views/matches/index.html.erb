@@ -67,6 +67,7 @@
                                               </div>
                                               <!-- TEAM 1  - CARD N - TAB N -->
                                               <div class="row" id="row-crd-rnd-<%=round%>-<%=index%>-t1">
+                                              <p class = "h7 text-center" >Match: &nbsp; <%=match.id%></p> 
                                                 <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerOne%>-t1">
                                                   <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
                                                 </div>
@@ -193,9 +194,13 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <%if (index%2)==0 && (index>0) %>
+                                      <%if (@event.matches.where(round: round).count - 1) == index%>
                                         </div>
-                                      <%end%>                                    
+                                        <div class="d-flex px-2 py-1"></div>                                        
+                                      <%elsif (index%2)==0 && (index>0) %>
+                                        </div>
+                                        <div class="d-flex px-2 py-1"></div>
+                                      <%end%>
                                   <%end%>
                                 </div>                                
                               </div>
