@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="container" id="container-pb-<%=round%>">
-                                  <%  @event.matches.where(round: round).each_with_index do |match, index| %>
+                                  <%  @event.matches.where(round: round).sort_by{|m| m.id}.each_with_index do |match, index| %>
                                     
                                       <%if (index%3) == 0 %>
                                         <div class="row">
