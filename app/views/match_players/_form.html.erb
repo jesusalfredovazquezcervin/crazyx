@@ -55,7 +55,7 @@
                   <% end %>
                 </div>
                 <p class="text-sm mt-3 mb-0">Your cellphone does not appear?
-                <%= link_to "Register here", new_player_path,  class: "text-s text-primary mb-0" %>
+                <%= link_to "Register here", new_player_path,  class: "text-info text-gradient font-weight-bold" %>
                  </p>
               <%end%>
             </div>
@@ -126,8 +126,8 @@
                         </div>
                       </div>
                     </td>                                          
-                    <td>
-                      <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#modal-form">Quit</button>                    
+                    <td>                      
+                      <%= link_to "Quit", edit_match_player_path(mp.id), class: "btn btn-link btn-sm", data: { turbo_frame: "validation_code_modal" }%>
                     </td>
                   </tr>
                 <%end%>
@@ -142,50 +142,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-<!-- Modal Quit PLayer Form -->
-
-
-  
-  
-<div class="col-md-4">
-  <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-      <div class="modal-content">
-        <div class="modal-body p-0">
-          <div class="card card-plain">
-            <div class="card-header pb-0 text-left">
-              <h3 class="font-weight-bolder text-danger text-gradient">Quit Event</h3>
-              <p class="mb-0"> Alfredo, we've sent you a verification code to the cellphone end with ***7380</p>
-            </div>
-            <div class="card-body">
-              <form role="form text-left">
-                <label>Verification code</label>
-                <div class="input-group mb-3">
-                  <input type="email" class="form-control" placeholder="Enter the verification code" aria-label="Email" aria-describedby="email-addon">
-                </div>                
-                <div class="text-center">
-                  <button type="button" class="btn btn-round bg-gradient-danger btn-lg w-100 mt-4 mb-0">Confirm Quit</button>
-                </div>
-              </form>
-            </div>
-            <div class="card-footer text-center pt-0 px-lg-2 px-1">
-              <p class="mb-4 text-sm mx-auto">
-                Did'nt receive a code?
-                <a href="javascript:;" class="text-info text-gradient font-weight-bold">Resend new code</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <script type="text/javascript">
   // In your Javascript (external .js resource or <script> tag)
   $(document).ready(function() {
