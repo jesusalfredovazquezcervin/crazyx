@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_15_163624) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_28_205729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,6 +25,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_163624) do
     t.bigint "player_id"
     t.time "timeIni"
     t.time "timeEnd"
+    t.boolean "mixed"
+    t.string "level"
     t.index ["player_id"], name: "index_events_on_player_id"
   end
 
@@ -52,6 +54,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_163624) do
     t.datetime "updated_at", null: false
     t.integer "round"
     t.index ["event_id"], name: "index_matches_on_event_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "number"
+    t.string "body"
+    t.string "error"
+    t.string "action"
+    t.string "controller"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "players", force: :cascade do |t|
@@ -82,6 +94,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_163624) do
     t.bigint "player_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "event_id", null: false
+    t.index ["event_id"], name: "index_verification_codes_on_event_id"
     t.index ["player_id"], name: "index_verification_codes_on_player_id"
   end
 
@@ -91,5 +105,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_15_163624) do
   add_foreign_key "matches", "events"
   add_foreign_key "scores", "events"
   add_foreign_key "scores", "players"
+  add_foreign_key "verification_codes", "events"
   add_foreign_key "verification_codes", "players"
 end
