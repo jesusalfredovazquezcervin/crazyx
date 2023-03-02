@@ -30,7 +30,7 @@
               </ul>              
             </div>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Enrolled players</button>
+            <button type="button" class="btn btn-link bg-gradient font-bold" data-bs-toggle="modal" data-bs-target="#exampleModal">Enrolled players</button>
             <div class="card-body">
               <%= form_with(model: match_player) do |f| %>
                 <% if match_player.errors.any? %>
@@ -51,7 +51,7 @@
                   <%= f.select :player_id, options_for_select(Player.order(:name).collect { |player|
                                                                    [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control m-b",  required: true} %>
                   <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
-                        <i class="fa fa-database"></i> Join event
+                        <i class="fa fa-check"></i> Join event
                   <% end %>
                 </div>
                 <p class="text-sm mt-3 mb-0">Your cellphone does not appear?
@@ -127,7 +127,9 @@
                       </div>
                     </td>                                          
                     <td>                      
-                      <%= link_to "Quit", edit_match_player_path(mp.id), class: "btn btn-link btn-sm", data: { turbo_frame: "validation_code_modal" }%>
+                      <%= link_to(edit_match_player_path(mp.id), class: "text-sm text-danger text-gradient text-bold", data: { turbo_frame: "validation_code_modal" }) do %>
+                        Quit&nbsp;&nbsp;<i class="fa fa-sign-out"></i>
+                      <%end%>
                     </td>
                   </tr>
                 <%end%>
@@ -137,7 +139,11 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>        
+        <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">
+           <i class="fa fa-times"></i>&nbsp; Close
+        </button>        
+        
+        
       </div>
     </div>
   </div>

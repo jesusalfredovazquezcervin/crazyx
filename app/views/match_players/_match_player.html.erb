@@ -43,8 +43,23 @@
                 </li>
                 
               </ul>
-              <div class="ms-auto text-end">
-                    <%= link_to "Quit this event", @match_player, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-danger btn-sm" %>
+              <div class= "row">
+                <div class="col-sm">
+                  <p class="mb-2 text-sm">
+                      <%= link_to(new_match_player_path(@match_player.event), class: "btn bg-gradient-primary") do %>
+                        <i class="fa fa-plus-square"></i> Enroll player
+                      <% end %>
+                  </p>  
+                </div>
+                <div class="col-sm">
+                  <p class="mb-2 text-sm text-end">
+                    <%= link_to( @match_player, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn bg-gradient-danger") do %>
+                      <i class="fa fa-sign-out"></i> Confirm Quit                    
+                    <% end %>   
+                  </p>
+                </div>
+                
+                
               </div>
             </div>            
           </div>

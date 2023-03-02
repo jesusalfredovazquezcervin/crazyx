@@ -3,7 +3,9 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div >                    
-                    <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>
+                    <%= link_to(events_path, class:"btn bg-gradient-primary") do%>
+                        <i class="fa fa-list-ol"></i>&nbsp;&nbsp;Event list
+                    <%end%>
                 </div>
             </div>
             <%= form_with(model: event) do |f| %>
@@ -70,8 +72,8 @@
                   <hr class="horizontal dark">
                   <div class="form-group">
                     <div class="col-sm-4 col-sm-offset-2">                      
-                      <%= button_tag(type: 'submit', class: "btn btn-success btn-sm ms-auto") do %>
-                        <i class="fa fa-database"></i> Save
+                      <%= button_tag(type: 'submit', class: "btn bg-gradient-success ms-auto") do %>
+                        Save&nbsp;&nbsp;<i class="fa fa-database"></i>
                       <% end %>
                     </div>
                   </div>

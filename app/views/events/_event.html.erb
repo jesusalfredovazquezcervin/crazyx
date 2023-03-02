@@ -3,8 +3,10 @@
       <div class="col-md-8">
           <div class="card">
               <div class="card-header pb-0">
-                  <div >                    
-                      <%= link_to "Event list", events_path, class: "btn btn-primary btn-sm ms-auto" %>
+                  <div >                                          
+                    <%= link_to(events_path, class:"btn bg-gradient-primary ms-auto") do%>
+                        <i class="fa fa-list-ol"></i>&nbsp;&nbsp;Event list
+                    <%end%>
                   </div>
               </div>
               
@@ -55,11 +57,17 @@
                 </div>
                 <div class="card-header pb-3">                        
                     <div class="row">
-                        <div class="col-md-2">
-                            <%= link_to "Edit", edit_event_path(event),  class: "class: btn btn-secondary btn-sm ms-auto" %>
+                        <div class="col-md-3">
+                            <%= link_to(edit_event_path(event), class:"btn bg-gradient-secondary ms-auto") do%>
+                                Edit&nbsp;&nbsp;<i class="fa fa-edit"></i>
+                            <%end%>
+                            
                         </div>
-                        <div class="col-md-2">
-                            <%= button_to 'Delete', event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "class: btn btn-warning btn-sm ms-auto" %>
+                        <div class="col-md-3">
+                            
+                            <%= button_to(event, method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } }, class: "btn bg-gradient-danger") do %>
+                                Delete&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                            <%end%>
                         </div>
                         
                     </div>                        
@@ -80,8 +88,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
-                        <label class="form-control-label" for="basic-url">Add a player</label>
-                        <%= link_to "Add player", new_match_player_path(event), class: "btn btn-success mb-0" %>
+                    <label class="form-control-label" for="basic-url">Add player</label>
+                        <%= link_to(new_match_player_path(event), class:"btn bg-gradient-success ms-auto") do%>
+                            <i class="fa fa-plus-square"></i>&nbsp;&nbsp;Player
+                        <%end%>
                         
                     </div>
                 </div>
@@ -95,7 +105,9 @@
                         <label class="form-control-label" for="basic-url">Your event URL</label>
                         <div class="input-group">
                         <span class="input-group-text" id="basic-addon3"> <%= new_match_player_url(event, :only_path => false) %></span>                    
-                        <button class="btn btn-info mb-0" type="button" id="button-addon2">Share event</button>
+                        <button class="btn btn-info mb-0" type="button" id="button-addon2">
+                            Share&nbsp;&nbsp;<i class="fa fa-share-alt"></i>
+                        </button>
                         </div>
                     </div>
                 </div>

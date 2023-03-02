@@ -34,7 +34,9 @@
         <div class="card-header pb-0">
           <div class="d-flex align-items-center">
             <p class="mb-0">Player Profile and Stats</p>
-            <%= link_to "Edit this player", edit_player_path(@player), class: "btn btn-primary btn-sm ms-auto" %>
+            <%= link_to(edit_player_path(@player), class:"btn bg-gradient-primary ms-auto") do%>
+                <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit
+            <%end%>
           </div>
         </div>
         <div class="card-body">
@@ -129,7 +131,9 @@
 
             <div class="card-header pb-0">
           <div class="d-flex align-items-center">            
-            <%= link_to "See all players", players_path, class: "btn btn-primary btn-sm ms-auto" %>       
+            <%= link_to(players_path, class:"btn bg-gradient-primary ms-auto") do%>
+                <i class="fa fa-list-ol"></i>&nbsp;&nbsp;Player list
+            <%end%>
           </div>
         </div>
           </div>      
