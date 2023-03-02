@@ -1,0 +1,3 @@
+<%= turbo_stream.update "remote_modal_body" do %>
+  <%= render "form_verification_code", {verification_code: @verification_code, match_player: @match_player} %>
+<% end %>
