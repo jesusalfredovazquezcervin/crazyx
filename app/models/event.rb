@@ -5,6 +5,7 @@ class Event < ApplicationRecord
     has_many :match_player
     has_many :matches
     has_many :score
+    has_many :verification_codes
 
     
     def getPlayersPoints
