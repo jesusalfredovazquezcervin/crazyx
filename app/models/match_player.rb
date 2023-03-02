@@ -1,5 +1,5 @@
 class MatchPlayer < ApplicationRecord
-  #This model keeps the players who are onboard for one particular event.
+  #This model keeps the players who are onboard for one particular event.  
   belongs_to :event
   belongs_to :player
   STATUS= %w[OnBoard OnHold Canceled] #Status
@@ -35,18 +35,12 @@ class MatchPlayer < ApplicationRecord
   end
 
   def send_sms_status_change
-    #This method will send an sms message to the 'OnHold' player 
-    #notifiying him that now he is a new 'OnBoard' Player.
-    # Hello John, You're now OnBoard! for the Padel event Seis Loco on  23/03/2023 at 12:00-14:00. Be on time!.
-    event = Event.find(self.event_id)
-    account_sid = 'ACc08ca94532b4f7c849560154f0269a40' 
-    auth_token = '9dfec69d0c13fcfe9bb89748c7617421' 
-    @client = Twilio::REST::Client.new(account_sid, auth_token) 
-    cellphone = "+52" << @player.cellphone #'+524461327380'
-    message = @client.messages.create(body: "Hello #{@player.name.titleize}, You are now OnBoard! for the Padel event: #{event.name} on #{event.eventDate.strftime('%d/%m/%Y')} from #{event.timeIni} to #{event.timeEnd}",  messaging_service_sid: 'MGbb8cfa4182eb40f0613808722637f813', to: cellphone) 
-    puts "-----------------------------------------------------------------------------------"
-    puts "Sending sms to: #{@player.cellphone} - #{@player.name.titleize}  - message id ->> #{message.sid}"
-    puts "-----------------------------------------------------------------------------------"
+    event = Event.find(self.event_id)    
+    message = "Hello #{@player.name.titleize}, You are now OnBoard! for the Padel event: #{event.name} on #{event.eventDate.strftime('%d/%m/%Y')} from #{event.timeIni.strftime('%H:%M')} to #{event.timeEnd.strftime('%H:%M')}"
+    sms = Message.new(number: @player.cellphone, body: message, action: "send_sms_status_change", controller: "match_player.rb")
+    result = sms.send_sms
+    sms.error = result.error_message
+    sms.save!    
   end
 
   #def addVerifiedCallerId
