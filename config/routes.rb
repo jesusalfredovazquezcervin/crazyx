@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  resources :verification_codes
   resources :scores
-  resources :match_players, except: [:new, :index]
+  resources :match_players, except: [:new, :index, :edit]
   resources :matches, except: [:index, :destroy]
   resources :events
   resources :players
@@ -12,8 +13,10 @@ Rails.application.routes.draw do
   # route for a new match-player with a specific event
   get 'match_players/new/:id', to: "match_players#new", as: 'new_match_player'
   # route to show the players for a specific event
-  get 'match_players/index/:id', to: "match_players#index", as: 'players_enrroled'
+  get 'match_players/index/:id', to: "match_players#index", as: 'players_enrolled'
   get 'matches/index/:id/', to: "matches#index", as: 'event_matches'
   delete "matches/:event_id/:round", to: "matches#destroy", as: "matches_destroy_round"
   get 'matches/create_round_of_matches/:event_id', to: "matches#create_round_of_matches", as: 'create_round_of_matches'
+  get "match_players/edit/:id/(:resend)", to: "match_players#edit", as: "edit_match_player"
+  
 end
