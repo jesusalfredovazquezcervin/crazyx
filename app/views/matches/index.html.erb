@@ -9,7 +9,9 @@
                 <div class="d-flex align-items-center">
                   <p class="h4">Event:&nbsp;</p>
                   <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]</p>
-                  <%= link_to "New round", create_round_of_matches_path(@event), class: "btn btn-primary btn-sm ms-auto" %>                  
+                  <%= link_to(create_round_of_matches_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
+                        <i class="fa fa-plus-square"></i>&nbsp;&nbsp;New round
+                  <%end%>
                 </div>
                 <div class="d-flex align-items-center">
                   <p class="h4">Date:&nbsp;</p>
@@ -49,7 +51,9 @@
                               <div class="panel-body" id= "pn-tab-<%=round%>">
                                 <div class="card-header pb-0">
                                   <div class="d-flex align-items-center">
-                                    <%= link_to "Delete Round #{round}", matches_destroy_round_path(@event.id, round), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-danger btn-sm ms-auto" %>
+                                    <%= link_to(matches_destroy_round_path(@event.id, round), data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn bg-gradient-danger ms-auto" ) do %>
+                                          <i class="fa fa-trash-o"></i>&nbsp;&nbsp;Delete Round <%=round%>
+                                    <%end%>
                                   </div>
                                 </div>
 
@@ -187,7 +191,9 @@
                                                   <!-- <%= link_to "Edit Results", edit_match_path(match), class: "btn btn-lg btn-primary" %> -->
                                                   <!-- <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalSignUp" data-information-id="<%=match.id%>">Edit results</button> -->
                                                   <!-- <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#editResultsModal" data-match-id="<%=match.id%>">Edit results</button> -->
-                                                  <%= link_to "Edit Results", edit_match_path(match), class: "btn btn-lg btn-primary", data: { turbo_frame: "remote_modal" }%>
+                                                  <%= link_to(edit_match_path(match), class: "btn bg-gradient-primary ms-auto", data: { turbo_frame: "remote_modal" }) do %>
+                                                        <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit Results
+                                                  <%end%>
                                                 </div>
                                               </div>
                                             </div>
