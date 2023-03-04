@@ -9,7 +9,10 @@
               <div class="d-flex align-items-center">
                 <p class="h4">Event:&nbsp;</p>
                 <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]</p>
-                <%= link_to "Enroll new player", new_match_player_path(@event), class: "btn btn-primary btn-sm ms-auto" %>
+                
+                <%= link_to(new_match_player_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
+                  <i class="fa fa-address-card-o"></i>&nbsp;&nbsp;Enroll player
+                <% end %>
               </div>
               <div class="d-flex align-items-center">
                 <p class="h4">Date:&nbsp;</p>
