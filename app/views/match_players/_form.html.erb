@@ -49,9 +49,9 @@
                   <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
                   
                   <%= f.select :player_id, options_for_select(Player.order(:name).collect { |player|
-                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control m-b",  required: true} %>
+                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control ms-auto",  required: true} %>
                   <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
-                        <i class="fa fa-check"></i> Join event
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;Join event
                   <% end %>
                 </div>
                 <p class="text-sm mt-3 mb-0">Your cellphone does not appear?
