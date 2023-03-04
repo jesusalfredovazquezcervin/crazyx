@@ -43,24 +43,22 @@
                 </li>
                 
               </ul>
-              <div class= "row">
-                <div class="col-sm">
-                  <p class="mb-2 text-sm">
-                      <%= link_to(new_match_player_path(@match_player.event), class: "btn bg-gradient-primary") do %>
-                        <i class="fa fa-plus-square"></i> Enroll player
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <%= link_to(new_match_player_path(@match_player.event), class: "btn bg-gradient-primary") do %>
+                        <i class="fa fa-plus-square"></i>&nbsp;&nbsp;Enroll player
                       <% end %>
-                  </p>  
-                </div>
-                <div class="col-sm">
-                  <p class="mb-2 text-sm text-end">
+                  </div>
+                  
+                  <div class="col">
                     <%= link_to( @match_player, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn bg-gradient-danger") do %>
-                      <i class="fa fa-sign-out"></i> Confirm Quit                    
+                      <i class="fa fa-sign-out"></i>&nbsp;&nbsp;Quit event                    
                     <% end %>   
-                  </p>
+                  </div>
                 </div>
-                
-                
               </div>
+              
             </div>            
           </div>
         </div>
