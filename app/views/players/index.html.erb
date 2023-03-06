@@ -35,10 +35,14 @@
                           </div>
                         </div>
                       </td>
-                      <td> 
-                      <div class="d-flex px-2 py-1">
-                          <div>
-                            <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                      <td>                         
+                        <div class="d-flex px-2 py-1">
+                          <div >
+                            <%if !player.image_attachment.nil?%>
+                              <%= image_tag(player.image, class: "avatar avatar-sm me-3") if !player.image_attachment.nil? %>
+                            <%else%>
+                              <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                            <%end%>                            
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"><%= link_to player.name.titleize, player, class: "text-xs font-weight-bold mb-0" %></h6>

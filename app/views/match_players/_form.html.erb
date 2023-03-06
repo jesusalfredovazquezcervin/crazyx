@@ -104,7 +104,11 @@
                     <td>
                       <div class="d-flex px-2 py-1">
                         <div>
-                          <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                          <%if !mp.player.image_attachment.nil?%>
+                            <%= image_tag(mp.player.image, class: "avatar avatar-sm me-3") if !mp.player.image_attachment.nil? %>
+                          <%else%>
+                            <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                          <%end%>                          
                         </div>
                         <div class="d-flex flex-column justify-content-center">
                           <h6 class="mb-0 text-xs"><%=mp.player.name.titleize%></h6>

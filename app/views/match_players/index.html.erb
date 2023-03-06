@@ -42,9 +42,16 @@
                       <td>
                         <p class="text-xs font-weight-bold mb-0"><%=i%></p>
                       </td>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div class="d-flex flex-column justify-content-right">
+                      <td>                      
+                        <div class="d-flex px-2 py-1"> 
+                          <div>
+                            <%if !mp.player.image_attachment.nil?%>
+                              <%= image_tag(mp.player.image, class: "avatar avatar-sm me-3")%>
+                            <%else%>
+                              <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                            <%end%>                            
+                          </div>
+                          <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm"><%=mp.player.name.titleize%></h6>
                             <p class="text-xs text-secondary mb-0"><%=mp.player.cellphone%></p>
                           </div>
@@ -68,8 +75,10 @@
                         </div>                      
                       </td>
                       <td>
-                        <div class="d-flex flex-column justify-content-left"> 
-                          <%= link_to "Quit", mp, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "text-xs text-primary mb-0" %>
+                        <div> 
+                          <%= link_to(mp, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm btn-danger ms-auto") do %>
+                                <i class="fa fa-sign-out"></i>&nbsp;&nbsp;Quit
+                              <%end%>
                         </div>
                       </td>
                     </tr>

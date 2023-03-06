@@ -73,7 +73,12 @@
                                               <div class="row" id="row-crd-rnd-<%=round%>-<%=index%>-t1">
                                               <p class = "h7 text-center" >Match: &nbsp; <%=match.id%></p> 
                                                 <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerOne%>-t1">
-                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                  
+                                                  <%if !Player.find(match.playerOne).image_attachment.nil?%>
+                                                    <%= image_tag(Player.find(match.playerOne).image, class: "avatar avatar-sm me-3")%>
+                                                  <%else%>
+                                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%end%>
                                                 </div>
                                                 <div class="col-sm">
                                                   <div class="progress-wrapper">
@@ -88,7 +93,11 @@
                                                   </div>
                                                 </div>
                                                 <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerTwo%>-t1">
-                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%if !Player.find(match.playerTwo).image_attachment.nil?%>
+                                                    <%= image_tag(Player.find(match.playerTwo).image, class: "avatar avatar-sm me-3")%>
+                                                  <%else%>
+                                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%end%>
                                                 </div>
                                               </div>
                                               <div class="row" id="row-crd-names-<%=round%>-m-<%=match.playerOne%>-t1">
@@ -109,7 +118,11 @@
                                               <!-- TEAM 2  - CARD N - TAB N -->
                                               <div class="row" id="row-crd-rnd-<%=round%>-<%=index%>-t2">
                                                 <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerThree%>-t2">
-                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%if !Player.find(match.playerThree).image_attachment.nil?%>
+                                                    <%= image_tag(Player.find(match.playerThree).image, class: "avatar avatar-sm me-3")%>
+                                                  <%else%>
+                                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%end%>
                                                 </div>
                                                 <div class="col-sm">
                                                   <div class="progress-wrapper">
@@ -124,7 +137,11 @@
                                                   </div>
                                                 </div>
                                                 <div class="col-sm" id="div-pic-r-<%=round%>player-<%=match.playerFour%>-t2">
-                                                  <%= image_tag("eduardogarcia.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%if !Player.find(match.playerFour).image_attachment.nil?%>
+                                                    <%= image_tag(Player.find(match.playerFour).image, class: "avatar avatar-sm me-3")%>
+                                                  <%else%>
+                                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%end%>
                                                 </div>
                                               </div>
 

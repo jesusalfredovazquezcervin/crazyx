@@ -6,7 +6,14 @@
           <div class="row gx-4">
             <div class="col-auto">
               <div class="avatar avatar-xl position-relative">
+               <!-- >
                 <%= image_tag("eduardogarcia.jpg", class: "w-100 border-radius-lg shadow-sm")%>
+                -->
+                <%if !player.image_attachment.nil?%>
+                  <%= image_tag(player.image, class: "w-100 border-radius-lg shadow-sm")%>
+                <%else%>
+                  <%= image_tag("blank-profile-picture.jpg", class: "w-100 border-radius-lg shadow-sm")%>
+                <%end%>
               </div>
             </div>
             <div class="col-auto my-auto">        
