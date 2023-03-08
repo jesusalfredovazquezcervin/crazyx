@@ -55,19 +55,23 @@
                       </td>
                       <td>                        
                         <%if !event.player.nil? %>
-                          <div class="d-flex px-2 py-1"> 
-                            <div>
-                              <%if !mp.player.image_attachment.nil?%>
-                                <%= image_tag(event.player.image, class: "avatar avatar-sm me-3")%>
-                              <%else%>
-                                <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
-                              <%end%>
-                            </div>
-                            <div class="d-flex flex-column justify-content-center">
-                              <h6 class="mb-0 text-sm"><%= link_to event.try(:player).try(:name).titleize, event.try(:player)%></h6>
-                              <p class="text-xs text-secondary mb-0">Won by &nbsp;<%=event.try(:winner)%> pts</p>
-                            </div>
-                          </div>                          
+                          <% event.results.each do |result|%>
+                            <div class="d-flex px-2 py-1"> 
+                              
+                                <div>
+                                  <%if !result.player.image_attachment.nil?%>
+                                    <%= image_tag(result.player.image, class: "avatar avatar-sm me-3")%>
+                                  <%else%>
+                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                  <%end%>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center">
+                                  <h6 class="mb-0 text-sm"><%= link_to result.try(:player).try(:name).titleize, result.try(:player)%></h6>
+                                  <p class="text-xs text-secondary mb-0">Won by&nbsp;<%=result.try(:points)%>&nbsp;pts</p>
+                                </div>
+                              
+                            </div>                          
+                          <%end%>
                         <%end%>
                       </td>
                       <td>
@@ -83,12 +87,13 @@
                             </li>
                             
                               
-                            
-                            <li>
-                              <%= link_to(event, class:"dropdown-item border-radius-md") do%>
-                                Share&nbsp;&nbsp;<i class="fa fa-share-alt"></i>
-                              <%end%>
-                            </li>
+                            <% if event.status.upcase != "CLOSED"%>
+                              <li>
+                                <%= link_to(event, class:"dropdown-item border-radius-md") do%>
+                                  Share&nbsp;&nbsp;<i class="fa fa-share-alt"></i>
+                                <%end%>
+                              </li>
+                            <%end%>
                             <li>
                               <%= link_to(event, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"dropdown-item border-radius-md") do %>
                                 Delete&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
@@ -104,6 +109,14 @@
                               Matches&nbsp;&nbsp;<i class="fa fa-sitemap"></i>
                               <%end%>
                             </li>
+                            <% if event.status.upcase == "CLOSED"%>
+                              <li>
+                                <%= link_to(show_closed_event_path(event), class:"dropdown-item border-radius-md") do%>
+                                Results&nbsp;&nbsp;<i class="fa fa-poll"></i>
+                                <%end%>
+                              </li>
+                            <%end%>
+                            
                           </ul>
                         </div>
                       </td>                                            
