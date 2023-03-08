@@ -15,10 +15,10 @@ class Event < ApplicationRecord
         players = MatchPlayer.where(event_id: id, status: "OnBoard")
         points_per_player = {}
         players.each{|player|
-            points_per_event = Match.where(event_id: id, playerOne: player.player_id).collect{|p| p.pointsOne}.sum
-            points_per_event += Match.where(event_id: id, playerTwo: player.player_id).collect{|p| p.pointsTwo}.sum
-            points_per_event += Match.where(event_id: id, playerThree: player.player_id).collect{|p| p.pointsThree}.sum
-            points_per_event += Match.where(event_id: id, playerFour: player.player_id).collect{|p| p.pointsFour}.sum
+            points_per_event = Match.where(event_id: id, playerOne: player.player_id).where.not(pointsOne: nil).collect{|p| p.pointsOne}.sum
+            points_per_event += Match.where(event_id: id, playerTwo: player.player_id).where.not(pointsTwo: nil).collect{|p| p.pointsTwo}.sum
+            points_per_event += Match.where(event_id: id, playerThree: player.player_id).where.not(pointsThree: nil).collect{|p| p.pointsThree}.sum
+            points_per_event += Match.where(event_id: id, playerFour: player.player_id).where.not(pointsFour: nil).collect{|p| p.pointsFour}.sum
             points_per_player[player.player_id] = points_per_event            
         }
         return points_per_player
