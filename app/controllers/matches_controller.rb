@@ -6,7 +6,11 @@ class MatchesController < ApplicationController
     @event = Event.find(params[:id])
     @matches = @event.matches
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
-    @round = params[:round]
+    if params[:round].nil?
+      @round = 1
+    else
+      @round = params[:round]
+    end
   end
 
   # GET /matches/1 or /matches/1.json
