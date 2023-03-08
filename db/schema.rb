@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_06_040119) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_08_161540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -116,6 +116,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_040119) do
     t.string "cellphone"
   end
 
+  create_table "results", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "player_id", null: false
+    t.integer "points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_results_on_event_id"
+    t.index ["player_id"], name: "index_results_on_player_id"
+  end
+
   create_table "scores", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.bigint "player_id", null: false
@@ -143,6 +153,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_06_040119) do
   add_foreign_key "match_players", "events"
   add_foreign_key "match_players", "players"
   add_foreign_key "matches", "events"
+  add_foreign_key "results", "events"
+  add_foreign_key "results", "players"
   add_foreign_key "scores", "events"
   add_foreign_key "scores", "players"
   add_foreign_key "verification_codes", "events"
