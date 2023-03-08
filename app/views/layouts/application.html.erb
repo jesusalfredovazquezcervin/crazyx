@@ -129,8 +129,12 @@
                                   <li class="mb-2">
                                       <a class="dropdown-item border-radius-md" href="javascript:;">
                                           <div class="d-flex py-1">
-                                              <div class="my-auto">
-                                                  <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                                              <div class="my-auto">                                                  
+                                                  <%if !score.player.image_attachment.nil?%>
+                                                    <%= image_tag(score.player.image, class: "avatar avatar-sm me-3")%>
+                                                  <%else%>
+                                                    <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                                                  <%end%>
                                               </div>
                                               <div class="d-flex flex-column justify-content-center">
                                                   <p class="text-s text-secondary mb-0">
