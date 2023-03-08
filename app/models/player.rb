@@ -7,6 +7,7 @@ class Player < ApplicationRecord
     attribute  :totalScore, default: 0
     attribute  :eventScore, default: 0
     has_one_attached :image
+    has_many :results
 
     def updateTotalScore 
         #Compute all the gainned points and update the totalScore field
