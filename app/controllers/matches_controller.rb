@@ -6,6 +6,7 @@ class MatchesController < ApplicationController
     @event = Event.find(params[:id])
     @matches = @event.matches
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
+    @round = params[:round]
   end
 
   # GET /matches/1 or /matches/1.json
@@ -19,6 +20,7 @@ class MatchesController < ApplicationController
 
   # GET /matches/1/edit
   def edit
+    @round = params[:round]
   end
 
   # POST /matches or /matches.json
@@ -37,12 +39,13 @@ class MatchesController < ApplicationController
   end
 
   # PATCH/PUT /matches/1 or /matches/1.json
-  def update
+  def update    
     params[:match][:pointsTwo]= params[:match][:pointsOne]
-    params[:match][:pointsFour]= params[:match][:pointsThree]    
+    params[:match][:pointsFour]= params[:match][:pointsThree]
+    @round = params[:match][:round]
     respond_to do |format|
       if @match.update(match_params)
-        format.html { redirect_to event_matches_url(@match.event_id), notice: "Match was successfully updated." }
+        format.html { redirect_to event_matches_url(@match.event_id, @round), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -87,6 +90,6 @@ class MatchesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def match_params
-      params.require(:match).permit(:event_id, :playerOne, :pointsOne, :playerTwo, :pointsTwo, :playerThree, :pointsThree, :playerFour, :pointsFour)
+      params.require(:match).permit(:event_id, :playerOne, :pointsOne, :playerTwo, :pointsTwo, :playerThree, :pointsThree, :playerFour, :pointsFour, :round)
     end
 end
