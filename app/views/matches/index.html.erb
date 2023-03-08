@@ -1,4 +1,4 @@
-<h3 style= "color: white">Event matches</h3>
+<h3 style= "color: white">Event matches -- round ---->  <%=@round%></h3>
 
   <div class="row">
         <div class="col-12">
@@ -79,15 +79,15 @@
 
                           <!-- We loop throughout the number of generated rounds-->
                           <%  @event.matches.select("round").group("round").sort_by{|m| m.round}.collect{|m| m.round}.each_with_index do |r, i| %>
-                              <li class="<%= i == 0 ? ("active"):("") %>">
+                              <li class="<%= i == (@round.to_i - 1) ? ("active"):("") %>">
                               <li class="nav-item" role = "presentation">
-                              <button class="nav-link <%= i == 0 ? ("active"):("") %>" id="tab-<%=r%>" data-bs-toggle="tab" data-bs-target="#tab-<%=r%>-pane" type="button" role="tab" aria-controls="tab-<%=r%>-pane" aria-selected="true">Round <%=r%></button>
+                              <button class="nav-link <%= i == (@round.to_i - 1) ? ("active"):("") %>" id="tab-<%=r%>" data-bs-toggle="tab" data-bs-target="#tab-<%=r%>-pane" type="button" role="tab" aria-controls="tab-<%=r%>-pane" aria-selected="true">Round <%=r%></button>
                           <%end%>
                         </ul>
                         <div class="d-flex px-2 py-1"></div>
                         <div class="tab-content" id="myTabContent">
                           <%  @event.matches.select("round").group("round").sort_by{|m| m.round}.collect{|m| m.round}.each_with_index do |round, i| %>                            
-                            <div class="tab-pane fade <%= i == 0 ? ("show active"):("") %> " id="tab-<%=round%>-pane" role="tabpanel" aria-labelledby="tab-<%=round%>" tabindex="0">
+                            <div class="tab-pane fade <%= i == (@round.to_i - 1) ? ("show active"):("") %> " id="tab-<%=round%>-pane" role="tabpanel" aria-labelledby="tab-<%=round%>" tabindex="0">
                               <div class="panel-body" id= "pn-tab-<%=round%>">
                                 <div class="card-header pb-0">
                                   <div class="d-flex align-items-center">
@@ -248,7 +248,7 @@
                                               <div class="row">                                        
                                                 <div class="col-sm text-center">
                                                   <% if @event.status.upcase != "CLOSED"%>
-                                                    <%= link_to(edit_match_path(match), class: "btn bg-gradient-primary ms-auto", data: { turbo_frame: "remote_modal" }) do %>
+                                                    <%= link_to(edit_match_path(match,round), class: "btn bg-gradient-primary ms-auto", data: { turbo_frame: "remote_modal" }) do %>
                                                           <i class="fa fa-edit"></i>&nbsp;&nbsp;Edit Results
                                                     <%end%>
                                                   <%end%>
