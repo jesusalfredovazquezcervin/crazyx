@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event]
 
   # GET /events or /events.json
   def index
@@ -55,6 +55,27 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+  
+  # PATCH/PUT /events/1/close or /events/1/close.json
+  def update_status 
+    respond_to do |format|
+      @event.status = "Closed"
+      @event.getWinner      
+      if @event.save
+        format.html { redirect_to show_closed_event_path(@event), notice: "Event was succesfully closed!"  }      
+        format.json { render :close, status: :ok, location: @event }
+      else
+        format.html { redirect_to players_enrolled_url(@event), status: :unprocessable_entity }
+        format.json { render json: @event.errors, status: :unprocessable_entity }
+      end
+    end
+
+    
+  end
+  
+  def show_closed_event
+    @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
   end
 
   private
