@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   delete "matches/:event_id/:round", to: "matches#destroy", as: "matches_destroy_round"
   get 'matches/create_round_of_matches/:event_id', to: "matches#create_round_of_matches", as: 'create_round_of_matches'
   get "match_players/edit/:id/(:resend)", to: "match_players#edit", as: "edit_match_player"
-  
+  patch "events/update_status/:id", to: "events#update_status", as: "update_status_event"
+  get "event/show_closed_event/:id", to: "events#show_closed_event", as: "show_closed_event"
 end
