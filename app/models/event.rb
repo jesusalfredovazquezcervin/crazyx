@@ -6,7 +6,7 @@ class Event < ApplicationRecord
     has_many :matches
     has_many :score
     has_many :verification_codes
-
+    has_many :results
     
     def getPlayersPoints
         # Obtain the sumatory of points for all the players for the event {player, total_points} {1=>9, 2=>20, 3=>15, 4=>14, 5=>1, 6=>1}
@@ -27,7 +27,13 @@ class Event < ApplicationRecord
     def getWinner
         # Get the winner [player, points] for the event
         points_per_player= self.getPlayersPoints
-        winner = points_per_player.sort_by{|key, value| value}.last
+        #winner = points_per_player.sort_by{|key, value| value}.last
+        
+        #here we get noy only one posible winner but n winners
+        max=points_per_player.max_by{|key, value| value }
+        winner = points_per_player.select{|k, v| v == max[1]}.each_pair{|player, points|
+            Result.create(event_id: self.id, player_id: player, points: points)
+        }
         return winner
     end
     
