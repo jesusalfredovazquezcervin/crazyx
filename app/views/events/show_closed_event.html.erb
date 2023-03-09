@@ -20,7 +20,7 @@
                     <p class="h3 text-success">
                         <i class="fa fa-trophy"></i>&nbsp;&nbsp;Winner
                     </p>
-                    <% @event.results.each do |result|%>
+                    <% @event.score.where(position: 1).each do |result|%>
                         <p class="h4">
                             <%=result.player.name.titleize%> &nbsp;&nbsp;&nbsp;&nbsp; Total Points:&nbsp; <%=result.points%>
                         </p>
@@ -59,10 +59,10 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% @scores.each.with_index(1) do |score, i|%>
+                                    <% @scores.each do |score|%>
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 ps-4"><%=i.ordinalize%></p>
+                                                <p class="text-sm font-weight-bold mb-0 ps-4"><%=score.position.ordinalize%></p>
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2">
