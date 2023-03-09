@@ -11,6 +11,7 @@
                   <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]
                     <span class="text-danger">&nbsp;&nbsp;<%="CLOSED" if @event.status.upcase == "CLOSED"%> </span>
                   </p>
+                  <%if @event.match_player.count >= @event.people%>
                       <div class="dropdown ms-auto">
                           <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Action
@@ -51,7 +52,11 @@
                             </li>
                           </ul>
                       </div>
-                                                    
+                  <%elsif @event.status.upcase != "CLOSED"%>
+                    <%= link_to(new_match_player_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
+                        <i class="fa fa-address-card-o"></i>&nbsp;&nbsp;Enroll player
+                      <% end %> 
+                  <%end%>
                 </div>
                 <div class="d-flex align-items-center">
                   <p class="h4">Date:&nbsp;</p>
@@ -60,6 +65,10 @@
                 <div class="d-flex align-items-center">
                   <p class="h4">Maximum players: <%=@event.people%></p>                                                          
                 </div>
+                <%if @event.match_player.count < @event.people%>
+                  <p class = "h3 text-warning">
+                  There are <%=@event.match_player.count%>/<%=@event.people%> enrolled players. You can't create round of matches until the event is complete! </p>
+                <%end%>
               </div>
               
               
