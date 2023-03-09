@@ -26,13 +26,23 @@ class Event < ApplicationRecord
     
     def getWinner
         # Get the winner [player, points] for the event
-        points_per_player= self.getPlayersPoints
+        points_per_player= self.getPlayersPoints.sort_by{|k, v| -v}
         #winner = points_per_player.sort_by{|key, value| value}.last
         
         #here we get noy only one posible winner but n winners
         max=points_per_player.max_by{|key, value| value }
-        winner = points_per_player.select{|k, v| v == max[1]}.each_pair{|player, points|
-            Result.create(event_id: self.id, player_id: player, points: points)
+        winner = points_per_player.select{|k, v| v == max[1]}
+
+        points_per_player.each.with_index(1){|point, position|
+            if point[1] == max[1]
+                #update the position in the score model for the event-player
+                score = Score.where(event_id: self.id, player_id: point[0]).first
+                score.position = 1                
+            else
+                score = Score.where(event_id: self.id, player_id: point[0]).first
+                score.position = position
+            end
+            score.save            
         }
         return winner
     end
