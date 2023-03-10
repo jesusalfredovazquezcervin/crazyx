@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :verification_codes
-  resources :scores
+  resources :scores, except: [:index]
   resources :match_players, except: [:new, :index, :edit]
   resources :matches, except: [:index, :destroy, :edit]
   resources :events
@@ -21,4 +21,5 @@ Rails.application.routes.draw do
   patch "events/update_status/:id", to: "events#update_status", as: "update_status_event"
   get "event/show_closed_event/:id", to: "events#show_closed_event", as: "show_closed_event"
   get "matches/edit/:id/:round", to: "matches#edit", as: "edit_match"
+  get "scores/index/:id", to: "scores#index", as: "player_scores"
 end
