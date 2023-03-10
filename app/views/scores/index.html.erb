@@ -1,14 +1,113 @@
-<p style="color: green"><%= notice %></p>
+<h3 style= "color: white">Player scores</h3>
+<br/>
+<div>
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-body p-3">
+          <div class="row gx-4">
+            <div class="col-auto">
+              <div class="avatar avatar-xl position-relative">               
+                <%if !@scores.first.player.image_attachment.nil?%>
+                  <%= image_tag(@scores.first.player.image, class: "w-100 border-radius-lg shadow-sm")%>
+                <%else%>
+                  <%= image_tag("blank-profile-picture.jpg", class: "w-100 border-radius-lg shadow-sm")%>
+                <%end%>
+              </div>
+            </div>
+            <div class="col-auto my-auto">        
+                <div class="h-100">
+                    <p class="h3 text-primary">
+                        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;Scores of
+                    </p>                    
+                        <p class="h4">
+                            <%=@scores.first.player.name.titleize%> &nbsp;&nbsp;&nbsp;&nbsp; Events played:&nbsp; <%=@scores.first.player.eventsPlayed%>
+                        </p>                    
+                </div>
+            </div>
+            
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <br>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                    <p class="h3 text-info">Final event positions</p>            
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                    <div class="card mb-4">                        
+                        <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center justify-content-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder">Event</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-4">Position</th>
+                                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-7 ps-2">Points winner</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% @scores.each do |score|%>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                  <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm"><%= link_to score.event.name, score.event.name, class: "text-xs font-weight-bold mb-0" %>&nbsp;
+                                                      <%if score.event.status=='Open' %>
+                                                        <span class="badge badge-sm bg-gradient-success"><%=score.event.status%></span>
+                                                      <%else%>
+                                                        <span class="badge badge-sm bg-gradient-secondary"><%=score.event.status%></span>
+                                                      <%end%>
+                                                    </h6>
+                                                    
+                                                    <p class="text-xs text-secondary mb-0">Date: <%=score.event.eventDate.strftime("%d/%m/%Y")%></p>
+                                                  </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex px-2">
+                                                  <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm"><%=score.try(:position).try(:ordinalize)%></h6>
+                                                    <p class="text-xs text-secondary mb-0">Points: <%=score.points%></p>
+                                                  </div>                                                    
+                                                </div>
+                                            </td>
+                                        
+                                            <td>
+                                                <span class="text-xs font-weight-bold"><%=score.event.score.sort_by{|s| s.points}.last.points%></span>
+                                            </td>                                                                                    
+                                        </tr>
+                                    <%end%>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            
+            
 
-<h1>Scores</h1>
-
-<div id="scores">
-  <% @scores.each do |score| %>
-    <%= render score %>
-    <p>
-      <%= link_to "Show this score", score %>
-    </p>
-  <% end %>
+                <div class="card-header pb-0">
+                    <div class="d-flex align-items-center">            
+                        <%= link_to(players_path, class:"btn bg-gradient-primary ms-auto") do%>
+                            <i class="fa fa-list-ol"></i>&nbsp;&nbsp;Player list
+                        <%end%>
+                    </div>
+                </div>
+            </div>      
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New score", new_score_path %>
