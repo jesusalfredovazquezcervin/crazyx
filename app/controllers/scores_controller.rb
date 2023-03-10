@@ -3,7 +3,7 @@ class ScoresController < ApplicationController
 
   # GET /scores or /scores.json
   def index
-    @scores = Score.all
+    @scores = Score.where(player_id: params[:id].to_i).sort_by{|s|  - s.id}
   end
 
   # GET /scores/1 or /scores/1.json
