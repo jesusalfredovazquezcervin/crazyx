@@ -62,7 +62,7 @@
                               <%= f.file_field :image, class: 'form-control'%>
                           </div>
                       </div>
-
+                      <%= hidden_field_tag 'event_id', @event.nil? ? nil:@event.id  %>                        
                   </div>
                   <hr class="horizontal dark">
                   <div class="form-group">
