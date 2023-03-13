@@ -13,19 +13,28 @@ class PlayersController < ApplicationController
   # GET /players/new
   def new
     @player = Player.new
+    @event = Event.find(params[:event_id]) if !params[:event_id].nil?
   end
-
+  
   # GET /players/1/edit
-  def edit
+  def edit    
   end
-
+  
+  
   # POST /players or /players.json
   def create
     @player = Player.new(player_params)
     @player.cellphone = @player.cellphone.gsub(/\s+/, "")
-
     respond_to do |format|
       if @player.save
+        if !params[:event_id].nil? #entonces enrolamos al player
+          mp = MatchPlayer.create(event_id: params[:event_id].to_i, player_id: @player.id)          
+          if !mp.errors.messages.any?
+            mp.setStatus
+            mp.save!
+            format.html { redirect_to match_player_url(mp), notice: "You have joined succesfully to the event"}
+          end
+        end
         format.html { redirect_to player_url(@player), notice: "Player was successfully created." }
         format.json { render :show, status: :created, location: @player }
       else
@@ -70,6 +79,6 @@ class PlayersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def player_params
-      params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore, :cellphone, :image)
+      params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore, :cellphone, :image, :event_id)
     end
 end
