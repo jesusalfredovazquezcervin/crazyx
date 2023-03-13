@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :match_players, except: [:new, :index, :edit]
   resources :matches, except: [:index, :destroy, :edit]
   resources :events
-  resources :players
+  
+  
+  get "players/new/(:event_id)", to: "players#new", as: "new_player"
+  resources :players, except: [:new]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
