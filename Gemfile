@@ -1,7 +1,12 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+group :development do
+  ruby "3.1.2"
+end
+group :production do
+  ruby "3.1.3"
+end
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.4"
@@ -80,3 +85,8 @@ gem 'twilio-ruby', '~> 5.74.3'
 # To create the combination of matches between 2 players
 gem 'round_robin_tournament'
 
+#deployment 
+gem 'capistrano', '~> 3.17', '>= 3.17.2'
+gem 'capistrano-rails', '~> 1.6', '>= 1.6.2'
+gem 'capistrano-passenger', '~> 0.2.1'
+gem 'capistrano-rbenv', '~> 2.2'
