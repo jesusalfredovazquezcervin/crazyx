@@ -26,7 +26,14 @@
                 <li class="list-group-item">Date: <strong><%=event.eventDate.strftime("%d/%m/%Y") %> </strong></li>
                 <li class="list-group-item">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> </strong></li>
                 <li class="list-group-item">Players: <strong><%=event.people%> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
-                <li class="list-group-item">Category: <strong>4a - 5a</strong></li>
+                <li class="list-group-item">Category: <strong><%=event.level%>&nbsp;&nbsp;
+                  <%if  event.mixed   %>
+                    Mixed
+                  <%else%>
+                    Fixed
+                  <%end%>
+                  Couples</strong>
+                </li>                
               </ul>              
             </div>
             <!-- Button trigger modal -->
