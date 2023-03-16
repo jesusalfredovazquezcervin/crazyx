@@ -8,8 +8,10 @@
               <div class="card-header pb-0">
                 <div class="d-flex align-items-center">
                   <p class="h4">Event:&nbsp;</p>
-                  <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]
-                    <span class="text-danger">&nbsp;&nbsp;<%="CLOSED" if @event.status.upcase == "CLOSED"%> </span>
+                  <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]&nbsp;&nbsp;                 
+                    <span class="badge badge-pill badge-lg bg-gradient-success"><%=(@event.mixed? ? "MIXED COUPLES":"FIXED COUPLES" ) %></span>&nbsp;&nbsp;
+                    <span class="badge badge-pill badge-lg bg-gradient-danger"><%="  CLOSED" if @event.status.upcase == "CLOSED"%></span>
+                    
                   </p>
                   <%if @event.match_player.count >= @event.people%>
                       <div class="dropdown ms-auto">
@@ -18,9 +20,14 @@
                           </button>
                           <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
                             <li>
-                              <% if @event.status.upcase != "CLOSED"%>
+                              <% if @event.status.upcase != "CLOSED"%>                                
                                 <%= link_to(create_round_of_matches_path(@event), class: "dropdown-item") do %>
-                                      New round&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+                                  <%if @event.mixed %>
+                                    New round&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+                                  <%else%>
+                                    New full round&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+                                  <%end%>
+                                      
                                 <%end%>
                               <%else%>
                                 <%= link_to(events_path(@event), class: "dropdown-item") do %>
@@ -221,16 +228,18 @@
                                                   <p class="h5 text-start"> Team 1:</p>
                                                 </div>
                                                 <div class="col-sm">
-                                                  <% case match.match_result %>
-                                                    <%when 0%>
-                                                      <button class="btn btn-info"><strong><%=match.pointsOne%> points </strong></button>
-                                                    <%when 1%>
-                                                      <button class="btn btn-success"><strong><%=match.pointsOne%> points </strong></button>
-                                                    <%when 2%>
-                                                      <button class="btn btn-danger"><strong><%=match.pointsOne%> points </strong></button>
-                                                    <%when -1%>
-                                                      <button class="btn btn-secondary"><strong> - </strong></button>
-                                                  <%end%>
+                                                  <p class="h5">
+                                                    <% case match.match_result %>
+                                                      <%when 0%>                                                        
+                                                        <span class="badge badge-pill badge-lg bg-gradient-info"><%=match.pointsOne%> points</span>
+                                                      <%when 1%>                                                      
+                                                        <span class="badge badge-pill badge-lg bg-gradient-success"><%=match.pointsOne%> points</span>                                                        
+                                                      <%when 2%>
+                                                        <span class="badge badge-pill badge-lg bg-gradient-danger"><%=match.pointsOne%> points</span>
+                                                      <%when -1%>
+                                                        <span class="badge badge-pill badge-lg bg-gradient-secondary">-</span>
+                                                    <%end%>
+                                                  </p>
                                                     
                                                 </div>                                                
                                                 
@@ -241,16 +250,18 @@
                                                   <p class="h5 text-start"> Team 2:</p>
                                                 </div>
                                                 <div class="col-sm">
-                                                  <% case match.match_result %>
-                                                    <%when 0%>
-                                                      <button class="btn btn-info"><strong><%=match.pointsThree%> points </strong></button>
-                                                    <%when 1%>
-                                                      <button class="btn btn-danger"><strong><%=match.pointsThree%> points </strong></button>
-                                                    <%when 2%>
-                                                      <button class="btn btn-success"><strong><%=match.pointsThree%> points </strong></button>
-                                                    <%when -1%>
-                                                      <button class="btn btn-secondary"><strong> - </strong></button>
-                                                  <%end%>
+                                                  <p class="h5">
+                                                    <% case match.match_result %>
+                                                      <%when 0%>                                                        
+                                                        <span class="badge badge-pill badge-lg bg-gradient-info"><%=match.pointsThree%> points</span>
+                                                      <%when 1%>                                                      
+                                                        <span class="badge badge-pill badge-lg bg-gradient-danger"><%=match.pointsThree%> points</span>                                                        
+                                                      <%when 2%>
+                                                        <span class="badge badge-pill badge-lg bg-gradient-success"><%=match.pointsThree%> points</span>
+                                                      <%when -1%>
+                                                        <span class="badge badge-pill badge-lg bg-gradient-secondary">-</span>
+                                                    <%end%>
+                                                  </p>
                                                 </div>
                                               </div>
 
