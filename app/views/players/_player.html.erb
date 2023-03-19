@@ -90,7 +90,7 @@
             <div class="col-md-3">
               <div class="form-group">
                 <label for="example-text-input" class="form-control-label">Events won</label>
-                <p class="text-uppercase text-sm"><%=player.results.count%></p>
+                <p class="text-uppercase text-sm"><%=player.scores.where(position: 1).count%></p>
               </div>
             </div>
             <div class="col-md-3">
