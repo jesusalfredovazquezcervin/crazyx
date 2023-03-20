@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :couples, except: [:index, :new]
   resources :verification_codes
   resources :scores, except: [:index]
   resources :match_players, except: [:new, :index, :edit]
@@ -34,6 +35,6 @@ Rails.application.routes.draw do
   #  get "players/new/(:event_id)", to: "players#new", as: "new_player", on: :collection
   #end
   
-  
-  
+  get 'couples/index/:id', to: "couples#index", as: 'event_couples'
+  get "couples/new/:id", to: "couples#new", as: "new_couple"
 end 
