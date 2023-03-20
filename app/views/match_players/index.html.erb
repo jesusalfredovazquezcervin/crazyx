@@ -8,11 +8,35 @@
             <div class="card-header pb-0">
               <div class="d-flex align-items-center">
                 <p class="h4">Event:&nbsp;</p>
-                <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]</p>
+                <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]
+                  <span class="badge badge-pill badge-lg bg-gradient-success"><%=(@event.mixed? ? "MIXED COUPLES":"FIXED COUPLES" ) %></span>&nbsp;&nbsp;
+                </p>
+
                 <% if @event.status.upcase != "CLOSED"%>
-                    <%= link_to(new_match_player_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
-                      <i class="fa fa-address-card-o"></i>&nbsp;&nbsp;Enroll player
-                    <% end %> 
+                  <div class="dropdown ms-auto">
+                          <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            Action
+                          </button>
+                          <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                            <li>                              
+                              <%= link_to(new_match_player_path(@event), class: "dropdown-item") do %>
+                                    Enroll player&nbsp;&nbsp;<i class="fa fa-address-card-o"></i>
+                              <%end%>                              
+                            </li>                              
+                            <li>
+                              <% if @event.mixed == false%>
+                                <%= link_to(event_couples_path(@event), class: "dropdown-item") do %>
+                                      Event couples&nbsp;&nbsp;<i class="fa fa-users"></i>
+                                <%end%>
+                              <%end%>
+                            </li>
+                          </ul>
+                  </div>
+
+
+
+                    
+                    
                 <%else%>
                     <%= link_to(events_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
                           <i class="fa fa-list"></i>&nbsp;&nbsp;Event list
