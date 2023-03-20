@@ -9,6 +9,15 @@ class Player < ApplicationRecord
     has_one_attached :image
     has_many :results
     has_many :scores
+    #scope :de_cliente, -> (cliente) { where("cliente_id = ?", cliente) }
+    #scope :ready_to_mate, -> { from_event.where("price > 500") }
+    def self.ready_to_mate(event_id)
+        event = Event.find(event_id)
+        enrolled = event.match_player.where(status: "OnBoard").collect{|mp| mp.player }
+        couples = event.couples
+        players_not_elegible = couples.collect{|c| c.mate} + couples.collect{|c| c.player}
+        return  enrolled.select{|p| p if players_not_elegible.exclude?(p)}
+    end
 
     def updateTotalScore 
         #Compute all the gainned points and update the totalScore field
