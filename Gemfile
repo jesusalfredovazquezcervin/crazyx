@@ -87,3 +87,6 @@ gem 'capistrano', '~> 3.17', '>= 3.17.2'
 gem 'capistrano-rails', '~> 1.6', '>= 1.6.2'
 gem 'capistrano-passenger', '~> 0.2.1'
 gem 'capistrano-rbenv', '~> 2.2'
+
+#Solargraph provides a comprehensive suite of tools for Ruby programming: intellisense, diagnostics, inline documentation, and type checking.
+gem 'solargraph', '~> 0.48.0'
