@@ -65,7 +65,7 @@
                                     <% @scores.each do |score|%>
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 ps-4"><%=score.position.ordinalize%></p>
+                                                <p class="text-sm font-weight-bold mb-0 ps-4"><%=score.try(:position).try(:ordinalize)  %></p>
                                             </td>
                                             <td>
                                                 <span class="text-xs font-weight-bold"><%=score.points%></span>
