@@ -120,9 +120,8 @@ class Player < ApplicationRecord
 
         return won_lost_draw
     end
-    def lostMatches 
-        #return the number of lost matches
-        return 5
+    def next_event
+        return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.last
     end
     def winRate 
         #returns the win ratio
