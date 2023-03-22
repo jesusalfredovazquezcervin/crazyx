@@ -121,7 +121,7 @@ class Player < ApplicationRecord
         return won_lost_draw
     end
     def next_event
-        return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.last
+        return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.first
     end
     def winRate 
         #returns the win ratio
