@@ -37,4 +37,5 @@ Rails.application.routes.draw do
   
   get 'couples/index/:id', to: "couples#index", as: 'event_couples'
   get "couples/new/:id", to: "couples#new", as: "new_couple"
+  get "players/dashboard/:player_id", to:  "players#dashboard", as: "dashboard_player"
 end 
