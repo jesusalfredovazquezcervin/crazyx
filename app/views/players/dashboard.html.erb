@@ -20,7 +20,11 @@
                             </div>
                     </div>
                     <div class="col-lg-6 col-12 text-center">
-                        <%= image_tag("eduardogarcia.jpg", class: "w-20 border-radius-lg shadow-sm")%>                        
+                        <%if !@player.image_attachment.nil?%>
+                            <%= image_tag(@player.image, class: "w-20 border-radius-lg shadow-sm")%>
+                        <%else%>
+                            <%= image_tag("blank-profile-picture.jpg", class: "w-20 border-radius-lg shadow-sm")%>
+                        <%end%>                        
                     </div>
                     <div class="col-lg-3 col-12 my-auto">
                         <h4 class="text-body opacity-9">Upcoming event:</h4>
