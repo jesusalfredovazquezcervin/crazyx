@@ -1,0 +1,108 @@
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card shadow-lg">
+            <%= image_tag("pattern-left.png", class: "position-absolute overflow-hidden opacity-4 start-0 top-0 h-100 border-radius-xl")%>
+            <%= image_tag("pattern-right.png", class: "position-absolute overflow-hidden opacity-4 end-0 top-0 h-100 border-radius-xl")%>
+            <div class="card-body px-5 z-index-1 bg-cover">
+                <div class="row">
+                    <div class="col-lg-3 col-12 my-auto">
+                        <h4 class="text-body opacity-9 text-center">Welcome <%=@player.name.titleize%> </h4>
+                        <hr class="horizontal light mt-1 mb-3">
+                            <div class="d-flex justify-content-center">
+                                <div>
+                                    <h6 class="mb-0 text-body opacity-7">Last event</h6>
+                                    <h5 class="text-body"><%= MatchPlayer.where(player_id: @player.id).last.event.eventDate.strftime("%A, %d %B %Y")%></h5>
+                                </div>
+                                <div class="ms-lg-6 ms-4 text-center">
+                                    <h6 class="mb-0 text-body opacity-7">Last score:</h6>
+                                    <h5 class="text-body">21 points </h5>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-lg-6 col-12 text-center">
+                        <%= image_tag("eduardogarcia.jpg", class: "w-20 border-radius-lg shadow-sm")%>                        
+                    </div>
+                    <div class="col-lg-3 col-12 my-auto">
+                        <h4 class="text-body opacity-9">Upcoming event:</h4>
+                        <hr class="horizontal light mt-1 mb-3">
+                        <div class="d-flex align-items-center">
+                        <div>
+                        <h6 class="mb-0 text-body"><%=@player.next_event.nil? ? "No upcomming events!": link_to(@player.next_event.updated_at.strftime("%A, %d %B %Y")<< " at" << @player.next_event.timeIni.strftime("%H:%M") << "-" << @player.next_event.timeEnd.strftime("%H:%M")  , @player.next_event) %></h6>
+                        
+                        </div>
+                        <div class="ms-lg-6 ms-4">
+                        <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 py-0">
+                        <i class="ni ni-map-big" aria-hidden="true"></i>
+                        </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+</div>
+
+
+
+
+
+<div class="col-xl-5 mt-xl-0 mt-4">
+    <div class="row mt-4">
+        <div class="col-md-6 mt-md-0 mt-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-gradient text-primary"><span id="status4" countto="417"><%=@player.categoryRank.ordinalize%></span> <span class="text-lg ms-n2"></span></h1>
+                    <h6 class="mb-0 font-weight-bolder">Category Rank</h6>
+                    <p class="opacity-8 mb-0 text-sm">Place</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-gradient text-primary"><span id="status4" countto="417"><%=@player.generalRank.ordinalize%></span> <span class="text-lg ms-n2"></span></h1>
+                    <h6 class="mb-0 font-weight-bolder">General Rank</h6>
+                    <p class="opacity-8 mb-0 text-sm">Place </p>
+                </div>
+            </div>
+        </div>                
+    </div>
+
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-gradient text-primary"><span id="status1" countto="21"> <%=@player.winRate.round%></span> <span class="text-lg ms-n2">%</span></h1>
+                    <h6 class="mb-0 font-weight-bolder">Win Rate</h6>
+                    <p class="opacity-8 mb-0 text-sm">Temperature</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mt-md-0 mt-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-gradient text-primary"> <span id="status2" countto="44"><%=@player.won_lost_draw_matches[:won]%></span> <span class="text-lg ms-n1"></span></h1>
+                    <h6 class="mb-0 font-weight-bolder">Won</h6>
+                    <p class="opacity-8 mb-0 text-sm">Matches</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h1 class="text-gradient text-primary"><span id="status3" countto="87"><%=@player.won_lost_draw_matches[:lost]%></span> <span class="text-lg ms-n2"></span></h1>
+                    <h6 class="mb-0 font-weight-bolder">Lost</h6>
+                    <p class="opacity-8 mb-0 text-sm">Matches</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
