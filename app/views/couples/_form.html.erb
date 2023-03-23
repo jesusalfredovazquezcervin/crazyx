@@ -1,28 +1,39 @@
+
+<div class="col-md-8">
+  <div class="card"><!-- EVENT DETAILS -->
+        <div class="card-header pb-0 p-3">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 text-primary">New Couple for the event</h5>                  
+                  <%= link_to(event_couples_path(couple.event_id), class:"btn btn-sm btn-primary ms-auto") do %>
+                          Couple list&nbsp;&nbsp;<i class="fa fa-list"></i>
+                        <%end%>         
+            </div>            
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-6">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Event Name:</strong> &nbsp; [<%= couple.event.id%>]&nbsp;<%= couple.event.name.titleize%>&nbsp;
+                            <span class="badge badge-pill badge-lg bg-gradient-danger"><%="CLOSED" if  couple.event.status.upcase == "CLOSED"%></span>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp; <%=local_time( couple.event.created_at, %"%d/%m/%Y") %> at <%= couple.event.timeIni.strftime("%H:%M")%> - <%= couple.event.timeEnd.strftime("%H:%M")%></li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Couples:</strong> &nbsp; <%=( couple.event.mixed? ? "MIXED":"FIXED" ) %>&nbsp;
+                              <strong class="text-dark">Category:</strong>&nbsp; <%= couple.event.level%>
+                        </li>
+                        
+                    </ul>
+                </div>                
+            </div>
+        </div>
+    </div>
+  </div>
+    <div class="col-md-8">
+        <br>
+    </div>
+
 <div class="row">
     <div class="col-md-8">
-        <div class="card">            
-              <div class="card-header pb-0">                         
-                <div class="d-flex align-items-center">
-                  <p class="h4">Event:&nbsp;</p>
-                  <p class="h4"><%= couple.event.name.titleize%> [ID <%= couple.event.id%>]&nbsp;&nbsp;
-                    <span class="badge badge-pill badge-lg bg-gradient-success"><%=(couple.event.mixed? ? "MIXED COUPLES":"FIXED COUPLES" ) %></span>&nbsp;&nbsp;
-                    <span class="badge badge-pill badge-lg bg-gradient-danger"><%="  CLOSED" if couple.event.status.upcase == "CLOSED"%></span>                    
-                  </p>
-                                  
-
-
-                <%= link_to(event_couples_path(couple.event_id), class:"btn btn-sm btn-primary ms-auto") do %>
-                          Couple list&nbsp;&nbsp;<i class="fa fa-list-o"></i>
-                        <%end%>
-                </div>
-                <div class="d-flex align-items-center">
-                  <p class="h4">Date:&nbsp;</p>
-                  <p class="h4"><%=local_time(couple.event.created_at, %"%d/%m/%Y") %> at <%=couple.event.timeIni.strftime("%H:%M")%> - <%=couple.event.timeEnd.strftime("%H:%M")%>  </p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <p class="h4">Maximum players: <%=couple.event.people%></p>                                                          
-                </div>              
-            </div>
+        <div class="card">                          
             <%= form_with(model: couple) do |f| %>
               <% if couple.errors.any? %>
                 <div style="color: red">
