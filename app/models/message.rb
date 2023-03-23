@@ -3,7 +3,7 @@ class Message < ApplicationRecord
     
     def send_sms
         #This method will send an sms message
-        #number = "52" << self.number # Uncomment this line to work in production        
+        number = "52" << self.number # Uncomment this line to work in production        
         #number = "524461327380" #comment this line to work in production        
         account_sid = ENV['TWILIO_ACCOUNT_SID']
         auth_token = ENV['TWILIO_AUTH_TOKEN']
