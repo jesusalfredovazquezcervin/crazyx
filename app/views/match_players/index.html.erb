@@ -1,60 +1,96 @@
-<h3 style= "color: white">Enrolled players</h3>
-<div id="match_players">
-  <div class="row">
+<div class="col-md-12"> 
+    <div class="card"><!-- EVENT DETAILS -->
+        <div class="card-header pb-0 p-3">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 text-primary">Enrolled Players</h5>
+                  <%if @event.match_player.count >= @event.people%>
+                        <div class="dropdown ms-auto">
+                            <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              Action
+                            </button>
+                            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                              <li>
+                                <% if @event.status.upcase != "CLOSED"%>                                
+                                  <%= link_to(create_round_of_matches_path(@event), class: "dropdown-item") do %>
+                                    <%if @event.mixed %>
+                                      New round&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+                                    <%else%>
+                                      New full round&nbsp;&nbsp;<i class="fa fa-plus-square"></i>
+                                    <%end%>
+                                        
+                                  <%end%>
+                                <%else%>
+                                  <%= link_to(events_path(@event), class: "dropdown-item") do %>
+                                        Event list&nbsp;&nbsp;<i class="fa fa-list"></i>
+                                  <%end%>
+                                <%end%>
+                              </li>
+                                <% if @event.status.upcase != "CLOSED"%>
+                                  <%= form_for @event, url: update_status_event_path, method: "patch"  do |f| %>
+                                    <% if @event.errors.any? %>
+                                        <div id="error_explanation">                            
+                                          <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+                                          <ul>
+                                            <% @event.errors.full_messages.each do |msg| %>
+                                                <li><%= msg %></li>
+                                            <% end %>
+                                          </ul>
+                                        </div>
+                                    <% end %>
+                                    <%= f.hidden_field :status, :value => "Closed" %>                      
+                                    <%= button_tag(type: 'submit', class: "dropdown-item", method: "patch") do %>
+                                        Close Event&nbsp;&nbsp;<i class="fa fa-lock"></i>
+                                    <% end %>
+                        
+                                  <% end %>
+                                  
+                                <%end%>           
+                              <li>
+                              </li>
+                            </ul>
+                        </div>
+                  <%elsif @event.status.upcase != "CLOSED"%>
+                    <%= link_to(new_match_player_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
+                        <i class="fa fa-address-card-o"></i>&nbsp;&nbsp;Enroll player
+                    <% end %> 
+                  <%end%>
+                  <%if @event.match_player.count < @event.people%>
+                    <p class = "h3 text-warning">
+                    There are <%=@event.match_player.count%>/<%=@event.people%> enrolled players. You can't create round of matches until the event is complete! </p>
+                  <%end%>
+            </div>            
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-6">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Event Name:</strong> &nbsp; [<%=@event.id%>]&nbsp;<%=@event.name.titleize%>&nbsp;
+                            <span class="badge badge-pill badge-lg bg-gradient-danger"><%="CLOSED" if @event.status.upcase == "CLOSED"%></span>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp; <%=local_time(@event.created_at, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%></li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Couples:</strong> &nbsp; <%=(@event.mixed? ? "MIXED":"FIXED" ) %>&nbsp;
+                              <strong class="text-dark">Category:</strong>&nbsp; <%=@event.level%>
+                        </li>
+                        
+                    </ul>
+                </div>                
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <br>
+    </div>
+
+    <div class="row">
         <div class="col-12">
           <div class="card mb-4">
           <div class="d-flex px-2 py-1">
           </div>
-            <div class="card-header pb-0">
-              <div class="d-flex align-items-center">
-                <p class="h4">Event:&nbsp;</p>
-                <p class="h4"><%= @event.name.titleize%> [ID <%= @event.id%>]
-                  <span class="badge badge-pill badge-lg bg-gradient-success"><%=(@event.mixed? ? "MIXED COUPLES":"FIXED COUPLES" ) %></span>&nbsp;&nbsp;
-                </p>
-
-                <% if @event.status.upcase != "CLOSED"%>
-                  <div class="dropdown ms-auto">
-                          <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Action
-                          </button>
-                          <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
-                            <li>                              
-                              <%= link_to(new_match_player_path(@event), class: "dropdown-item") do %>
-                                    Enroll player&nbsp;&nbsp;<i class="fa fa-address-card-o"></i>
-                              <%end%>                              
-                            </li>                              
-                            <li>
-                              <% if @event.mixed == false%>
-                                <%= link_to(event_couples_path(@event), class: "dropdown-item") do %>
-                                      Event couples&nbsp;&nbsp;<i class="fa fa-users"></i>
-                                <%end%>
-                              <%end%>
-                            </li>
-                          </ul>
-                  </div>
-
-
-
-                    
-                    
-                <%else%>
-                    <%= link_to(events_path(@event), class: "btn bg-gradient-primary ms-auto") do %>
-                          <i class="fa fa-list"></i>&nbsp;&nbsp;Event list
-                    <%end%>
-                <%end%>
-                
-              </div>
-              <div class="d-flex align-items-center">
-                <p class="h4">Date:&nbsp;</p>
-                <p class="h4"><%=local_time(@event.created_at, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%>  </p>
-              </div>
-              <div class="d-flex align-items-center">
-                <p class="h4">Maximum players: <%=@event.people%></p>                
-              </div>
-            </div>
             
             
-<div class="card-body px-0 pt-0 pb-2">
+            
+          <div class="card-body px-0 pt-0 pb-2">
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
@@ -127,7 +163,8 @@
 
           </div>
         </div>
-      </div>
+    </div>
 </div>
+
 
 
