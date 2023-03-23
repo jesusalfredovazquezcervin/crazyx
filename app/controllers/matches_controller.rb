@@ -4,7 +4,7 @@ class MatchesController < ApplicationController
   # GET /matches or /matches.json
   def index
     @event = Event.find(params[:id])
-    @matches = @event.matches
+    #@matches = @event.matches
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
     if params[:round].nil?
       @round = 1
@@ -12,6 +12,12 @@ class MatchesController < ApplicationController
       @round = params[:round]
     end
   end
+  def player_matches
+    @event = Event.find(params[:event_id])
+    @player = Player.find(params[:player_id])
+    @matches = @event.matches.where(playerOne: params[:player_id]).or(@event.matches.where(playerTwo: params[:player_id])).or(@event.matches.where(playerThree: params[:player_id])).or(@event.matches.where(playerFour: params[:player_id]))    
+  end
+
 
   # GET /matches/1 or /matches/1.json
   def show
