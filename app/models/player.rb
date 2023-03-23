@@ -87,13 +87,18 @@ class Player < ApplicationRecord
         #puts "The rank for the player id -> #{self.id} is -> #{rank}"
         return rank
     end
-    def won_lost_draw_matches 
+    def won_lost_draw_matches(event_id = nil) 
         #return a dictionary with the total number of won|lost|tied matches
 
         won_lost_draw = {total: 0, won: 0, lost: 0, tied: 0}
         
         #We count the matches result whe the player is PlayerOne or Two
-        matches = Match.where(playerOne: self.id).or(Match.where(playerTwo: self.id))
+        if event_id.nil?
+            matches = Match.where(playerOne: self.id).or(Match.where(playerTwo: self.id))
+        else
+            matches = Match.where(playerOne: self.id, event_id: event_id).or(Match.where(playerTwo: self.id, event_id: event_id))
+        end
+        
         matches.each{|m|
             if m.pointsOne == m.pointsThree
                 won_lost_draw[:tied] = won_lost_draw[:tied] + 1
@@ -105,7 +110,11 @@ class Player < ApplicationRecord
         }
 
         #We count the matches result whe the player is PlayerThree or Four
-        matches = Match.where(playerThree: self.id).or(Match.where(playerFour: self.id))
+        if event_id.nil?
+            matches = Match.where(playerThree: self.id).or(Match.where(playerFour: self.id))
+        else
+            matches = Match.where(playerThree: self.id, event_id: event_id).or(Match.where(playerFour: self.id, event_id: event_id))
+        end
         matches.each{|m|
             if m.pointsOne == m.pointsThree
                 won_lost_draw[:tied] = won_lost_draw[:tied] + 1
@@ -123,9 +132,15 @@ class Player < ApplicationRecord
     def next_event
         return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.first
     end
-    def winRate 
+    def winRate(event_id = nil) 
         #returns the win ratio
-        won_lost_draw_matches = self.won_lost_draw_matches
+        if event_id.nil?
+            won_lost_draw_matches = self.won_lost_draw_matches
+        else
+            won_lost_draw_matches = self.won_lost_draw_matches(event_id)
+        end
+
+        
         ratio = 0.0
         player = Player.find(self.id)
         lost = player.won_lost_draw_matches[:lost].to_f
