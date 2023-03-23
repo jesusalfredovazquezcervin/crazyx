@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   
   
   get 'matches/index/:id/(:round)', to: "matches#index", as: 'event_matches'
+  get 'matches/player_matches/:event_id/:player_id', to: "matches#player_matches", as: 'player_matches'
   delete "matches/:event_id/:round", to: "matches#destroy", as: "matches_destroy_round"
   get 'matches/create_round_of_matches/:event_id', to: "matches#create_round_of_matches", as: 'create_round_of_matches'
   
