@@ -1,20 +1,9 @@
-<div class="row">
-        <div class="col-12">
-          <div class="card mb-4">
-          <div class="d-flex px-2 py-1">
-          </div>
-            <div class="card-header pb-0">
-                         
-                <div class="d-flex align-items-center">
-                  <p class="h4">Event:&nbsp;</p>
-                  <p class="h4"><%= @couples.first.event.name.titleize%> [ID <%= @couples.first.event.id%>]&nbsp;&nbsp;
-                    <span class="badge badge-pill badge-lg bg-gradient-success"><%=(@couples.first.event.mixed? ? "MIXED COUPLES":"FIXED COUPLES" ) %></span>&nbsp;&nbsp;
-                    <span class="badge badge-pill badge-lg bg-gradient-danger"><%="  CLOSED" if @couples.first.event.status.upcase == "CLOSED"%></span>                    
-                  </p>
-                                  
 
-
-                <div class="dropdown ms-auto">
+<div class="card"><!-- EVENT DETAILS -->
+        <div class="card-header pb-0 p-3">
+            <div class="d-flex align-items-center">
+                <h5 class="mb-0 text-primary">Couples for the event</h5>                  
+                  <div class="dropdown ms-auto">
                           <button type="button" class="btn bg-gradient-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                             Action
                           </button>
@@ -32,67 +21,87 @@
                                 <%end%>
                             </li>
                           </ul>
-                      </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <p class="h4">Date:&nbsp;</p>
-                  <p class="h4"><%=local_time(@couples.first.event.created_at, %"%d/%m/%Y") %> at <%=@couples.first.event.timeIni.strftime("%H:%M")%> - <%=@couples.first.event.timeEnd.strftime("%H:%M")%>  </p>
-                </div>
-                <div class="d-flex align-items-center">
-                  <p class="h4">Maximum players: <%=@couples.first.event.people%></p>                                                          
-                </div>              
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>                      
-                      <th class="text-uppercase text-primary text-s font-weight-bolder ps-4">Couples</th>
-                      <th class="text-secondary opacity-7"></th>                      
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <% @couples.each.with_index(1) do | couple, index |%>
-                    <tr>
-                      
-                      <td>                         
-                        <div class="d-flex px-2 py-1">
-                          <div >
-                            <%if !couple.player.image_attachment.nil?%>
-                              <%= image_tag(couple.player.image, class: "avatar avatar-sm me-3") if !couple.player.image_attachment.nil? %>
-                            <%else%>
-                              <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
-                            <%end%>                            
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><%= link_to couple.player.name.titleize, couple, class: "text-xs font-weight-bold mb-0" %></h6>
-                          </div>&nbsp;&nbsp;
-                          <p class="h5"><span class="badge badge-pill bg-gradient-success">Couple&nbsp;<%=index%></span></p>&nbsp;&nbsp;
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm"><%= link_to couple.mate.name.titleize, couple, class: "text-xs font-weight-bold mb-0" %></h6>
-                          </div>&nbsp;&nbsp;                          
-                          
-                          <div >
-                            <%if !couple.mate.image_attachment.nil?%>
-                              <%= image_tag(couple.mate.image, class: "avatar avatar-sm me-3") if !couple.mate.image_attachment.nil? %>
-                            <%else%>
-                              <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
-                            <%end%>                            
-                          </div>
-                        </div>
-                      </td>                      
-                      <td class="d-flex px-2">
-                        <%= link_to(couple, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-sm btn-danger ms-auto") do %>
-                          Delete&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
-                        <%end%>
+                  </div>                
+            </div>            
+        </div>
+        <div class="card-body p-3">
+            <div class="row">
+                <div class="col-6">
+                    <ul class="list-group">
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Event Name:</strong> &nbsp; [<%=@couples.first.event.id%>]&nbsp;<%=@couples.first.event.name.titleize%>&nbsp;
+                            <span class="badge badge-pill badge-lg bg-gradient-danger"><%="CLOSED" if @couples.first.event.status.upcase == "CLOSED"%></span>
+                        </li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp; <%=local_time(@couples.first.event.created_at, %"%d/%m/%Y") %> at <%=@couples.first.event.timeIni.strftime("%H:%M")%> - <%=@couples.first.event.timeEnd.strftime("%H:%M")%></li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Couples:</strong> &nbsp; <%=(@couples.first.event.mixed? ? "MIXED":"FIXED" ) %>&nbsp;
+                              <strong class="text-dark">Category:</strong>&nbsp; <%=@couples.first.event.level%>
+                        </li>
                         
-                      </td>                                            
-                    </tr>
-                    <%end%>
-                  </tbody>
-                </table>
-              </div>
+                    </ul>
+                </div>                
             </div>
-          </div>
+        </div>
+    </div>
+    
+    <div class="col-md-12">
+        <br>
+    </div>
+<div class="row">
+  <div class="col-12">
+    <div class="card mb-4">
+    <div class="d-flex px-2 py-1">
+    </div>
+      
+      <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>                      
+                <th class="text-uppercase text-primary text-s font-weight-bolder ps-4">Couples</th>
+                <th class="text-secondary opacity-7"></th>                      
+              </tr>
+            </thead>
+            <tbody>
+            <% @couples.each.with_index(1) do | couple, index |%>
+              <tr>
+                
+                <td>                         
+                  <div class="d-flex px-2 py-1">
+                    <div >
+                      <%if !couple.player.image_attachment.nil?%>
+                        <%= image_tag(couple.player.image, class: "avatar avatar-sm me-3") if !couple.player.image_attachment.nil? %>
+                      <%else%>
+                        <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                      <%end%>                            
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm"><%= link_to couple.player.name.titleize, couple, class: "text-xs font-weight-bold mb-0" %></h6>
+                    </div>&nbsp;&nbsp;
+                    <p class="h5"><span class="badge badge-pill bg-gradient-success">Couple&nbsp;<%=index%></span></p>&nbsp;&nbsp;
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-sm"><%= link_to couple.mate.name.titleize, couple, class: "text-xs font-weight-bold mb-0" %></h6>
+                    </div>&nbsp;&nbsp;                          
+                    
+                    <div >
+                      <%if !couple.mate.image_attachment.nil?%>
+                        <%= image_tag(couple.mate.image, class: "avatar avatar-sm me-3") if !couple.mate.image_attachment.nil? %>
+                      <%else%>
+                        <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                      <%end%>                            
+                    </div>
+                  </div>
+                </td>                      
+                <td class="d-flex px-2">
+                  <%= link_to(couple, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class:"btn btn-sm btn-danger ms-auto") do %>
+                    Delete&nbsp;&nbsp;<i class="fa fa-trash-o"></i>
+                  <%end%>
+                  
+                </td>                                            
+              </tr>
+              <%end%>
+            </tbody>
+          </table>
         </div>
       </div>
+    </div>
+  </div>
+</div>
