@@ -40,7 +40,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Type:</label>
-                                <label for="example-text-input" class="form-control-label"><%= event.mixed? ? "Mixed couples":"Fixed couples" %></label>
+                                <label for="example-text-input" class="form-control-label"><%= event.mixed? ? "Mixed couples":"Fixed couples" %>, <%= event.public? ? "Public event":"Private event" %></label>                                
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -65,6 +65,7 @@
 
                             </div>
                         </div>
+                        
                     </div>                                                                    
                 </div>
                 <div class="card-header pb-3">                        
