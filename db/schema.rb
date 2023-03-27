@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_16_182734) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_185942) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,6 +76,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_16_182734) do
     t.time "timeEnd"
     t.boolean "mixed"
     t.string "level"
+    t.boolean "public"
     t.index ["player_id"], name: "index_events_on_player_id"
   end
 
