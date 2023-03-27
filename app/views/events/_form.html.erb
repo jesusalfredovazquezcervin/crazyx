@@ -68,6 +68,14 @@
                               <%= f.radio_button :mixed, false %>
                           </div>
                       </div>
+                      <div class="col-md-8">
+                          <div class="form-group">                                                                                                                        
+                              <%= f.label "Public event", "Public event", value: "true"  %>
+                              <%= f.radio_button :public, true, checked: true%>
+                              <%= f.label "Private event", "Private event", value: "false" %>
+                              <%= f.radio_button :public, false %>
+                          </div>
+                      </div>
                   </div>
                   <hr class="horizontal dark">
                   <div class="form-group">
