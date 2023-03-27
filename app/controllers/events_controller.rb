@@ -77,7 +77,15 @@ class EventsController < ApplicationController
   def show_closed_event
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
   end
-
+  
+  def dashboard
+    #here we have the next seven days events
+    dateIni = Date.today
+    @events = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.group_by{|e| e.eventDate}
+    @total_events = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.count
+    @next_event = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.sort_by{|e| [e.eventDate, e.timeIni]}.first
+    @round = 1
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
