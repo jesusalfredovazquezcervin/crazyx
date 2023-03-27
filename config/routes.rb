@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "events#index"
+  root "events#dashboard"
 
   # route for a new match-player with a specific event
   get 'match_players/new/:id', to: "match_players#new", as: 'new_match_player'
@@ -39,4 +39,5 @@ Rails.application.routes.draw do
   get 'couples/index/:id', to: "couples#index", as: 'event_couples'
   get "couples/new/:id", to: "couples#new", as: "new_couple"
   get "players/dashboard/:player_id", to:  "players#dashboard", as: "dashboard_player"
+  get "events/dashboard", to: "events#dashboard", as: "dashboard_events"
 end 
