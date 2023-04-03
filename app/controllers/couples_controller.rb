@@ -4,6 +4,7 @@ class CouplesController < ApplicationController
   # GET /couples or /couples.json
   def index
     @couples = Couple.where(event_id: params[:id])
+    @event = Event.find(params[:id])
   end
 
   # GET /couples/1 or /couples/1.json
