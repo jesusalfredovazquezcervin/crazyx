@@ -191,5 +191,9 @@ class Event < ApplicationRecord
             num_round = rounds_created.sort_by{|m| m.round}.last.round     
         end
         return num_round
+    end
+    def target 
+        #returns the datetime target 
+        return DateTime.new(self.eventDate.year, self.eventDate.month, self.eventDate.day, self.timeIni.hour, self.timeIni.min, self.timeIni.sec, Rational(-6, 24))
     end    
 end
