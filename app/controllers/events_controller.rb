@@ -81,9 +81,12 @@ class EventsController < ApplicationController
   def dashboard
     #here we have the next seven days events
     dateIni = Date.today
-    @events = Event.where(public: true, status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.group_by{|e| e.eventDate}
-    @total_events = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.count
-    @next_event = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.sort_by{|e| [e.eventDate, e.timeIni]}.first
+    #@events = Event.where(public: true, status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.group_by{|e| e.eventDate}.sort_by{|ebd| ebd[0]}
+    @events = Event.where(public: true, status: "Open", eventDate: dateIni..dateIni+7).select{|e| e if e.target >DateTime.now }.sort_by{|e| e.target }.group_by{|e| e.eventDate}
+    #@total_events = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.count
+    @total_events = Event.where(status: "Open", eventDate: dateIni..dateIni+7).select{|e| e if e.target > DateTime.now}.count
+    #@next_event = Event.where(status: "Open", eventDate: dateIni..dateIni+7).collect{|e| e}.sort_by{|e| [e.eventDate, e.timeIni]}.first
+    @next_event = Event.where(status: "Open", eventDate: dateIni..dateIni+7).select{|e| e if  e.target > DateTime.now}.sort_by{|e| e.target }.first
     @round = 1
   end
   private
