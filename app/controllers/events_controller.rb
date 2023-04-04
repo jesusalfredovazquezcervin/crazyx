@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  include Rails.application.routes.url_helpers
   before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event]
 
   # GET /events or /events.json
@@ -63,6 +64,9 @@ class EventsController < ApplicationController
       @event.status = "Closed"
       @event.getWinner      
       if @event.save
+        #we send the sms to inform to the winners
+        send_sms_to_winner if !@event.message_sent
+
         format.html { redirect_to show_closed_event_path(@event), notice: "Event was succesfully closed!"  }      
         format.json { render :close, status: :ok, location: @event }
       else
@@ -76,7 +80,23 @@ class EventsController < ApplicationController
   
   def show_closed_event
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
+  end  
+
+  def send_sms_to_winner
+    url = show_closed_event_url(@event.id)        
+    @event.score.where(position: 1).each{|winner|
+      message = "Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
+      sms = Message.new(number: winner.player.cellphone, body: message, action: "send_sms_to_winner", controller: "events_controller.rb")
+      result = sms.send_sms
+      sms.error = result.error_message
+      sms.save!
+      if result.error_message.nil?
+        @event.message_sent=true
+        @event.save!
+      end
+    }
   end
+
   
   def dashboard
     #here we have the next seven days events
