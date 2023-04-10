@@ -11,6 +11,8 @@ class Player < ApplicationRecord
     has_many :scores
     #scope :de_cliente, -> (cliente) { where("cliente_id = ?", cliente) }
     #scope :ready_to_mate, -> { from_event.where("price > 500") }
+    validates_format_of :cellphone, :with => /[0-9]{3}[0-9]{3}[0-9]{4}/, :message => "numbers must be in xxx-xxx-xxxx format."
+
     def self.ready_to_mate(event_id)
         event = Event.find(event_id)
         enrolled = event.match_player.where(status: "OnBoard").collect{|mp| mp.player }
