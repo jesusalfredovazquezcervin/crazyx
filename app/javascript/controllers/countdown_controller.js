@@ -26,7 +26,7 @@ export default class extends Controller {
 
         if (secondsRemaining <= 0) {
             clearInterval(this.countdown);
-            this.next_eventTarget.innerHTML = "Countdown is over!";
+            this.next_eventTarget.innerHTML = "Event has started!";
             return;
         }
 
