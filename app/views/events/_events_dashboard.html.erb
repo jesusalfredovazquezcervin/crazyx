@@ -27,7 +27,7 @@
                             </div>
                             <div class="col-lg-4 col-12 my-auto">
                                 <%if !next_event.nil?%>
-                                    <h4 class="text-body opacity-9">[<%=next_event.try(:id)%>] Next event starts in</h4>
+                                    <h4 class="text-body opacity-9">Next event starts in</h4>
                                     <hr class="horizontal light mt-1 mb-3">
                                     <div class="d-flex align-items-center">
                                         <div>                                            
@@ -103,6 +103,7 @@
                                                         <div class="col-10">
                                                             <div class="numbers">
                                                                 <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Schedulled at: <%= event.timeIni.strftime("%H:%M")%> - <%= event.timeEnd.strftime("%H:%M")%></p>
+                                                                <p class="text-white text-sm mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>
                                                                 <h5 class="text-white font-weight-bolder mb-0"><%=event.level%> Category</h5>
                                                                 <hr class="horizontal light mt-1 mb-3">
                                                                 <%if event.match_player.count < event.people%>
