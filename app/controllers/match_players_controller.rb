@@ -8,14 +8,14 @@ class MatchPlayersController < ApplicationController
 
   # GET /match_players/1 or /match_players/1.json
   def show
-    render layout: "empty"
+    #render layout: "empty"
   end
 
   # GET /match_players/new
   def new
     @event = Event.find(params[:id])    
     @match_player = MatchPlayer.new
-    render layout: "empty"
+    #render layout: "empty"
   end
 
   # POST /match_players or /match_players.json
