@@ -9,6 +9,8 @@ class Player < ApplicationRecord
     has_one_attached :image
     has_many :results
     has_many :scores
+    has_one :user
+
     #scope :de_cliente, -> (cliente) { where("cliente_id = ?", cliente) }
     #scope :ready_to_mate, -> { from_event.where("price > 500") }
     validates_format_of :cellphone, :with => /[0-9]{3}[0-9]{3}[0-9]{4}/, :message => "numbers must be in xxx-xxx-xxxx format."
@@ -132,7 +134,8 @@ class Player < ApplicationRecord
         return won_lost_draw
     end
     def next_event
-        return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.first
+        #return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| e.status=="Open"}.sort_by{|e| e.updated_at }.first 
+        return MatchPlayer.where(player_id: self.id).collect{|mp| mp.event }.select{|e| ((e.status=="Open") && (e.eventDate > Date.today) )}.sort_by{|e| e.updated_at }.first
     end
     def winRate(event_id = nil) 
         #returns the win ratio
