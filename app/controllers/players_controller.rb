@@ -1,5 +1,7 @@
 class PlayersController < ApplicationController
+  before_action :authenticate_user!, except: %i[ new create ]
   before_action :set_player, only: %i[ show edit update destroy ]
+  before_action :check_user_role, except: %i[ new create ]
 
   # GET /players or /players.json
   def index
@@ -83,5 +85,15 @@ class PlayersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def player_params
       params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore, :cellphone, :image, :event_id)
+    end
+    
+    def check_user_role    
+      case current_user.role        
+        when "Player"
+          respond_to do |format|
+            format.html { redirect_to root_path, notice: "You don't have enough privileges to access this page!"  }
+            format.json { head :no_content }
+          end
+      end
     end
 end
