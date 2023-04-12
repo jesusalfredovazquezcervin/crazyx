@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
   resources :couples, except: [:index, :new]
   resources :verification_codes
   resources :scores, except: [:index]
