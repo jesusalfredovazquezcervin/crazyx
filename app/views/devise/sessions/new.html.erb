@@ -1,0 +1,52 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 text-center mx-auto">
+      <h1 class="text-white mb-2 mt-5">&nbsp;</h1>
+      <p class="text-lead text-white">&nbsp;</p>
+      <p class="text-lead text-white">&nbsp;</p>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+    <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+      <div class="card mt-5">
+        <div class="card-header pb-0 text-start">
+          <h3 class="font-weight-bolder">Login</h3>
+          <p class="mb-0">Enter your email and password to sign in</p>
+        </div>
+        <div class="card-body">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "text-start") do |f| %>
+            
+            <%= f.label :email %><br />
+            <div class="mb-3">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
+            </div>
+            
+            
+            <%= f.label :password %><br />
+            <div class="mb-3">
+              <%= f.password_field :password, autocomplete: "current-password" , class: "form-control", placeholder: "Password" %>
+            </div>                 
+            <% if devise_mapping.rememberable? %>
+              <div class="form-check form-switch">
+                <%= f.check_box :remember_me, class: "form-check-input" %>
+                <%= f.label :remember_me, class: "form-check-label"%>
+              </div>
+            <% end %>
+
+            <div class="text-center">
+              <%= f.submit "Log in", class: "btn btn-primary w-100 mt-4 mb-0" %>
+            </div>          
+          <%end%>
+        </div>
+        <div class="card-footer text-center pt-0 px-lg-2 px-1">
+          <p class="mb-4 text-sm mx-auto">
+            <%= render "devise/shared/links" %>  
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
