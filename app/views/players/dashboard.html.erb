@@ -27,19 +27,26 @@
                         <%end%>                        
                     </div>
                     <div class="col-lg-3 col-12 my-auto">
-                        <h4 class="text-body opacity-9">Upcoming event:</h4>
-                        <hr class="horizontal light mt-1 mb-3">
-                        <div class="d-flex align-items-center">
-                        <div>
-                        <h6 class="mb-0 text-body"><%=@player.next_event.nil? ? "No upcomming events!": link_to(@player.next_event.updated_at.strftime("%A, %d %B %Y")<< " at" << @player.next_event.timeIni.strftime("%H:%M") << "-" << @player.next_event.timeEnd.strftime("%H:%M")  , @player.next_event) %></h6>
+                        <%if @player.next_event.nil?%>
+                            <h4 class="text-body opacity-9">No upcoming events:</h4>
+                            <hr class="horizontal light mt-1 mb-3">
+                            <div class="ms-lg-2 ms-4">
+                                <%= link_to(root_path, class:"btn btn-lg bg-gradient-info ms-auto") do%>
+                                    <i class="bi bi-calendar2-date"></i>&nbsp;&nbsp; Enroll to an event now!
+                                <%end%>
+                            </div>
+                        <%else%>
+                            <h4 class="text-body opacity-9">Upcoming event:</h4>
+                            <hr class="horizontal light mt-1 mb-3">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <h6 class="mb-0 text-body"><%=@player.next_event.nil? ? "No upcomming events!": link_to(@player.next_event.eventDate.strftime("%A, %d %B %Y")<< " at " << @player.next_event.timeIni.strftime("%H:%M") << "-" << @player.next_event.timeEnd.strftime("%H:%M")  , @player.next_event) %></h6>
+                                </div>                            
+                            </div>                    
+
+                        <%end%>
                         
-                        </div>
-                        <div class="ms-lg-6 ms-4">
-                        <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 py-0">
-                        <i class="ni ni-map-big" aria-hidden="true"></i>
-                        </button>
-                        </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
