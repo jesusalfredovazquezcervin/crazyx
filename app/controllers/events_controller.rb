@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   include Rails.application.routes.url_helpers
+  before_action :authenticate_user!, except: %i[ dashboard ]
   before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event]
+  before_action :check_user_role, except: %i[ dashboard ]
 
   # GET /events or /events.json
   def index
@@ -118,5 +120,15 @@ class EventsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def event_params
       params.require(:event).permit(:name, :eventDate, :people, :status, :winner, :timeIni, :timeEnd, :mixed, :level, :public)
+    end
+    
+    def check_user_role    
+      case current_user.role        
+        when "Player"
+          respond_to do |format|
+            format.html { redirect_to root_path, notice: "You don't have enough privileges to access this page!"  }
+            format.json { head :no_content }
+          end
+      end
     end
 end
