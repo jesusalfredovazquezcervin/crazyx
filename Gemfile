@@ -90,3 +90,6 @@ gem 'capistrano-rbenv', '~> 2.2'
 
 #Solargraph provides a comprehensive suite of tools for Ruby programming: intellisense, diagnostics, inline documentation, and type checking.
 gem 'solargraph', '~> 0.48.0'
+
+#Authentication DEVISE
+gem "devise", github: "heartcombo/devise", branch: "main"
