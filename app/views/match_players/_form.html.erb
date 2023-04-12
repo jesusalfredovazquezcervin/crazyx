@@ -18,15 +18,15 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Join event</h5>              
+              <h5>Enroll event or <%= link_to "enroll other", root_path,  class: "text-info text-gradient font-weight-bold" %></h5>              
             </div>
             <div class="card-header">
               <ul class="list-group">
-                <li class="list-group-item">Event: <strong><%=event.name%> [ID: <%=event.id%>]</strong></li>
-                <li class="list-group-item">Date: <strong><%=event.eventDate.strftime("%d/%m/%Y") %> </strong></li>
-                <li class="list-group-item">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> </strong></li>
-                <li class="list-group-item">Players: <strong><%=event.people%> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
-                <li class="list-group-item">Category: <strong><%=event.level%>&nbsp;&nbsp;
+                <li class="list-group-item text-sm">Event: <strong><%=event.name%> [ID: <%=event.id%>]</strong></li>
+                <li class="list-group-item text-sm">Date: <strong><%=event.eventDate.strftime("%d/%m/%Y") %> </strong></li>
+                <li class="list-group-item text-sm">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> </strong></li>
+                <li class="list-group-item text-sm">Players: <strong><%=event.people%> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
+                <li class="list-group-item text-sm">Category: <strong><%=event.level%>&nbsp;&nbsp;
                   <%if  event.mixed   %>
                     Mixed
                   <%else%>
@@ -34,10 +34,15 @@
                   <%end%>
                   Couples</strong>
                 </li>                
-              </ul>              
+              </ul>                                          
             </div>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-link bg-gradient font-bold" data-bs-toggle="modal" data-bs-target="#exampleModal">Enrolled players</button>
+            <div class="text-center">
+              <button type="button" class="btn btn-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#exampleModal">See enrolled players</button>
+            </div>
+            
+              
+            
             <div class="card-body">
               <%= form_with(model: match_player) do |f| %>
                 <% if match_player.errors.any? %>
@@ -55,10 +60,10 @@
                   <p class="text-s mt-3 mb-0">Type your cellphone or full name</p>                
                   <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
                   
-                  <%= f.select :player_id, options_for_select(Player.order(:name).collect { |player|
+                  <%= f.select :player_id, options_for_select(Player.where.not({ id: event.match_player.collect{|mp| mp.player.id}}).order(:name).collect { |player|
                                                                    [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control ms-auto",  required: true} %>
                   <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
-                        <i class="fa fa-check"></i>&nbsp;&nbsp;Join event
+                        <i class="fa fa-check"></i>&nbsp;&nbsp;Enroll event
                   <% end %>
                 </div>
                 <p class="text-sm mt-3 mb-0">Your cellphone does not appear?
