@@ -93,3 +93,6 @@ gem 'solargraph', '~> 0.48.0'
 
 #Authentication DEVISE
 gem "devise", github: "heartcombo/devise", branch: "main"
+
+#Active storage amazon S3
+gem "aws-sdk-s3", require: false
