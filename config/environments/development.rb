@@ -70,4 +70,8 @@ Rails.application.configure do
   config.hosts << /[a-z0-9-.]+\.ngrok\.io/
   Rails.application.routes.default_url_options[:host] = "localhost:3000"
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # Store files locally.
+  config.active_storage.service = :local
+  
+
 end
