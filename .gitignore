@@ -67,3 +67,5 @@ yarn-debug.log*
 !/storage/.keep
 twilio.env
 local_env.yml
+
+/config/credentials/production.key
