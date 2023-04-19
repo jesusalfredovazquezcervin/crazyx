@@ -12,8 +12,8 @@
               </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
+              <div class="table-responsive p-6">
+                <table id= "events_table" class="display compact">
                   <thead>
                     <tr>
                       
@@ -130,3 +130,9 @@
           </div>
         </div>
       </div>
+<script type="text/javascript">
+  // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {    
+    $('#events_table').DataTable();        
+  });
+</script>
