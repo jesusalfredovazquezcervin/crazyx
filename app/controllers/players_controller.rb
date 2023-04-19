@@ -1,7 +1,8 @@
 class PlayersController < ApplicationController
   before_action :authenticate_user!, except: %i[ new create ]
+  before_action :check_user_role, except: %i[ new create dashboard]
   before_action :set_player, only: %i[ show edit update destroy ]
-  before_action :check_user_role, except: %i[ new create ]
+  
 
   # GET /players or /players.json
   def index
@@ -74,7 +75,11 @@ class PlayersController < ApplicationController
   end
   
   def dashboard
-    @player = Player.find(params[:player_id])
+    if current_user.role == "Player"
+      @player = Player.find(current_user.player_id)
+    else
+      @player = Player.find(params[:player_id])
+    end
   end
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -87,13 +92,13 @@ class PlayersController < ApplicationController
       params.require(:player).permit(:name, :category, :leftHanded, :birthDate, :eventScore, :totalScore, :cellphone, :image, :event_id)
     end
     
-    def check_user_role    
+    def check_user_role
       case current_user.role        
         when "Player"
           respond_to do |format|
-            format.html { redirect_to root_path, notice: "You don't have enough privileges to access this page!"  }
+            format.html { redirect_to dashboard_player_path(current_user.player_id), notice: "...redirected to the dashboard page!"  }
             format.json { head :no_content }
-          end
+          end        
       end
     end
 end
