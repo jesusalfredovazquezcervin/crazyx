@@ -23,3 +23,4 @@
     <%= button_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), data: { turbo: false }, class: "text-primary font-weight-bold" %><br />
   <% end %>
 <% end %>
+<%= link_to "Events", root_path,class: "text-primary font-weight-bold" %><br />
