@@ -113,8 +113,15 @@
                       
                         <%if current_user %>
                           <li class="nav-item d-flex align-items-center">
-                            <span class="d-sm-inline d-none text-white p-0">
-                              <i class="fa fa-user me-sm-1"></i>Hello, <strong><%=current_user.role%></strong>&nbsp;|&nbsp;<%=current_user.email%>&nbsp;&nbsp;|
+                            <span class="d-sm-inline d-none text-white p-0" >
+                              <i class="fa fa-user me-sm-1"></i>Hello, 
+                                <strong><%=current_user.role%></strong>
+                                <%if current_user.role == 'Player'%>
+                                  &nbsp;|&nbsp;<%=current_user.try(:player).try(:name)%>&nbsp;|&nbsp;
+                                  &nbsp;|&nbsp;<%=current_user.email%>&nbsp;|&nbsp;
+                                <%else%>
+                                  &nbsp;|&nbsp;<%=current_user.email%>&nbsp;|&nbsp;
+                                <%end%>                                                                
                             </span>
                           </li>
                           <li class="nav-item d-flex align-items-center">
