@@ -37,7 +37,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
@@ -70,8 +70,21 @@ Rails.application.configure do
   config.hosts << /[a-z0-9-.]+\.ngrok\.io/
   Rails.application.routes.default_url_options[:host] = "localhost:3000"
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  #config.action_mailer.delivery_method = :mailtrap
+  #config.action_mailer.mailtrap_settings = {
+  #  api_key: 'b9bce520b12b0bbab1e46d429ef45acd'
+  #}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => 'b85d0e4a5110db',
+    :password => '51df6834c2b782',
+    :address => 'sandbox.smtp.mailtrap.io',
+    :domain => 'sandbox.smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
+  }  
   # Store files locally.
-  config.active_storage.service = :local
+  config.active_storage.service = :amazon
   
 
 end
