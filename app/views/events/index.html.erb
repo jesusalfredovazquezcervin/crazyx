@@ -19,7 +19,7 @@
                       
                       <th class="text-uppercase text-primary text-s font-weight-bolder">ID</th>
                       <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Name</th>
-                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Date</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Date <small>yyyy-mm-dd</small></th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">People Qty</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Status</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Winner</th>
@@ -41,7 +41,12 @@
                         <%= link_to event.name, event, class: "text-xs font-weight-bold mb-0" %>                                                  
                       </td>
                       <td class="align-middle text-center">
-                        <span class="text-secondary text-xs font-weight-bold"><%=event.eventDate.strftime("%d/%m/%Y")%></span>
+                        <%if event.target >= Date.today%>
+                          <span class="text-secondary text-xs font-weight-bold">Scheduled for <%=event.eventDate  %></span>
+                        <%else%>
+                          <span class="text-secondary text-xs font-weight-bold">Played <%=event.eventDate%></span>
+                        <%end%>
+                        
                       </td>                      
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"> <%=event.people%></span>
@@ -133,6 +138,10 @@
 <script type="text/javascript">
   // In your Javascript (external .js resource or <script> tag)
     $(document).ready(function() {    
-    $('#events_table').DataTable();        
+    $('#events_table').DataTable(
+      {
+        order: [[2, 'desc']],
+      }
+    );
   });
 </script>
