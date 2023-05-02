@@ -196,6 +196,6 @@ class Event < ApplicationRecord
     end
     def target 
         #returns the datetime target 
-        return DateTime.new(self.eventDate.year, self.eventDate.month, self.eventDate.day, self.timeIni.hour, self.timeIni.min, self.timeIni.sec, Rational(-6, 24))
+        return DateTime.new(self.eventDate.year, self.eventDate.month, self.eventDate.day, self.timeIni.try(:hour).nil? ? 0:self.timeIni.hour, self.timeIni.try(:min).nil? ? 0:self.timeIni.min, self.timeIni.try(:sec).nil? ? 0:self.timeIni.sec, Rational(-6, 24))
     end    
 end
