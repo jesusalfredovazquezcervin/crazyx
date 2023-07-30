@@ -47,7 +47,7 @@
             <div class="field">
               <%= f.label :player %><br />              
               <%= f.select :player_id, options_for_select(Player.all.order(:name).collect { |player|
-                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, resource.player_id), {}, {id: 'select2_player_id',class:"form-control ms-auto",  required: true} %>
+                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, resource.player_id), {}, {id: 'select2_player_id',class:"form-control ms-auto"} %>
             </div>
             <div class="text-center">
               <%= f.submit "Sign up", class: "btn btn-primary w-100 mt-4 mb-0" %>
