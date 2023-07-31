@@ -101,7 +101,7 @@
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">#</th>
+                  
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Player</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
@@ -109,21 +109,21 @@
               </thead>
               <tbody>
                 <% (event.match_player.all.sort_by{|p| p.created_at}).each.with_index(1) do | mp, i |%>
-                  <tr>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0"><%=i%></p>
-                    </td>                  
+                  <tr>                       
                     <td>
                       <div class="d-flex px-2 py-1">
-                        <div>
-                          <%if !mp.player.image_attachment.nil?%>
-                            <%= image_tag(mp.player.image, class: "avatar avatar-sm me-3") if !mp.player.image_attachment.nil? %>
-                          <%else%>
-                            <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
-                          <%end%>                          
-                        </div>
+                        <% if device != "mobile" %>
+                        
+                          <div>                          
+                            <%if !mp.player.image_attachment.nil?%>
+                              <%= image_tag(mp.player.image, class: "avatar avatar-sm me-3") if !mp.player.image_attachment.nil? %>
+                            <%else%>
+                              <%= image_tag("blank-profile-picture.jpg", class: "avatar avatar-sm me-3")%>
+                            <%end%>                          
+                          </div>
+                        <%end%>
                         <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-xs"><%=mp.player.name.titleize%></h6>
+                          <h6 class="mb-0 text-xs"><%=i%>.&nbsp;<%=mp.player.name.titleize%></h6>
                           <p class="text-xs text-secondary mb-0"><%=mp.player.cellphone%></p>
                         </div>
                       </div>
@@ -131,10 +131,11 @@
                     <td>
                       <div>
                         <div>
+
                           <%if mp.status=='OnBoard' %>
-                            <span class="badge badge-sm bg-gradient-success"><%=mp.status%></span>
+                            <span class="text-xs font-weight-bold mb-0 text-success"><%=mp.status%></span>
                           <%else%>
-                            <span class="badge badge-sm bg-gradient-danger"><%=mp.status%></span>
+                            <span class="text-xs font-weight-bold mb-0 text-danger"><%=mp.status%></span>
                           <%end%>
                           <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, %"%d/%m/%Y")%></p>
                           <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, "%H:%M:%S")%></p>
