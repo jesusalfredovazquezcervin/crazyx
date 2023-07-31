@@ -11,11 +11,11 @@
                             <div class="d-flex justify-content-center">
                                 <div>
                                     <h6 class="mb-0 text-body opacity-7">Last event</h6>
-                                    <h5 class="text-body"><%= MatchPlayer.where(player_id: @player.id).last.event.eventDate.strftime("%A, %d %B %Y")%></h5>
+                                    <h5 class="text-body"><%= MatchPlayer.where(player_id: @player.id).last.nil? ? ("N/A"):(MatchPlayer.where(player_id: @player.id).last.event.eventDate.strftime("%A, %d %B %Y")) %></h5>
                                 </div>
                                 <div class="ms-lg-6 ms-4 text-center">
                                     <h6 class="mb-0 text-body opacity-7">Last score:</h6>
-                                    <h5 class="text-body"><%= @player.scores.last.points%></h5>
+                                    <h5 class="text-body"><%= @player.scores.last.nil? ? ('N/A'):(@player.scores.last.try(:points))%></h5>
                                 </div>
                             </div>
                     </div>
