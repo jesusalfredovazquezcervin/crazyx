@@ -1,60 +1,82 @@
 <div class="col-md-12"> 
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card shadow-lg">
-                <%= image_tag("pattern-left.png", class: "position-absolute overflow-hidden opacity-4 start-0 top-0 h-100 border-radius-xl")%>
-                <%= image_tag("pattern-right.png", class: "position-absolute overflow-hidden opacity-4 end-0 top-0 h-100 border-radius-xl")%>
-                    <div class="card-body px-5 z-index-1 bg-cover">
-                        <div class="row">
-                            <div class="col-lg-4 col-12 my-auto">
-                                <h4 class="text-body opacity-9 text-center">Welcome to FEMAC</h4>
-                                <hr class="horizontal light mt-1 mb-3">
-                                    <div class="d-flex justify-content-center">
-                                        <div>
-                                            <h6 class="mb-0 text-body opacity-7">Here you have the upcomming events for the next</h6>
-                                            <h3 class="text-body">7 <small class="text-sm align-top">days</small></h3>
-                                        </div>
-
-                                    </div>
-                            </div>
-                            <div class="col-lg-4 col-12 text-center">
-                                <%= image_tag("logofemac.jpg", class: "w-45")%>
-
-                                <div class="d-flex align-items-center">
-                                    <h4 class="text-body opacity-7 ms-0 ms-md-auto">Upcomming events</h4>
-                                        <h2 class="text-body ms-2 me-auto"><%=@total_events%></h2>
+    <% if device != "mobile" %>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-lg">
+                    <%= image_tag("pattern-left.png", class: "position-absolute overflow-hidden opacity-4 start-0 top-0 h-100 border-radius-xl")%>
+                    <%= image_tag("pattern-right.png", class: "position-absolute overflow-hidden opacity-4 end-0 top-0 h-100 border-radius-xl")%>
+                        <div class="card-body px-5 z-index-1 bg-cover">
+                            <div class="row">
+                                <div class="col-lg-4 col-12 my-auto">
+                                    <h4 class="text-body opacity-9 text-center">Welcome to FEMAC</h4>                                    
+                                        <hr class="horizontal light mt-1 mb-3">
+                                            <div class="d-flex justify-content-center">
+                                                <div>
+                                                    <h6 class="mb-0 text-body opacity-7">Here you have the upcomming events for the next</h6>
+                                                    <h3 class="text-body">7 <small class="text-sm align-top">days</small></h3>
+                                                </div>
+                                            </div>                                    
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-12 my-auto">
-                                <%if !next_event.nil?%>
-                                    <h4 class="text-body opacity-9">Next event starts in</h4>
-                                    <hr class="horizontal light mt-1 mb-3">
-                                    <div class="d-flex align-items-center">
-                                        <div>                                            
-                                            <%seconds_until_target_time = next_event.try(:target).to_i -  DateTime.new(Date.today.year,Date.today.month, Date.today.day, Time.now.hour, Time.now.min, Time.now.sec, Rational(-6, 24)).to_i%>
-                                            <%= content_tag(:h4, "", data: {
-                                                controller: "countdown",
-                                                countdown_target: "next_event",
-                                                seconds_until_end_value: seconds_until_target_time
-                                                
-                                            }, class: "text-primary")%>
+                                <div class="col-lg-4 col-12 text-center">
+                                    <%= image_tag("logofemac.jpg", class: "w-45")%>
 
-                                            <h6 class="mb-0 text-body"><%=next_event.try(:name).try(:titleize)%>&nbsp;<%=next_event.try(:level)%></h6>
-                                            <% if !next_event.nil? %>
-                                                <%= link_to(new_match_player_path(next_event), class:"btn bg-gradient-info ms-auto") do%>
-                                                    <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll now!
-                                                <%end%>
-                                            <%end%>
-                                        </div>                                        
+                                    <div class="d-flex align-items-center">
+                                        <h4 class="text-body opacity-7 ms-0 ms-md-auto">Upcomming events</h4>
+                                            <h2 class="text-body ms-2 me-auto"><%=@total_events%></h2>
                                     </div>
-                                <%end%>
+                                </div>                                
+                                    <div class="col-lg-4 col-12 my-auto">
+                                        <%if !next_event.nil?%>
+                                            <h4 class="text-body opacity-9">Next event starts in</h4>
+                                            <hr class="horizontal light mt-1 mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div>                                            
+                                                    <%seconds_until_target_time = next_event.try(:target).to_i -  DateTime.new(Date.today.year,Date.today.month, Date.today.day, Time.now.hour, Time.now.min, Time.now.sec, Rational(-6, 24)).to_i%>
+                                                    <%= content_tag(:h4, "", data: {
+                                                        controller: "countdown",
+                                                        countdown_target: "next_event",
+                                                        seconds_until_end_value: seconds_until_target_time
+                                                        
+                                                    }, class: "text-primary")%>
+
+                                                    <h6 class="mb-0 text-body"><%=next_event.try(:name).try(:titleize)%>&nbsp;<%=next_event.try(:level)%></h6>
+                                                    <% if !next_event.nil? %>
+                                                        <%= link_to(new_match_player_path(next_event), class:"btn bg-gradient-info ms-auto") do%>
+                                                            <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll now!
+                                                        <%end%>
+                                                    <%end%>
+                                                </div>                                        
+                                            </div>
+                                        <%end%>
+                                    </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <%else%>
+        <!-- Diseño para dispositivos moviles-->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow-lg">
+                    <%= image_tag("pattern-left.png", class: "position-absolute overflow-hidden opacity-4 start-0 top-0 h-100 border-radius-xl")%>
+                    <%= image_tag("pattern-right.png", class: "position-absolute overflow-hidden opacity-4 end-0 top-0 h-100 border-radius-xl")%>
+                        <div class="card-body px-5 z-index-1 bg-cover">
+                            <div class="row">
+                                <div class="col-lg-4 col-12 my-auto">
+                                    <h4 class="text-body opacity-9 text-center">Welcome to FEMAC</h4>
+                                    <h6 class="mb-0 text-body opacity-7">Here you have the upcomming events for the next 7 days</h6>                                    
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <%end%>
+    
 
 
 
@@ -79,7 +101,14 @@
                     <button class="nav-link <%= i == (@round.to_i - 1) ? ("active"):("") %>" 
                     id="tab-<%=i%>" data-bs-toggle="tab" data-bs-target="#tab-<%=i%>-pane" type="button" 
                     role="tab" aria-controls="tab-<%=i%>-pane" 
-                    aria-selected="true"><%=events_by_day[0].strftime("%A %d, %B %Y")%></button>
+                    aria-selected="true">
+                        <% if device != "mobile" %>
+                            <%=events_by_day[0].strftime("%A %d, %B %Y")%>
+                        <%else%>
+                            <%=events_by_day[0].strftime("%d %b %Y")%>
+                        <%end%>
+                    
+                    </button>
                 <%end%>                
                 </ul>
                 <div class="d-flex px-2 py-1">
@@ -94,46 +123,74 @@
                                 </div>
                             </div>
                             <div class="container" id="container-pb-<%=i%>">                                
+                            
                                 <div class="row mt-2">
-                                    <%  events_by_day[1].sort_by{|e| e.timeIni}.each_with_index do |event, i| %>                                                                    
-                                        <div class="col-lg-3 col-md-6 col-12">
+                                    <%  events_by_day[1].sort_by{|e| e.timeIni}.sort_by{|e| e.level }.each_with_index do |event, i| %>                                                                    
+                                    <% if device != "mobile" %>
+                                        <div class= "col-lg-3 col-md-6">
+                                    <%else%>
+                                        <div class= "col-6 col-md-auto">
+                                    <%end%>
                                             <div class="card <%=(event.match_player.count < event.people) ? ("bg-success"):("bg-danger") %> card-gradient" >
-                                                <div class="card-body p-3">
-                                                    <div class="row">
-                                                        <div class="col-10">
-                                                            <div class="numbers">
-                                                                <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Schedulled at: <%= event.timeIni.strftime("%H:%M")%> - <%= event.timeEnd.strftime("%H:%M")%></p>
-                                                                <p class="text-white text-sm mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>
-                                                                <h5 class="text-white font-weight-bolder mb-0"><%=event.level%> Category</h5>
-                                                                <hr class="horizontal light mt-1 mb-3">
+                                                <% if device != "mobile" %>
+                                                    <div class="card-body p-3">
+                                                        <div class="row">                                           
+                                                            <div class="col-10">
+                                                                <div class="numbers">
+                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>
+                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Schedulled at: <%= event.timeIni.strftime("%H:%M")%> - <%= event.timeEnd.strftime("%H:%M")%></p>
+                                                                    <h5 class="text-white font-weight-bolder mb-0"><%=event.level%> Category</h5>
+                                                                    <hr class="horizontal light mt-1 mb-3">
+                                                                    <%if event.match_player.count < event.people%>
+                                                                        <h4 class="text-white font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>                                                                        
+                                                                    <%else%>
+                                                                        <h4 class="text-white font-weight-bolder mb-0">Event is full</h4>
+                                                                        <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">&nbsp;</p>                                           
+                                                                    <%end%>
+                                                                </div>                                                                
+                                                            </div>                                                            
+                                                        </div>
+                                                        <br>
+                                                        <div class="row">
+                                                            <div class="col-10">
                                                                 <%if event.match_player.count < event.people%>
-                                                                    <h4 class="text-white font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>
-                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Available</p>
+                                                                    <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
+                                                                        <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll now! 
+                                                                    <%end%>
                                                                 <%else%>
-                                                                    <h4 class="text-white font-weight-bolder mb-0">Event is full</h4>
-                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">&nbsp;</p>                                           
+                                                                    <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
+                                                                        <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll & wait! 
+                                                                    <%end%>
                                                                 <%end%>
                                                             </div>
-                                                            
                                                         </div>
-                                                        
                                                     </div>
-                                                    <br>
-                                                    <div class="row">
-                                                        <div class="col-10">
+                                                <%else%>
+                                                    <!-- For mobile devices-->
+                                                    <div class="card-body p-3">
+                                                        <div class="numbers">
+                                                            <p class="text-white text-xs mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>                                                            
+                                                            <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.timeIni.strftime("%H:%M")%>-<%= event.timeEnd.strftime("%H:%M")%></p>
+                                                            <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.level%> Category</h6> 
+                                                            <%if event.match_player.count < event.people%>
+                                                                <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>                                                                        
+                                                            <%else%>
+                                                                <h6 class="text-white text-xs font-weight-bolder mb-0">Event is full</h4>                                                                        
+                                                            <%end%>
+                                                            <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.mixed? ? ("Parejas Multiples"):("Parejas Fijas")%></p>
+                                                            <hr class="horizontal light mt-1 mb-3">
                                                             <%if event.match_player.count < event.people%>
                                                                 <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
-                                                                    <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll now! 
-                                                                <%end%>
-                                                            <%else%>
-                                                                <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
-                                                                    <i class="bi bi-person-plus-fill"></i>&nbsp;&nbsp; Enroll & wait! 
-                                                                <%end%>
+                                                                    <i class="bi bi-person-plus-fill"></i>Enroll 
+                                                                <%end%>                                                                    
                                                             <%end%>
                                                         </div>
                                                     </div>
-                                                </div>
+
+                                                <%end%>
+                                                
                                             </div>
+                                            <br>
                                         </div>
                                     <%end%>
                                 </div>
