@@ -1,6 +1,7 @@
-<div class="row>
+<% if device != "mobile" %>
+  <div class="row>
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg">
-      <span ></span>
+      <span></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-5 text-center mx-auto">
@@ -18,7 +19,7 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">
-              <h5>Enroll event or <%= link_to "enroll other", root_path,  class: "text-info text-gradient font-weight-bold" %></h5>              
+              <h5>Enroll event or <%= link_to "enroll other", root_path,  class: "text-info text-gradient text-link font-weight-bold" %></h5>              
             </div>
             <div class="card-header">
               <ul class="list-group">
@@ -76,32 +77,121 @@
       </div>
     </div>
   
-</div>
+  </div>
+<%else%>
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-lg">
+        <div class="card-body z-index-1 bg-cover">
+            <div class="container">                              
+              <div class="row">
+                <div class="col">
+                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
+                          Event:&nbsp;<strong><%=event.name.titleize%>&nbsp;[ID: <%=event.id%>]</strong></p>
+                  </span>
+                </div>
+                <div class="col">
+                  <span>
+                  <p class="text-primary text-sm mb-0 font-weight-bold">                                          
+                    Scheduled:&nbsp;<strong><%=event.timeIni.strftime("%H:%M")%>-<%=event.timeEnd.strftime("%H:%M")%> </strong>                                                                                    
+                  </p>                                        
+                  </span>
+                </div>
+                <div class="col">
+                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
+                          Category:&nbsp;<strong><%=event.level%></strong></span></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span><p class="text-primary text-sm mb-0 font-weight-bold">                                          
+                          Seats:&nbsp;<strong><%=event.people%> </strong>
+                        </p>
+                  </span>
+                </div>
+                <div class="col">
+                  <span>
+                    <p class="text-primary text-sm mb-0 font-weight-bold">
+                        Only left:&nbsp;<strong><%=event.onlyLeft%></strong></p>
+                  </span>
+                </div>
+                <div class="col">
+                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
+                          Type:&nbsp;<strong><%= event.mixed? ? ("Parejas Multiples"):("Parejas Fijas")%></strong></p>
+                </div>
+              </div>
+            </div>
+            <hr class="horizontal light mt-1 mb-3">
+            <div class="container">                              
+              <div class="row">
+                <div class="col">
+                  <span>
+                    <!-- Enroll Button -->
+                    <%= form_with(model: match_player) do |f| %>
+                      <% if match_player.errors.any? %>
+                        <div style="color: red">
+                          <h2><%= pluralize(match_player.errors.count, "error") %> prohibited this event from being saved:</h2>
 
+                          <ul>
+                            <% match_player.errors.each do |error| %>
+                              <li><%= error.full_message %></li>
+                            <% end %>
+                          </ul>
+                        </div>
+                      <% end %>
+                                                                  
+                      <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
+                      
+                      <%= f.select :player_id, options_for_select(Player.where.not({ id: event.match_player.collect{|mp| mp.player.id}}).order(:name).collect { |player|
+                                                                      [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {prompt: "Type or select name|phone"}, {id: 'select2_player_id_mobile',class:"form-control my-auto",  required: true} %>
+                      <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
+                            <i class="fa fa-check"></i>&nbsp;&nbsp;Enroll event
+                      <% end %>                                            
+                      <p class="text-sm mb-0">Your name|cellphone does not appear?
+                        <%= link_to "Register here", new_player_path(event),  class: "text-info text-gradient font-weight-bold" %>
+                      </p>
+                    <%end%>
+                    <div class="text-center">
+                      <hr class="horizontal light mt-1 mb-3">
+                      <button type="button" class="btn btn-sm bg-gradient-success" data-bs-toggle="modal" data-bs-target="#exampleModal">See enrolled players</button>
+                    </div>
+                  </span>
+                </div>
+                
+              </div>
+            </div>                                                        
+        </div>          
+      </div>
+    </div>
+  </div>
+<%end%>
 
-
-
-
-
-
-
+<% if device != "mobile" %>
+<%else%>
+<%end%>
 <!-- Modal Enrolled Players-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Enrolled players to "<%=event.name%>" [ID: <%=event.id%>]</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      
+        <% if device != "mobile" %>
+          <h5 class="modal-title" id="exampleModalLabel">Enrolled players to "<%=event.name%>" [ID: <%=event.id%>]</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        <%else%>
+          <span><p class="text-secondary text-sm mb-0 font-weight-bold">
+                          Enrolled players to:&nbsp;<strong><%=event.name.titleize%>&nbsp;[ID: <%=event.id%>]</strong></p>
+          </span>
+        <%end%>
       </div>
       <div class="modal-body">        
         <div class="card">
           <div class="table-responsive">
             <table class="table align-items-center mb-0">
               <thead>
-                <tr>
-                  
+                <tr>                  
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Player</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
@@ -130,18 +220,24 @@
                     </td>
                     <td>
                       <div>
-                        <div>
-
+                        <% if device != "mobile" %>
+                          <%if mp.status=='OnBoard' %>
+                            <span class="badge badge-sm bg-gradient-success"><%=mp.status%></span>
+                          <%else%>
+                            <span class="badge badge-sm bg-gradient-danger"><%=mp.status%></span>
+                          <%end%>
+                        <%else%>
+                          <!-- Diseño movil-->
                           <%if mp.status=='OnBoard' %>
                             <span class="text-xs font-weight-bold mb-0 text-success"><%=mp.status%></span>
                           <%else%>
                             <span class="text-xs font-weight-bold mb-0 text-danger"><%=mp.status%></span>
-                          <%end%>
-                          <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, %"%d/%m/%Y")%></p>
-                          <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, "%H:%M:%S")%></p>
-                          
-                        </div>
+                          <%end%>                          
+                        <%end%>
+                        <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, %"%d/%m/%Y")%></p>
+                        <p class="text-xs font-weight-bold mb-0"><%= local_time(mp.created_at, "%H:%M:%S")%></p>                        
                       </div>
+                      
                     </td>                                          
                     <td>                      
                       <%= link_to(edit_match_player_path(mp.id), class: "text-sm text-danger text-gradient text-bold", data: { turbo_frame: "validation_code_modal" }) do %>
