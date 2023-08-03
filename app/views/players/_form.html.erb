@@ -39,7 +39,7 @@
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Category</label>
                               <%= f.select :category, options_for_select(Player::CATEGORY.collect { |category|
-                                                                         [category.to_i.ordinalize] }, player.category), {}, {id: 'select2_category',class:"form-control m-b",  required: true} %>
+                                                                         [category.to_i.ordinalize, category] }, player.category), {}, {id: 'select2_category',class:"form-control m-b",  required: true} %>
                           </div>
                       </div>
                       <div class="col-md-8">
