@@ -125,7 +125,7 @@
                             <div class="container" id="container-pb-<%=i%>">                                
                             
                                 <div class="row mt-2">
-                                    <%  events_by_day[1].sort_by{|e| [e.level, e.timeIni]}.each_with_index do |event, i| %>                                                                    
+                                    <%  events_by_day[1].sort_by{|e| e.level}.each_with_index do |event, i| %>                                                                    
                                     <% if device != "mobile" %>
                                         <div class= "col-lg-3 col-md-6">
                                     <%else%>
