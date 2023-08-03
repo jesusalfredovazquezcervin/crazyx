@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_10_214557) do
     t.time "timeIni"
     t.time "timeEnd"
     t.boolean "mixed"
-    t.string "level"
+    t.integer "level"
     t.boolean "public"
     t.boolean "message_sent"
     t.index ["player_id"], name: "index_events_on_player_id"
@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_10_214557) do
 
   create_table "players", force: :cascade do |t|
     t.string "name"
-    t.string "category"
+    t.integer "category"
     t.boolean "leftHanded"
     t.date "birthDate"
     t.integer "eventScore"
