@@ -19,7 +19,8 @@
                       
                       <th class="text-uppercase text-primary text-s font-weight-bolder">ID</th>
                       <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Name</th>
-                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Date <small>yyyy-mm-dd</small></th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Schedulled</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder ps-4">Category</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">People Qty</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Status</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Winner</th>
@@ -40,14 +41,24 @@
                       <td>                        
                         <%= link_to event.name, event, class: "text-xs font-weight-bold mb-0" %>                                                  
                       </td>
+                      
                       <td class="align-middle text-center">
-                        <%if event.target >= Date.today%>
-                          <span class="text-secondary text-xs font-weight-bold">Scheduled for <%=event.eventDate  %></span>
-                        <%else%>
-                          <span class="text-secondary text-xs font-weight-bold">Played <%=event.eventDate%></span>
-                        <%end%>
+                        <div class="d-flex flex-column justify-content-center">
+                          <span class="text-secondary text-xs font-weight-bold"><%=event.eventDate  %></span>
+                          <%if event.target >= DateTime.now%>
+                            <p class="text-xs text-secondary mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%></p>
+                          <%else%>
+                            <p class="text-xs text-danger mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%></p>
+                          <%end%>
+                          
+                          
+                        </div>
+                      
                         
-                      </td>                      
+                      </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold"><%=event.level.ordinalize  %></span>
+                      </td>
                       <td class="align-middle text-center">
                         <span class="text-secondary text-xs font-weight-bold"> <%=event.people%></span>
                       </td>
