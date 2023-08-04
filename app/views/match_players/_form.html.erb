@@ -85,42 +85,39 @@
         <div class="card-body z-index-1 bg-cover">
             <div class="container">                              
               <div class="row">
-                <div class="col">
-                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
-                          Event:&nbsp;<strong><%=event.name.titleize%>&nbsp;[ID: <%=event.id%>]</strong></p>
-                  </span>
+                <div class="col">                  
+                  <span class="mb-2 text-xs">Event: <span class="text-dark font-weight-bold ms-sm-2"><%=@event.name.titleize%></span></span>
                 </div>
                 <div class="col">
-                  <span>
-                  <p class="text-primary text-sm mb-0 font-weight-bold">                                          
-                    Scheduled:&nbsp;<strong><%=event.timeIni.strftime("%H:%M")%>-<%=event.timeEnd.strftime("%H:%M")%> </strong>                                                                                    
-                  </p>                                        
-                  </span>
-                </div>
-                <div class="col">
-                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
-                          Category:&nbsp;<strong><%=event.level%></strong></span></p>
-                </div>
+                  <span class="mb-2 text-xs">Date: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.eventDate.strftime("%d/%m/%Y")%></span></span>
+                </div>                
               </div>
               <div class="row">
                 <div class="col">
-                  <span><p class="text-primary text-sm mb-0 font-weight-bold">                                          
-                          Seats:&nbsp;<strong><%=event.people%> </strong>
-                        </p>
-                  </span>
+                  <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.timeIni.strftime("%H:%M")%>-<%=@event.timeEnd.strftime("%H:%M")%></span></span>
+                </div>                
+              </div>
+              <div class="row">
+                <div class="col">
+                  <span class="mb-2 text-xs">Seats: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.people%></span></span>                  
                 </div>
                 <div class="col">
-                  <span>
-                    <p class="text-primary text-sm mb-0 font-weight-bold">
-                        Only left:&nbsp;<strong><%=event.onlyLeft%></strong></p>
-                  </span>
+                  <span class="mb-2 text-xs">Only left: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.onlyLeft%></span></span>                  
                 </div>
+                
+              </div>
+              <div class="row">
                 <div class="col">
-                  <span><p class="text-primary text-sm mb-0 font-weight-bold">
-                          Type:&nbsp;<strong><%= event.mixed? ? ("Parejas Multiples"):("Parejas Fijas")%></strong></p>
-                </div>
+                  <span class="mb-2 text-xs">Category: <span class="text-dark ms-sm-2 font-weight-bold"><%= @event.level.ordinalize%></span></span>
+                </div>                
+              </div>
+              <div class="row">  
+                <div class="col">              
+                  <span class="mb-2 text-xs">Type: <span class="text-dark ms-sm-2 font-weight-bold"><%= @event.mixed? ? ("Multiple couples"):("Fixed couples")%></span></span>                  
+                </div>                
               </div>
             </div>
+            
             <hr class="horizontal light mt-1 mb-3">
             <div class="container">                              
               <div class="row">
@@ -240,7 +237,7 @@
                       
                     </td>                                          
                     <td>                      
-                      <%= link_to(edit_match_player_path(mp.id), class: "text-sm text-danger text-gradient text-bold", data: { turbo_frame: "validation_code_modal" }) do %>
+                      <%= link_to(edit_match_player_path(mp.id), class: "text-sm text-danger text-gradient text-bold") do %>
                         Quit&nbsp;&nbsp;<i class="fa fa-sign-out"></i>
                       <%end%>
                     </td>
