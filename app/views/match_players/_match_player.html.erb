@@ -33,17 +33,22 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.timeIni.strftime("%H:%M")%> - <%=@match_player.event.timeEnd.strftime("%H:%M")%> Hrs</span></span>
+                    <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.timeIni.strftime("%H:%M")%>-<%=@match_player.event.timeEnd.strftime("%H:%M")%></span></span>
                   </div>
                   
                 </div>
                 <div class="row">
-                <div class="col">
+                  <div class="col">
                     <span class="mb-2 text-xs">Players: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.people%></span></span>
                   </div>                  
                   <div class="col">
                     <span class="mb-2 text-xs">Category: <span class="text-dark font-weight-bold ms-sm-2"><%=  @match_player.event.level.ordinalize%></span></span>
                   </div>                  
+                </div>
+                <div class="row">  
+                  <div class="col">              
+                    <span class="mb-2 text-xs">Type: <span class="text-dark ms-sm-2 font-weight-bold"><%= @match_player.event.mixed? ? ("Multiple couples"):("Fixed couples")%></span></span>                  
+                  </div>                
                 </div>
               </div>
               <hr class="horizontal light mt-1 mb-3">
