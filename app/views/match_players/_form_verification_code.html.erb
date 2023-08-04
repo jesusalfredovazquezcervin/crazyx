@@ -1,65 +1,53 @@
-<!-- Modal -->
-<div class="card card-plain">
-  <div class="card-header pb-0 text-left">  
-  <% unless notice.nil? %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style= "color:white" >
-      <strong>
-        <%= notice %>
-        <%= alert %>
-      </strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-    </div>      
-  <% end %>
-    <h3 class="font-weight-bolder text-danger text-gradient">Quit Event</h3>
-    <p class="mb-0"> <%=verification_code.player.name.titleize%>, we've sent you a verification code to the cellphone end with ***<%=verification_code.player.cellphone[-4..-1]%></p>
-  </div>
-  <div class="card-body">
-    <%= form_with(model: match_player) do |f| %>
-      <% if match_player.errors.any? %>
-        <div style="color: red">
-          <h2><%= pluralize(match_player.errors.count, "error") %> prohibited this event from being saved:</h2>
-          <ul>
-            <% match_player.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
+<div class="col-lg-4 col-md-8 col-12 mx-auto">
+  <div class="card z-index-0 fadeIn3 fadeInBottom">
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+      <div class="bg-gradient-danger shadow-danger border-radius-lg py-3 pe-1">
+        <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Quit event</h4>
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <p class="mb-0"> <%=verification_code.player.name.titleize%>, we've sent you a verification code to the cellphone ends with ***<%=verification_code.player.cellphone[-4..-1]%></p>      
+      <%= form_with(model: match_player, class: 'text-start') do |f| %>
+        <% if match_player.errors.any? %>
+          <div style="color: red">
+            <h2><%= pluralize(match_player.errors.count, "error") %> prohibited this event from being saved:</h2>
+            <ul>
+              <% match_player.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <label>Verification code</label>
+        <div class="input-group mb-3">
+          <%= f.number_field :code, class: "form-control", value: "" , required: true %>
+        </div>
+        <div class="input-group mb-3">
+          <%= f.hidden_field :event_id %>
+          <%= f.hidden_field :player_id%>
+          <%= f.hidden_field :verification_id, :value => verification_code.id %>
+        </div>
+          
+        <div class="text-center">
+          <%= button_tag(type: 'submit', data: {turbo: false}, class:"btn btn-sm bg-gradient-danger btn-lg w-100 mt-4 mb-0") do %>
+            Confirm Quit &nbsp;&nbsp;&nbsp;<i class="fa fa-sign-out"></i> 
+          <% end %> 
+        </div>
+        <hr class="horizontal light mt-1 mb-3">
+        <div class="text-center">
+          <%= link_to(root_path , class:"btn btn-sm bg-gradient-primary my-auto") do %>
+            Dashboard &nbsp;&nbsp;&nbsp;<i class="fas fa-th-large"></i>
+          <% end %>
         </div>
       <% end %>
-
-      <label>Verification code</label>
-      <div class="input-group mb-3">
-        <%= f.number_field :code, class: "form-control", value: "" , required: true %>
-      </div>
-      <div class="input-group mb-3">
-        <%= f.hidden_field :event_id %>
-        <%= f.hidden_field :player_id%>
-        <%= f.hidden_field :verification_id, :value => verification_code.id %>
-      </div>
-          
-      <div class="text-center">
-        <%= button_tag(type: 'submit', data: {turbo: false}, class:"btn btn-round bg-gradient-danger btn-lg w-100 mt-4 mb-0") do %>
-           Confirm Quit &nbsp;&nbsp;&nbsp;<i class="fa fa-sign-out"></i> 
-          
-      <% end %> 
-      </div>
-
-    <% end %>
-      
-    
-  </div>
-  <div class="card-footer text-center pt-0 px-lg-2 px-1">
-    <p class="mb-4 text-sm mx-auto">
-      Did not receive a code?
-      
-      <%= link_to "Resend new code", edit_match_player_path(match_player.id, true), class: "text-info text-gradient font-weight-bold", data: { turbo_frame: "validation_code_modal" }%>
-    </p>
-  </div>
-  <div class="modal-footer">    
-    <%= link_to(new_match_player_path(verification_code.event_id), data: {turbo: false} , class: "btn bg-gradient-secondary") do %>
-      <i class="fa fa-times"></i> Close
-    <% end %>
+    </div>
+    <div class="card-footer text-center pt-0 px-lg-2 px-1">
+      <p class="mb-4 text-sm mx-auto">
+        Did not receive a code?        
+        <%= link_to "Resend new code", edit_match_player_path(match_player.id, true), class: "text-info text-gradient font-weight-bold", data: { turbo_frame: "validation_code_modal" }%>
+      </p>
+    </div>  
   </div>
 </div>
 
