@@ -1,15 +1,7 @@
-<div class="row>
-    <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg">
-      <span ></span>
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
-            <h1 class="text-white mb-2 mt-5">&nbsp;</h1>
-            <p class="text-lead text-white">&nbsp;</p>
-            
-          </div>
-        </div>
-      </div>
+<div class="row">
+    <div class="page-header align-items-start  pt-5 pb-8 border-radius-lg">
+      
+      
     </div>
 
 
@@ -18,7 +10,7 @@
         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
           <div class="card z-index-0">
             <div class="card-header text-center pt-4">            
-              <h5>You are now                
+              <h6><%=@match_player.player.name.titleize%>, you are                
                 <% case @match_player.status%>
                   <%when 'OnBoard'%> 
                     <strong class= "text-success"> <%=@match_player.status%>! </strong>
@@ -27,32 +19,44 @@
                   <%else%>
                     <strong class= "text-danger"> <%=@match_player.status%>! </strong>
                 <%end%>
-              </h5>              
+              </h6>              
             </div>
             <div class="card-body pt-4 p-3">
-              <ul class="list-group">
-                <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
-                  <div class="d-flex flex-column">
-                    <h6 class="mb-3 text-sm"><%=@match_player.player.name.titleize%></h6>
-                    <span class="mb-2 text-xs">Event: <span class="text-dark font-weight-bold ms-sm-2"><%=@match_player.event.name%></span></span>
-                    <span class="mb-2 text-xs">Date: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.eventDate.strftime("%d/%m/%Y")%></span></span>
-                    <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.timeIni.strftime("%H:%M")%> - <%=@match_player.event.timeEnd.strftime("%H:%M")%> Hrs</span></span>
-                    <span class="mb-2 text-xs">Players: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.people%></span></span>
-                    <span class="mb-2 text-xs">Category: <span class="text-dark font-weight-bold ms-sm-2">4a - 5a</span></span>                  
-                  </div>                  
-                </li>
-                
-              </ul>
               <div class="container">
                 <div class="row">
                   <div class="col">
-                    <%= link_to(new_match_player_path(@match_player.event), class: "btn bg-gradient-primary") do %>
+                    <span class="mb-2 text-xs">Event: <span class="text-dark font-weight-bold ms-sm-2"><%=@match_player.event.name%></span></span>
+                  </div>
+                  <div class="col">
+                    <span class="mb-2 text-xs">Date: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.eventDate.strftime("%d/%m/%Y")%></span></span>
+                  </div>                  
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.timeIni.strftime("%H:%M")%> - <%=@match_player.event.timeEnd.strftime("%H:%M")%> Hrs</span></span>
+                  </div>
+                  
+                </div>
+                <div class="row">
+                <div class="col">
+                    <span class="mb-2 text-xs">Players: <span class="text-dark ms-sm-2 font-weight-bold"><%=@match_player.event.people%></span></span>
+                  </div>                  
+                  <div class="col">
+                    <span class="mb-2 text-xs">Category: <span class="text-dark font-weight-bold ms-sm-2"><%=  @match_player.event.level.ordinalize%></span></span>
+                  </div>                  
+                </div>
+              </div>
+              <hr class="horizontal light mt-1 mb-3">
+              <div class="container">
+                <div class="row">
+                  <div class="col">
+                    <%= link_to(new_match_player_path(@match_player.event), class: "btn btn-sm bg-gradient-primary") do %>
                         <i class="fa fa-plus-square"></i>&nbsp;&nbsp;Enroll player
                       <% end %>
                   </div>
                   
                   <div class="col">
-                    <%= link_to( @match_player, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn bg-gradient-danger") do %>
+                    <%= link_to( @match_player, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'}, class: "btn btn-sm bg-gradient-danger") do %>
                       <i class="fa fa-sign-out"></i>&nbsp;&nbsp;Quit event                    
                     <% end %>   
                   </div>
