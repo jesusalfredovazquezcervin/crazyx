@@ -80,9 +80,15 @@
   </div>
 <%else%>
   <div class="row">
+    
     <div class="col-12">
       <div class="card shadow-lg">
         <div class="card-body z-index-1 bg-cover">
+          <div class="text-center">
+            <%= link_to(root_path , class:"btn btn-sm bg-gradient-primary my-auto") do %>
+              Dashboard &nbsp;&nbsp;&nbsp;<i class="fas fa-th-large"></i>
+            <% end %>
+          </div>
             <div class="container">                              
               <div class="row">
                 <div class="col">                  
