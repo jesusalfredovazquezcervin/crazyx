@@ -123,8 +123,15 @@
                             <button class="btn btn-info mb-0" data-action="clipboard#copy">Copy&nbsp;<i class="far fa-clipboard"></i></button>
                         </div>                        
                     </div>
-                
-                        
+                    
+
+                    <div>
+                        <p>
+                            <%= new_match_player_url(event, :only_path => false)%>
+                        </p>
+                        <button class="copyBtn">Copy to clip</button>
+
+                    </div>
                     
                 </div>
             </div>
@@ -139,3 +146,16 @@
 
     
 </div>
+
+<script type="text/javascript">
+    const btn = document. querySelector (' .copyBtn' );
+    btn.addEventListener('click', () => {
+        const txt = btn.previousElementSibling.innerText;
+        copyToClipboard(txt);
+    })
+    function copyToClipboard(txt){
+        navigator.clipboard.writeText(txt)
+    }
+
+
+</script>
