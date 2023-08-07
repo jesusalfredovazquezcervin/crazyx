@@ -118,8 +118,8 @@
                             
                     <div class="form-group">
                         <label class="form-control-label" for="basic-url">Your event URL</label>
-                        <div class="input-group mb-3" data-controller="clipboard">
-                            <%= text_field_tag nil, new_match_player_url(event, :only_path => false), class: 'form-control', data: { clipboard_target: "source" }%>
+                        <div class="input-group mb-3">
+                            <%= text_field_tag nil, new_match_player_url(event, :only_path => false), class: 'form-control'%>
                             <!-- <button class="btn btn-info mb-0" data-action="clipboard#copy">Copy&nbsp;<i class="far fa-clipboard"></i></button> -->
                         </div>                        
                     </div>                    
