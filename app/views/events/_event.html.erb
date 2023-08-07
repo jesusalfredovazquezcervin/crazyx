@@ -119,20 +119,10 @@
                     <div class="form-group">
                         <label class="form-control-label" for="basic-url">Your event URL</label>
                         <div class="input-group mb-3" data-controller="clipboard">
-                            <%= text_field_tag nil, new_match_player_url(event, :only_path => false), class: 'form-control', data: { clipboard_target: "source" }, readonly: true%>
-                            <button class="btn btn-info mb-0" data-action="clipboard#copy">Copy&nbsp;<i class="far fa-clipboard"></i></button>
+                            <%= text_field_tag nil, new_match_player_url(event, :only_path => false), class: 'form-control', data: { clipboard_target: "source" }%>
+                            <!-- <button class="btn btn-info mb-0" data-action="clipboard#copy">Copy&nbsp;<i class="far fa-clipboard"></i></button> -->
                         </div>                        
-                    </div>
-                    
-
-                    <div>
-                        <p>
-                            <%= new_match_player_url(event, :only_path => false)%>
-                        </p>
-                        <button class="copyBtn">Copy to clip</button>
-
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -150,59 +140,12 @@
 <script type="text/javascript">
     const btn = document. querySelector (' .copyBtn' );
     btn.addEventListener('click', () => {
-        const textToCopy = btn.previousElementSibling.innerText;
-        copyToClipboard(textToCopy);
+        const txt = btn.previousElementSibling.innerText;
+        copyToClipboard(txt);
     })
-    //function copyToClipboard(txt){
-    //    navigator.clipboard.writeText(txt)
-    //}
-
-    async function copyToClipboard(textToCopy) {
-        // Use the 'out of viewport hidden text area' trick
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-            
-        // Move textarea out of the viewport so it's not visible
-        textArea.style.position = "absolute";
-        textArea.style.left = "-999999px";
-            
-        document.body.prepend(textArea);
-        textArea.select();
-
-        try {
-            document.execCommand('copy');
-        } catch (error) {
-            console.error(error);
-        } finally {
-            textArea.remove();
-        }
-        /*
-    // Navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(textToCopy);
-    } else {
-        // Use the 'out of viewport hidden text area' trick
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-            
-        // Move textarea out of the viewport so it's not visible
-        textArea.style.position = "absolute";
-        textArea.style.left = "-999999px";
-            
-        document.body.prepend(textArea);
-        textArea.select();
-
-        try {
-            document.execCommand('copy');
-        } catch (error) {
-            console.error(error);
-        } finally {
-            textArea.remove();
-        }
-    };
-    */
-}
-
+    function copyToClipboard(txt){
+        navigator.clipboard.writeText(txt)
+    }
 
 
 </script>
