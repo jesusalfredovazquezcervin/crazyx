@@ -70,7 +70,7 @@ class EventsController < ApplicationController
         #we create the payments records
         create_payments
         #we send the sms to inform to the winners
-        #send_sms_to_winner if !@event.message_sent
+        send_sms_to_winner if !@event.message_sent
 
         format.html { redirect_to show_closed_event_path(@event), notice: "Event was succesfully closed!"  }      
         format.json { render :close, status: :ok, location: @event }
