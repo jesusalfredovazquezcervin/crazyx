@@ -67,8 +67,10 @@ class EventsController < ApplicationController
       @event.status = "Closed"
       @event.getWinner      
       if @event.save
+        #we create the payments records
+        create_payments
         #we send the sms to inform to the winners
-        send_sms_to_winner if !@event.message_sent
+        #send_sms_to_winner if !@event.message_sent
 
         format.html { redirect_to show_closed_event_path(@event), notice: "Event was succesfully closed!"  }      
         format.json { render :close, status: :ok, location: @event }
@@ -80,7 +82,16 @@ class EventsController < ApplicationController
 
     
   end
-  
+  def create_payments
+    #if Business.exists?(user_id: current_user.id)
+    @event.match_player.each{|mp|
+      if !Payment.exists?(event_id: @event.id, player_id: mp.player.id )
+        Payment.create(event_id: @event.id, player_id: mp.player.id)
+      end
+    }    
+
+
+  end
   def show_closed_event
     @scores = @event.score.where("points > 0").sort_by{|s| s.points}.reverse
   end  
