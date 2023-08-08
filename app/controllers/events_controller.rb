@@ -101,7 +101,11 @@ class EventsController < ApplicationController
     @event.score.where(position: 1).each{|winner|
       message = "From Padel Crazy X - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
       sms = Message.new(number: winner.player.cellphone, body: message, action: "send_sms_to_winner", controller: "events_controller.rb")
+      logger.debug("-------Sending sms -------")
+      logger.debug(message)
+      logger.debug("To number-> #{sms.number}")
       result = sms.send_sms
+      logger.debug("Error-> #{result.error_message}")
       sms.error = result.error_message
       sms.save!
       if result.error_message.nil?
