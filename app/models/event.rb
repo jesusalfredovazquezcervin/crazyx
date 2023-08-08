@@ -9,6 +9,7 @@ class Event < ApplicationRecord
     has_many :verification_codes
     has_many :results
     has_many :couples
+    has_many :payments
     attribute :message_sent, :boolean, default: false
     def getPlayersPoints
         # Obtain the sumatory of points for all the players for the event {player, total_points} {1=>9, 2=>20, 3=>15, 4=>14, 5=>1, 6=>1}
