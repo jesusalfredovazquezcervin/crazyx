@@ -79,9 +79,9 @@
                       <td>                        
                         <div class="d-flex flex-column justify-content-center">
                           <%if payment.cost.nil?%>
-                            <span class="badge badge-sm bg-gradient-danger">No payment</span>
+                            <span class="badge badge-xs bg-gradient-danger">No payment</span>
                           <%else%>
-                            <span class="badge badge-sm bg-gradient-success"><%= number_to_currency(payment.try(:cost), :unit => "$", :separator => ".", :delimiter => ",") %></span>
+                            <span class="badge badge-xs bg-gradient-success"><%= number_to_currency(payment.try(:cost), :unit => "$", :separator => ".", :delimiter => ",") %></span>
                           <%end%>
                         </div>                        
                       </td>
