@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_10_214557) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_221423) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -117,6 +117,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_10_214557) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.bigint "player_id", null: false
+    t.decimal "cost", precision: 10, scale: 2
+    t.decimal "retainer", precision: 10, scale: 2
+    t.string "payment_type"
+    t.string "reference"
+    t.string "comments"
+    t.datetime "payment_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_payments_on_event_id"
+    t.index ["player_id"], name: "index_payments_on_player_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "name"
     t.integer "category"
@@ -190,6 +205,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_10_214557) do
   add_foreign_key "match_players", "events"
   add_foreign_key "match_players", "players"
   add_foreign_key "matches", "events"
+  add_foreign_key "payments", "events"
+  add_foreign_key "payments", "players"
   add_foreign_key "results", "events"
   add_foreign_key "results", "players"
   add_foreign_key "scores", "events"
