@@ -133,6 +133,13 @@
                                 <%end%>
                               </li>
                             <%end%>
+                            <% if event.status.upcase == "CLOSED"%>
+                              <li>
+                                <%= link_to(event_payments_path(event), class:"dropdown-item border-radius-md") do%>
+                                Payments&nbsp;&nbsp;<i class="fa fa-usd"></i>
+                                <%end%>
+                              </li>
+                            <%end%>
                             
                           </ul>
                         </div>
