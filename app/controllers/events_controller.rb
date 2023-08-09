@@ -99,7 +99,7 @@ class EventsController < ApplicationController
   def send_sms_to_winner
     url = show_closed_event_url(@event.id)        
     @event.score.where(position: 1).each{|winner|
-      message = "From Padel Crazy X - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
+      message = "FEMAC PADEL RETAS - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
       sms = Message.new(number: winner.player.cellphone, body: message, action: "send_sms_to_winner", controller: "events_controller.rb")
       logger.debug("-------Sending sms -------")
       logger.debug(message)
