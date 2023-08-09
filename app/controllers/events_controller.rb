@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   include Rails.application.routes.url_helpers
   before_action :authenticate_user!, except: %i[ dashboard show_closed_event ]
-  before_action :check_user_role, except: %i[ dashboard ]
+  before_action :check_user_role, except: %i[ dashboard show_closed_event]
   before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event]
   
 
