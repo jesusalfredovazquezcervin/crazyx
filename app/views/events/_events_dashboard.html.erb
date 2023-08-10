@@ -175,14 +175,18 @@
                                                             <%if event.match_player.count < event.people%>
                                                                 <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>                                                                        
                                                             <%else%>
-                                                                <h6 class="text-white text-xs font-weight-bolder mb-0">Event is full</h4>                                                                        
+                                                                <h6 class="text-white text-xs font-weight-bolder mb-0">Event is full</h6>
                                                             <%end%>
                                                             <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.mixed? ? ("Parejas Multiples"):("Parejas Fijas")%></p>
                                                             <hr class="horizontal light mt-1 mb-3">
                                                             <%if event.match_player.count < event.people%>
                                                                 <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
                                                                     <i class="bi bi-person-plus-fill"></i>Enroll 
-                                                                <%end%>                                                                    
+                                                                <%end%>
+                                                            <%else%>
+                                                                <%= link_to(new_match_player_path(event), class:"btn bg-gradient-info ms-auto") do%>
+                                                                    <i class="bi bi-person-plus-fill"></i>Enroll & wait
+                                                                <%end%>                                                            
                                                             <%end%>
                                                         </div>
                                                     </div>
