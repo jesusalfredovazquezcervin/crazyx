@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
   include Rails.application.routes.url_helpers
-  before_action :authenticate_user!, except: %i[ dashboard show_closed_event ]
-  before_action :check_user_role, except: %i[ dashboard show_closed_event]
-  before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event]
+  before_action :authenticate_user!, except: %i[ dashboard show_closed_event confirmed]
+  before_action :check_user_role, except: %i[ dashboard show_closed_event confirmed]
+  before_action :set_event, only: %i[ show edit update destroy update_status show_closed_event send_sms_request_confirmation]
   
 
   # GET /events or /events.json
@@ -101,11 +101,7 @@ class EventsController < ApplicationController
     @event.score.where(position: 1).each{|winner|
       message = "FEMAC PADEL RETAS - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
       sms = Message.new(number: winner.player.cellphone, body: message, action: "send_sms_to_winner", controller: "events_controller.rb")
-      logger.debug("-------Sending sms -------")
-      logger.debug(message)
-      logger.debug("To number-> #{sms.number}")
       result = sms.send_sms
-      logger.debug("Error-> #{result.error_message}")
       sms.error = result.error_message
       sms.save!
       if result.error_message.nil?
@@ -113,6 +109,57 @@ class EventsController < ApplicationController
         @event.save!
       end
     }
+  end
+  def send_sms_request_confirmation 
+    sms_error = nil
+    #url = "http://www.google.com"    
+    #This method send sms requesting confirmation to an event for all enrolled players
+    @event.match_player.where(confirmed: nil).or(@event.match_player.where(confirmed: false)).each{|mp|
+      #Send sms
+      url = event_confirmed_url(@event.id, mp.player_id)
+      message = "FEMAC PADEL - Confirmation: #{mp.player.name.titleize}, please confirm your asistence to the event for #{@event.target.strftime("%d/%m/%Y %H:%M")}. Click here to confirm:  #{url}"
+      sms = Message.new(number: mp.player.cellphone, body: message, action: "send_request_confirmation_sms", controller: "events_controller.rb")
+      result = sms.send_sms
+      sms.error = result.error_message
+      sms.save!
+      sms_error = result.error_message if !result.error_message.nil?
+      
+      #Update the fields for the confirmation request message
+      mp.request = DateTime.now
+      mp.confirmed = false
+      mp.save
+    }
+    respond_to do |format|
+      if sms_error.nil?
+        format.html { redirect_to events_url, notice: "The sms sending process was successful!" }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to events_url, alert: "There were errors during the sms sending process!"  }      
+        format.json { render json: sms_error, status: :unprocessable_entity }
+      end
+    end          
+  end
+  def confirmed
+    #This method save the player confirmation
+    @event = Event.find(params[:event_id].to_i)
+    @player = Player.find(params[:player_id].to_i)
+    
+    if @event.status == "Closed"
+      flash[:notice]= "The event is already closed!"
+    else
+      error=false
+      mp = MatchPlayer.where(event_id: params[:event_id].to_i, player_id: params[:player_id].to_i).first
+      #Update the fields for the confirmed request
+      mp.confirmation_date = DateTime.now
+      mp.confirmed = true      
+      if mp.save
+        flash[:notice]= "Player updated succesfully!"
+      else
+        flash[:notice]= "Player NOT updated succesfully!"
+      end
+    end
+
+    
   end
 
   
@@ -147,4 +194,5 @@ class EventsController < ApplicationController
           end
       end
     end
+    
 end
