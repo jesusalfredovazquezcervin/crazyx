@@ -101,7 +101,7 @@
                         </div>
                       </td>
                       <td>                        
-                        <div class="d-flex flex-column justify-content-center">
+                        <div>
                           <%if mp.status=='OnBoard' %>
                             <span class="badge badge-sm bg-gradient-success"><%=mp.status%></span>
                           <%else%>
@@ -117,8 +117,14 @@
                         </div>                      
                       </td>
                       <td>
-                        <div class="d-flex flex-column justify-content-left"> 
-                            <h6 class="mb-0 text-sm"><%= mp.confirmed.nil? ? ('N/A'):(mp.confirmed)%></h6>                          
+                        <div > 
+                            <%if mp.confirmed.nil?%>
+                              <h6 class="mb-0 text-sm">'N/A'</h6>
+                            <%elsif mp.confirmed%>
+                              <span class="badge badge-pill badge-lg bg-gradient-success"><%=mp.confirmed%></span>
+                            <%else%>
+                              <span class="badge badge-pill badge-lg bg-gradient-danger"><%=mp.confirmed%></span>
+                            <%end%>                                                        
                           </div>
                         </div>                      
                       </td>
