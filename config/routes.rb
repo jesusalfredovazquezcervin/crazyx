@@ -46,4 +46,6 @@ Rails.application.routes.draw do
   get "players/dashboard/:player_id", to:  "players#dashboard", as: "dashboard_player"
   get "events/dashboard", to: "events#dashboard", as: "dashboard_events"
   get 'payments/index/:id', to: "payments#index", as: 'event_payments'
+  patch "events/send_sms_request_confirmation/:id", to: "events#send_sms_request_confirmation", as: "send_sms_request_confirmation"
+  get "events/confirmed/:event_id/:player_id", to: "events#confirmed", as: "event_confirmed"
 end 
