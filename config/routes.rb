@@ -9,7 +9,11 @@ Rails.application.routes.draw do
   resources :scores, except: [:index]
   resources :match_players, except: [:new, :index, :edit]
   resources :matches, except: [:index, :destroy, :edit]
-  resources :events
+  resources :events do
+    collection do            
+      get :event_validation
+    end
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -48,4 +52,5 @@ Rails.application.routes.draw do
   get 'payments/index/:id', to: "payments#index", as: 'event_payments'
   patch "events/send_sms_request_confirmation/:id", to: "events#send_sms_request_confirmation", as: "send_sms_request_confirmation"
   get "events/confirmed/:event_id/:player_id", to: "events#confirmed", as: "event_confirmed"
+  get "events/event_validation", to: "events#event_validation", as: "event_validation"
 end 
