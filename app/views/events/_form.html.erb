@@ -1,3 +1,5 @@
+<div id = "event_validation_message">
+</div>
 <div class="row">
     <div class="col-md-8">
         <div class="card">
@@ -30,15 +32,15 @@
                           </div>
                       </div>
                       <div class="col-md-8">
-                          <div class="form-group">
+                          <div class="form-group" data-controller = "event-validation">
                               <label for="example-text-input" class="form-control-label">Event date</label>
-                              <%= f.date_field :eventDate, class: 'form-control', :required => true %>
+                              <%= f.date_field :eventDate, class: 'form-control', :required => true, data: {action:"change->event-validation#change" } %>
                           </div>
                       </div>
                       <div class="col-md-8">
-                          <div class="form-group">
+                          <div class="form-group" data-controller = "event-validation">
                               <label for="example-text-input" class="form-control-label">Start time</label>
-                              <%= f.time_field :timeIni, class: 'form-control', :required => true %>
+                              <%= f.time_field :timeIni, class: 'form-control', :required => true, data: {action:"change->event-validation#change" } %>
                           </div>
                       </div>
                       <div class="col-md-8">
@@ -48,18 +50,18 @@
                           </div>
                       </div>
                       <div class="col-md-8">
+                          <div class="form-group" data-controller = "event-validation">
+                              <label for="example-text-input" class="form-control-label">Category</label>
+                              <%= f.select :level, options_for_select(Player::CATEGORY.collect { |category|
+                                                                         [category.to_i.ordinalize, category] }, event.level), {}, {id: 'select2_category',class:"form-control",  required: true, data: {action:"change->event-validation#change" }} %>
+                          </div>
+                      </div>
+                      <div class="col-md-8">
                           <div class="form-group">
                               <label for="example-text-input" class="form-control-label">Players (Qty)</label>
                               <%= f.number_field :people, class: 'form-control', :required => true, :step => 4, min: 4, placeholder: "Multiples of 4 {4, 8, 12, 16...}" %>
                           </div>
-                      </div>                      
-                      <div class="col-md-8">
-                          <div class="form-group">
-                              <label for="example-text-input" class="form-control-label">Category</label>
-                              <%= f.select :level, options_for_select(Player::CATEGORY.collect { |category|
-                                                                         [category.to_i.ordinalize, category] }, event.level), {}, {id: 'select2_category',class:"form-control m-b",  required: true} %>
-                          </div>
-                      </div>
+                      </div>                                            
                       <div class="col-md-8">
                           <div class="form-group">                                                                                                                        
                               <%= f.label "Mixed cuople", "Mixed cuople", value: "true"  %>
@@ -96,6 +98,6 @@
   // In your Javascript (external .js resource or <script> tag)
   $(document).ready(function() {
       //$('.js-example-basic-single').select2();
-      $('#select2_category').select2();      
+      //$('#select2_category').select2();      
   });
 </script>
