@@ -1,0 +1,4 @@
+<%= turbo_stream.update "event_validation_message" do %>
+  <%= render "event_validation_message", {event_exist: @event_exist, event: @event, 
+  alert: "An event [#{@event.id if !@event.nil?}] in the same date-time-category already exist!"} %>
+<% end %>
