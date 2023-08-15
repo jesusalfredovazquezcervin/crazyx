@@ -196,7 +196,7 @@
         </nav>
         <!-- End Navbar -->
       <div class="container-fluid py-4">
-        <% unless notice.nil? %>
+        <% if !notice.nil? || !alert.nil? %>
           <div class="alert alert-success alert-dismissible fade show" role="alert" style= "color:white" >
             <strong>
               <%= notice %>
