@@ -196,16 +196,27 @@
         </nav>
         <!-- End Navbar -->
       <div class="container-fluid py-4">
-        <% if !notice.nil? || !alert.nil? %>
-          <div class="alert alert-success alert-dismissible fade show" role="alert" style= "color:white" >
-            <strong>
-              <%= notice %>
-              <%= alert %>
-            </strong>
+        <% if !notice.nil? %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style= "color:white">
+            <span class="alert-icon">                
+            <i class="fas fa-info-circle"></i>
+            </span>
+            <span class="alert-text"><strong>Info: </strong> <%= notice %></span>                
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-          </div>      
+          </div>          
+        <%end%>
+        <% if !alert.nil? %>
+          <div class="alert alert-warning alert-dismissible fade show" role="alert" style= "color:white">
+            <span class="alert-icon">                
+            <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            <span class="alert-text"><strong>Warning!: </strong> <%= alert %></span>                
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>          
         <% end %>
         
         <%= yield %>
