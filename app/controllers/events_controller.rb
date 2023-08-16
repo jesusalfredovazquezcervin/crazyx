@@ -175,13 +175,15 @@ class EventsController < ApplicationController
     @round = 1
   end
   def event_validation 
-    logger.debug "---------------Entramos en el metodo----------"
+    logger.info "---------------Entramos en el metodo 'event_validation'----------"
+    logger.info "---------------Estos son los parametros-> #{params}"
     @event_exist = false
     if !(params[:date] == "") && !(params[:start] == "") && !(params[:category] == "")
       @event = Event.where(eventDate: Date.strptime(params[:date],"%Y-%m-%d"), timeIni: Time.parse(params[:start]), level: params[:category].to_i, status: "Open").first      
       @event_exist = true if !@event.nil?      
     end
-    logger.debug "---------------Existe el evento: #{@event_exist}----------"
+    logger.info "The event found is-> #{@event.id if !@event.nil?}"
+    logger.info "---------------¿Existe el evento?: #{@event_exist}----------"
     if @event_exist      
       respond_to do |format|
         format.turbo_stream { render :event_validation }
