@@ -180,7 +180,7 @@ class EventsController < ApplicationController
     #{"date"=>"2023-08-26", "start"=>"06:00", "category"=>"1", "controller"=>"events", "action"=>"event_validation"}
     @event_exist = false
     if !(params[:date] == "") && !(params[:start] == "") && !(params[:category] == "")
-      loger.info("  ")
+      logger.info("  ")
       logger.info("---------------------------------------------------------")
       logger.info("eventDate-> #{Date.strptime(params[:date],"%Y-%m-%d")}")
       logger.info("---------------------------------------------------------")
