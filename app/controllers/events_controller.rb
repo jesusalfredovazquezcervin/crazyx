@@ -177,9 +177,17 @@ class EventsController < ApplicationController
   def event_validation 
     logger.info "---------------Entramos en el metodo 'event_validation'----------"
     logger.info "---------------Estos son los parametros-> #{params}"
+    #{"date"=>"2023-08-26", "start"=>"06:00", "category"=>"1", "controller"=>"events", "action"=>"event_validation"}
     @event_exist = false
     if !(params[:date] == "") && !(params[:start] == "") && !(params[:category] == "")
-      @event = Event.where(eventDate: Date.strptime(params[:date],"%Y-%m-%d"), timeIni: Time.parse(params[:start]), level: params[:category].to_i, status: "Open").first      
+      loger.info("  ")
+      logger.info("---------------------------------------------------------")
+      logger.info("eventDate-> #{Date.strptime(params[:date],"%Y-%m-%d")}")
+      logger.info("---------------------------------------------------------")
+      logger.info("timeIni-> #{Time.parse(params[:start])}")
+      logger.info("---------------------------------------------------------")
+      logger.info("level-> #{params[:category].to_i }")
+      @event = Event.where(eventDate: Date.strptime(params[:date],"%Y-%m-%d"), timeIni: Time.zone.parse(params[:start]), level: params[:category].to_i, status: "Open").first      
       @event_exist = true if !@event.nil?      
     end
     logger.info "The event found is-> #{@event.id if !@event.nil?}"
