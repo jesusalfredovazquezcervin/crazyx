@@ -62,7 +62,7 @@
                   <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
                   
                   <%= f.select :player_id, options_for_select(Player.where.not({ id: event.match_player.collect{|mp| mp.player.id}}).order(:name).collect { |player|
-                                                                   [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control ms-auto",  required: true} %>
+                                                                   [(player.cellphone? ? ("******" << player.try(:cellphone).to_s[-4..-1]):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {}, {id: 'select2_player_id_mobile',class:"form-control",  required: true} %>
                   <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
                         <i class="fa fa-check"></i>&nbsp;&nbsp;Enroll event
                   <% end %>
@@ -146,7 +146,7 @@
                       <%= f.text_field :event_id, value: event.id,  style: "#{'display:none'}"%>
                       
                       <%= f.select :player_id, options_for_select(Player.where.not({ id: event.match_player.collect{|mp| mp.player.id}}).order(:name).collect { |player|
-                                                                      [(player.cellphone? ? player.try(:cellphone):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {prompt: "Type or select name|phone"}, {id: 'select2_player_id_mobile',class:"form-control my-auto",  required: true} %>
+                                                                      [(player.cellphone? ? ("******" << player.try(:cellphone).to_s[-4..-1]):'no cellphone') + "-" + player.name.titleize , player.id] }, @match_player.player_id), {prompt: "Type or select name|phone"}, {id: 'select2_player_id_mobile',class:"form-control my-auto",  required: true} %>
                       <%= button_tag(type: 'submit', class: "btn bg-gradient-primary w-100 my-4 mb-2") do %>
                             <i class="fa fa-check"></i>&nbsp;&nbsp;Enroll event
                       <% end %>                                            
@@ -266,11 +266,10 @@
 </div>
 <script type="text/javascript">
   // In your Javascript (external .js resource or <script> tag)
-  $(document).ready(function() {
-      //$('.js-example-basic-single').select2();
-      $('#select2_player_id').select2();
-      $('#select2_event_id').select2();
-
+  $(document).ready(function() {      
       $('#select2_player_id_mobile').select2();
+      $("#select2_player_id_mobile").select2({
+          width: 'resolve' // need to override the changed default
+      });
   });
 </script>
