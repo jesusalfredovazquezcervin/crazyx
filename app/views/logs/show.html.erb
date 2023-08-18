@@ -1,0 +1,80 @@
+
+ <h3 style= "color: white">Showing log</h3>
+
+
+<div>
+  <div class="row">
+      <div class="col-md-8">
+          <div class="card">
+              <div class="card-header pb-0">
+                  <div >                                          
+                    <%= link_to(logs_path, class:"btn bg-gradient-primary ms-auto") do%>
+                        <i class="fa fa-list-ol"></i>&nbsp;&nbsp;Log list
+                    <%end%>
+                  </div>
+              </div>
+                <div class="card-body">                          
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">ID:</label>                              
+                                <label for="example-text-input" class="form-control-label"><%= @log.id %></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Action:</label>
+                                <label for="example-text-input" class="form-control-label"><%=@log.action%></label> 
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Record type:</label>
+                                <label for="example-text-input" class="form-control-label"><%=@log.record_type%></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Record ID:</label>
+                                <label for="example-text-input" class="form-control-label"><%=@log.record_id%></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">User:</label>
+                                <label for="example-text-input" class="form-control-label"><%=User.find(@log.user_id).email%></label>
+                            </div>
+                        </div>                        
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Payload:</label>
+                                <label for="example-text-input" class="form-control-label"><%=@log.payload%></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Request:</label>
+                                <label for="example-text-input" class="form-control-label"><%=@log.request%></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Created at:</label>
+                                <label for="example-text-input" class="form-control-label"><%= @log.created_at.strftime("%d/%m/%Y %H:%M:%S")%></label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Updated at:</label>
+                                <label for="example-text-input" class="form-control-label"><%= @log.updated_at.strftime("%d/%m/%Y %H:%M:%S")%></label>
+                            </div>
+                        </div>                                                
+                    </div>                                                                    
+                </div>                
+          </div>
+      </div>                
+  </div>
+  <div class="col-md-8">
+    <br>
+  </div>
+</div>

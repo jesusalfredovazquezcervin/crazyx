@@ -1,0 +1,70 @@
+<div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+          <div class="d-flex px-2 py-1">
+          </div>
+            <div class="card-header pb-0">
+              <div class="d-flex align-items-center">
+                <p class="h4">Usage logs</p>                
+              </div>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-6">
+                <table id= "logs_table" class="display compact">                
+                  <thead>
+                    <tr>                      
+                      <th class="text-uppercase text-primary text-s font-weight-bolder">ID</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Action</th>
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">User</th>                      
+                      <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Created at</th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <% @logs.each do | log |%>
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">                          
+                          <div class="d-flex flex-column justify-content-right">
+                            
+                            <%= link_to log.id, log, class: "text-sm font-weight-bold mb-0" %>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <%= link_to log.action, log, class: "text-sm font-weight-bold mb-0" %>
+                      </td>
+                      <td>
+                        <%if !log.user_id.nil?%>
+                          <%= link_to User.find(log.user_id).email, log, class: "text-sm font-weight-bold mb-0" %>
+                        <%else%>
+                          <p class="text-sm font-weight-bold mb-0"> No user </p>
+                        <%end%>
+                      </td>                                            
+                      <td class="align-middle text-center">
+                        <%= link_to log.created_at.strftime("%d/%m/%Y %H:%M:%S"), log, class: "text-sm font-weight-bold mb-0" %>                        
+                      </td>                      
+                    </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<script type="text/javascript">
+  // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {    
+    $('#logs_table').DataTable(
+      {
+        order: [[0, 'desc']],
+      }
+    );
+  });
+</script>
