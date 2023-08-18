@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_09_222514) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_17_165428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_09_222514) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "audit_logs", force: :cascade do |t|
+    t.string "action", null: false
+    t.bigint "user_id"
+    t.bigint "record_id"
+    t.string "record_type"
+    t.text "payload"
+    t.text "request"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.index ["action"], name: "index_audit_logs_on_action"
+    t.index ["record_type", "record_id"], name: "index_audit_logs_on_record_type_and_record_id"
+    t.index ["user_id", "action"], name: "index_audit_logs_on_user_id_and_action"
   end
 
   create_table "couples", force: :cascade do |t|

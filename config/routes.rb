@@ -53,4 +53,6 @@ Rails.application.routes.draw do
   patch "events/send_sms_request_confirmation/:id", to: "events#send_sms_request_confirmation", as: "send_sms_request_confirmation"
   get "events/confirmed/:event_id/:player_id", to: "events#confirmed", as: "event_confirmed"
   get "events/event_validation", to: "events#event_validation", as: "event_validation"
+  get "/logs", to: "logs#index", as: "logs"
+  get "/logs/:id", to: "logs#show", as: "log"
 end 
