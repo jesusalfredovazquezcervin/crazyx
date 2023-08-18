@@ -100,3 +100,4 @@ gem "aws-sdk-s3", require: false
 # mailtrap
 gem "mailtrap"
 gem "requestjs-rails"
+gem "audit-log", "~> 1.2"

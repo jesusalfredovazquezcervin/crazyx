@@ -83,6 +83,9 @@ GEM
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.2)
+    audit-log (1.2.0)
+      kaminari (>= 0.15)
+      rails (>= 5.2)
     aws-eventstream (1.2.0)
     aws-partitions (1.748.0)
     aws-sdk-core (3.171.0)
@@ -164,6 +167,18 @@ GEM
     jmespath (1.6.2)
     json (2.6.3)
     jwt (2.6.0)
+    kaminari (1.2.2)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.2)
+      kaminari-activerecord (= 1.2.2)
+      kaminari-core (= 1.2.2)
+    kaminari-actionview (1.2.2)
+      actionview
+      kaminari-core (= 1.2.2)
+    kaminari-activerecord (1.2.2)
+      activerecord
+      kaminari-core (= 1.2.2)
+    kaminari-core (1.2.2)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -343,6 +358,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  audit-log (~> 1.2)
   aws-sdk-s3
   bootsnap
   capistrano (~> 3.17, >= 3.17.2)
