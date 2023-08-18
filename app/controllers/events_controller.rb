@@ -29,6 +29,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+        audit! :create_event, @event, payload: event_params
         format.html { redirect_to event_url(@event), notice: "Event was successfully created." }
         format.json { render :show, status: :created, location: @event }
       else
@@ -42,6 +43,7 @@ class EventsController < ApplicationController
   def update
     respond_to do |format|
       if @event.update(event_params)
+        audit! :update_event, @event, payload: event_params
         format.html { redirect_to event_url(@event), notice: "Event was successfully updated." }
         format.json { render :show, status: :ok, location: @event }
       else
@@ -52,9 +54,9 @@ class EventsController < ApplicationController
   end
 
   # DELETE /events/1 or /events/1.json
-  def destroy
+  def destroy        
     @event.destroy
-
+    audit! :delete_event, nil, payload: @event.attributes    
     respond_to do |format|
       format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
@@ -67,6 +69,8 @@ class EventsController < ApplicationController
       @event.status = "Closed"
       @event.getWinner      
       if @event.save
+        #Audit        
+        AuditLog.audit!(:update_status_event, @event, payload: @event.attributes)
         #we create the payments records
         create_payments
         #we send the sms to inform to the winners
@@ -106,7 +110,10 @@ class EventsController < ApplicationController
       sms.save!
       if result.error_message.nil?
         @event.message_sent=true
-        @event.save!
+        if @event.save          
+          AuditLog.audit!(:send_sms_to_winner_event, @event, payload: @event.attributes)
+        end
+
       end
     }
   end
@@ -114,7 +121,7 @@ class EventsController < ApplicationController
     sms_error = nil
     #url = "http://www.google.com"    
     #This method send sms requesting confirmation to an event for all enrolled players
-    @event.match_player.where(confirmed: nil).or(@event.match_player.where(confirmed: false)).each{|mp|
+    @event.match_player.where(confirmed: nil, status: "OnBoard").or(@event.match_player.where(confirmed: false, status: "OnBoard")).each{|mp|
       #Send sms
       url = event_confirmed_url(@event.id, mp.player_id)
       message = "FEMAC PADEL - Confirmation: #{mp.player.name.titleize}, please confirm your asistence to the event for #{@event.target.strftime("%d/%m/%Y %H:%M")}. Click here to confirm:  #{url}"
@@ -131,6 +138,7 @@ class EventsController < ApplicationController
     }
     respond_to do |format|
       if sms_error.nil?
+        AuditLog.audit!(:send_sms_request_confirmation_event, @event, payload: @event.attributes)
         format.html { redirect_to events_url, notice: "The sms sending process was successful!" }
         format.json { head :no_content }
       else
