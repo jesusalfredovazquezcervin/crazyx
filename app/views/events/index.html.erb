@@ -144,7 +144,7 @@
                                 <%end%>
                               </li>
                             <%end%>
-                            <% if (event.status.upcase != "CLOSED" && event.target > DateTime.now)%>
+                            <% if (event.status.upcase != "CLOSED" && event.target > DateTime.now && !event.all_players_confirmed?)%>
                               <li>
                                 <%= link_to(send_sms_request_confirmation_path(event), data: {turbo_method: :patch, turbo_confirm: '¿You going to send requests, are you sure?'},class:"dropdown-item border-radius-md") do%>                                
                                 Confirmation&nbsp;&nbsp;<i class="fa fa-sms"></i> 
