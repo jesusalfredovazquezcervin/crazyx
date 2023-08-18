@@ -198,5 +198,17 @@ class Event < ApplicationRecord
     def target 
         #returns the datetime target 
         return DateTime.new(self.eventDate.year, self.eventDate.month, self.eventDate.day, self.timeIni.try(:hour).nil? ? 0:self.timeIni.hour, self.timeIni.try(:min).nil? ? 0:self.timeIni.min, self.timeIni.try(:sec).nil? ? 0:self.timeIni.sec, Rational(-6, 24))
-    end    
+    end
+    def all_players_confirmed?
+        #returns boolean true if all the players have been confirmed, false if at least one not confirmed
+        result = false
+        event = Event.find(self.id)
+        confirmed = event.match_player.where(confirmed: true, status: "OnBoard").count
+        players = event.match_player.where(status: "OnBoard").count
+        if players > 0
+            result = true if confirmed == players
+        end
+        
+        return result
+    end
 end
