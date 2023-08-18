@@ -14,17 +14,26 @@
                                       Enroll player&nbsp;&nbsp;<i class="fa fa-address-card-o"></i>
                                 <%end%>                              
                               </li>                              
-                              <li>
-                                <% if @event.mixed == false%>
+                              
+                              <% if @event.mixed == false%>
+                                <li>
                                   <%= link_to(event_couples_path(@event), class: "dropdown-item") do %>
                                         Event couples&nbsp;&nbsp;<i class="fa fa-users"></i>
                                   <%end%>
-                                <%end%>
-                              </li>
+                                </li>
+                              <%end%>
+                              
+                              <%if !@event.all_players_confirmed? %>
+                                <li>
+                                  <%= link_to(send_sms_request_confirmation_path(@event), data: {turbo_method: :patch, turbo_confirm: '¿You going to send requests, are you sure?'},class:"dropdown-item") do%>                                
+                                  Confirmation&nbsp;&nbsp;<i class="fa fa-sms"></i> 
+                                  <%end%>
+                                </li>
+                              <%end%>
+                              
                             </ul>
                     </div>
                   
-
 
                     
                     
