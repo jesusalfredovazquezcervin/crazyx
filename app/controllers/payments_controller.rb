@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  before_action :authenticate_user!, except: %i[ new create ]
+  before_action :check_user_role, except: %i[ new create dashboard]
   before_action :set_payment, only: %i[ show edit update destroy ]
 
   # GET /payments or /payments.json
@@ -77,5 +79,14 @@ class PaymentsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def payment_params
       params.require(:payment).permit(:event_id, :player_id, :cost, :retainer, :payment_type, :reference, :comments, :payment_date)
+    end
+    def check_user_role    
+      case current_user.role        
+        when "Player"
+          respond_to do |format|
+            format.html { redirect_to dashboard_player_path(current_user.player_id), notice: "...redirected to the dashboard page!"  }
+            format.json { head :no_content }
+          end
+      end
     end
 end
