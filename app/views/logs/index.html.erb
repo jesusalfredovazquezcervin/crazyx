@@ -15,6 +15,7 @@
                     <tr>                      
                       <th class="text-uppercase text-primary text-s font-weight-bolder">ID</th>
                       <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Action</th>
+                      <th class="text-uppercase text-primary text-s font-weight-bolder ps-2">Record type</th>
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">User</th>                      
                       <th class="text-center text-uppercase text-primary text-s font-weight-bolder ">Created at</th>                      
                     </tr>
@@ -32,6 +33,9 @@
                       </td>
                       <td>
                         <%= link_to log.action, log, class: "text-sm font-weight-bold mb-0" %>
+                      </td>
+                      <td>
+                        <%= link_to log.record_type, log, class: "text-sm font-weight-bold mb-0" %>
                       </td>
                       <td>
                         <%if !log.user_id.nil?%>
