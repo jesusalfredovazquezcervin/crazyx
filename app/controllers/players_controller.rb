@@ -30,6 +30,7 @@ class PlayersController < ApplicationController
     @player.cellphone = @player.cellphone.gsub(/\s+/, "")
     respond_to do |format|
       if @player.save
+        audit! :create_player, @player, payload: player_params
         if !params[:event_id].nil? #entonces enrolamos al player
           mp = MatchPlayer.create(event_id: params[:event_id].to_i, player_id: @player.id)          
           if !mp.errors.messages.any?
@@ -55,6 +56,7 @@ class PlayersController < ApplicationController
     #logger.debug "-------------params------> #{params[:player][:cellphone]}"
     respond_to do |format|
       if @player.update(player_params)
+        audit! :update_player, @player, payload: player_params
         format.html { redirect_to player_url(@player), notice: "Player was successfully updated." }
         format.json { render :show, status: :ok, location: @player }
       else
@@ -67,7 +69,7 @@ class PlayersController < ApplicationController
   # DELETE /players/1 or /players/1.json
   def destroy
     @player.destroy
-
+    audit! :delete_player, @player, payload: @player.attributes    
     respond_to do |format|
       format.html { redirect_to players_url, notice: "Player was successfully destroyed." }
       format.json { head :no_content }
