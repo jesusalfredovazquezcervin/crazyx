@@ -56,7 +56,7 @@ class EventsController < ApplicationController
   # DELETE /events/1 or /events/1.json
   def destroy        
     @event.destroy
-    audit! :delete_event, nil, payload: @event.attributes    
+    audit! :delete_event, @event, payload: @event.attributes    
     respond_to do |format|
       format.html { redirect_to events_url, notice: "Event was successfully destroyed." }
       format.json { head :no_content }
