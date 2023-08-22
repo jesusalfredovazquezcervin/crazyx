@@ -42,7 +42,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">User:</label>
-                                <label for="example-text-input" class="form-control-label"><%=User.find(@log.user_id).email%></label>
+                                <label for="example-text-input" class="form-control-label"><%= @log.user_id.nil? ? ("No user"):(User.find(@log.user_id).email)    %></label>
                             </div>
                         </div>                        
                         <div class="col-md-8">
