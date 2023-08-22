@@ -25,7 +25,9 @@ class MatchPlayersController < ApplicationController
     respond_to do |format|      
       if !mp.errors.messages.any?      
         mp.setStatus
-        mp.save!
+        if mp.save!
+          audit! :create_match_player, mp, payload: match_player_params
+        end
         format.html { redirect_to match_player_url(mp), notice: "You have joined succesfully to the event"}
         format.json { render :show, status: :created, location: @match_player }
       else
@@ -55,6 +57,8 @@ class MatchPlayersController < ApplicationController
 
     flash.now[:notice] = "FEMAC PADEL RETAS - We've send you another code, please check your messages!'" if params[:resend] == "true"
     #logger.debug "------------- Hello there resend = True #{params[:resend]}    ------------"
+    AuditLog.audit!(:edit_match_player, @match_player, payload: @match_player.attributes)
+    AuditLog.audit!(:edit_match_player, @verification_code, payload: @verification_code.attributes)
     render(layout: "empty")
     
   end
@@ -70,6 +74,7 @@ class MatchPlayersController < ApplicationController
         @match_player.destroy
         respond_to do |format|    
           if @verification_code.save
+            audit! :update_match_player, @match_player, payload: match_player_params
             #format.html { redirect_to verification_code_url(@verification_code), notice: "Verification code was successfully updated." }
             format.html { redirect_to new_match_player_path(@match_player.event_id), notice: "The player has been successfully withdrawn from the event." }
             #format.json { render :show, status: :ok, location: @verification_code }
@@ -92,7 +97,7 @@ class MatchPlayersController < ApplicationController
   # DELETE /match_players/1 or /match_players/1.json
   def destroy
     @match_player.destroy
-
+    audit! :delete_match_player, @match_player, payload: @match_player.attributes
     respond_to do |format|
       format.html { redirect_to match_players_url, notice: "Match player was successfully destroyed." }
       format.json { head :no_content }
