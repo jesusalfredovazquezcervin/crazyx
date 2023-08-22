@@ -28,6 +28,7 @@ class CouplesController < ApplicationController
   
     respond_to do |format|
       if @couple.save
+        audit! :create_couple, @couple, payload: couple_params
         format.html { redirect_to event_couples_url(@couple.event_id), notice: "Couple was successfully created." }
         format.json { render :show, status: :created, location: @couple }
       else
@@ -42,6 +43,7 @@ class CouplesController < ApplicationController
   def update
     respond_to do |format|
       if @couple.update(couple_params)
+        audit! :update, @couple, payload: couple_params
         format.html { redirect_to couple_url(@couple), notice: "Couple was successfully updated." }
         format.json { render :show, status: :ok, location: @couple }
       else
@@ -54,7 +56,7 @@ class CouplesController < ApplicationController
   # DELETE /couples/1 or /couples/1.json
   def destroy
     @couple.destroy
-
+    audit! :delete_couple, nil, payload: @couple.attributes
     respond_to do |format|
       format.html { redirect_to couples_url, notice: "Couple was successfully destroyed." }
       format.json { head :no_content }
