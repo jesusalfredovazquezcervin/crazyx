@@ -138,7 +138,7 @@
                                                             <div class="col-10">
                                                                 <div class="numbers">
                                                                     <p class="text-white text-sm mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>
-                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Schedulled at: <%= event.timeIni.strftime("%H:%M")%> - <%= event.timeEnd.strftime("%H:%M")%></p>
+                                                                    <p class="text-white text-sm mb-0 text-uppercase font-weight-bold opacity-7">Schedulled <%= event.timeIni.strftime("%R")%> - <%= event.timeEnd.strftime("%R")%> hrs</p>
                                                                     <h5 class="text-white font-weight-bolder mb-0"><%=event.level.ordinalize%> Category</h5>
                                                                     <hr class="horizontal light mt-1 mb-3">
                                                                     <%if event.match_player.count < event.people%>
@@ -170,7 +170,7 @@
                                                     <div class="card-body p-3">
                                                         <div class="numbers">
                                                             <p class="text-white text-xs mb-0 text-uppercase font-weight-bold"><%=event.name.titleize%></p>                                                            
-                                                            <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.timeIni.strftime("%H:%M")%>-<%= event.timeEnd.strftime("%H:%M")%></p>
+                                                            <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.timeIni.strftime("%R")%>-<%= event.timeEnd.strftime("%R")%> hrs</p>
                                                             <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.level.ordinalize%> Category</h6> 
                                                             <%if event.match_player.count < event.people%>
                                                                 <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>                                                                        
