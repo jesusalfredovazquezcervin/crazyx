@@ -46,10 +46,10 @@
                         <div class="d-flex flex-column justify-content-center">
                           <%if event.target >= DateTime.now%>
                             <span class="text-secondary text-xs font-weight-bold"><%=event.eventDate.strftime("%d/%m/%Y")  %></span>
-                            <p class="text-xs text-secondary mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%></p>
+                            <p class="text-xs text-secondary mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%> Hrs</p>
                           <%else%>
                             <span class="text-warning text-xs font-weight-bold"><%=event.eventDate.strftime("%d/%m/%Y")  %></span>
-                            <p class="text-xs text-danger mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%></p>
+                            <p class="text-xs text-danger mb-0"><%=event.timeIni.strftime('%H:%M')%>-<%=event.timeEnd.strftime('%H:%M')%> Hrs</p>
                           <%end%>
                           
                           
