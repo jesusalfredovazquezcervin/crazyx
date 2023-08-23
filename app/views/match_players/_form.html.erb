@@ -25,7 +25,7 @@
               <ul class="list-group">
                 <li class="list-group-item text-sm">Event: <strong><%=event.name%> [ID: <%=event.id%>]</strong></li>
                 <li class="list-group-item text-sm">Date: <strong><%=event.eventDate.strftime("%d/%m/%Y") %> </strong></li>
-                <li class="list-group-item text-sm">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> </strong></li>
+                <li class="list-group-item text-sm">Scheduled: <strong><%=event.timeIni.strftime("%H:%M")%> - <%=event.timeEnd.strftime("%H:%M")%> Hrs </strong></li>
                 <li class="list-group-item text-sm">Players: <strong><%=event.people%> </strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Only left: <strong><%=event.onlyLeft%></strong></li>
                 <li class="list-group-item text-sm">Category: <strong><%=event.level%>&nbsp;&nbsp;
                   <%if  event.mixed   %>
@@ -100,7 +100,7 @@
               </div>
               <div class="row">
                 <div class="col">
-                  <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.timeIni.strftime("%H:%M")%>-<%=@event.timeEnd.strftime("%H:%M")%></span></span>
+                  <span class="mb-2 text-xs">Scheduled: <span class="text-dark ms-sm-2 font-weight-bold"><%=@event.timeIni.strftime("%H:%M")%>-<%=@event.timeEnd.strftime("%H:%M")%> Hrs</span></span>
                 </div>                
               </div>
               <div class="row">
