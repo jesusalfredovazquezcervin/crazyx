@@ -1,4 +1,6 @@
 class MatchesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_user_role
   before_action :set_match, only: %i[ show edit update ]
 
   # GET /matches or /matches.json
@@ -36,7 +38,7 @@ class MatchesController < ApplicationController
   # POST /matches or /matches.json
   def create
     @match = Match.new(match_params)
-
+    audit! :create_match, @match, payload: match_params
     respond_to do |format|
       if @match.save
         format.html { redirect_to match_url(@match), notice: "Match was successfully created." }
@@ -55,6 +57,7 @@ class MatchesController < ApplicationController
     @round = params[:match][:round]
     respond_to do |format|
       if @match.update(match_params)
+        audit! :update_match, @match, payload: match_params
         format.html { redirect_to event_matches_url(@match.event_id, @round), notice: "Match was successfully updated." }
         format.json { render :show, status: :ok, location: @match }
       else
@@ -70,7 +73,7 @@ class MatchesController < ApplicationController
     #logger.debug "------------------------------------------"
     #logger.debug "this are the params #{params}"
     Match.where(event_id: params[:event_id], round: params[:round]).destroy_all
-
+    audit! :delete_match, nil, payload: {event_id: params[:event_id], round: params[:round]}
     respond_to do |format|
       format.html { redirect_to event_matches_url(params[:event_id]), notice: "Round #{params[:round]} was successfully destroyed." }
       format.json { head :no_content }
@@ -83,6 +86,7 @@ class MatchesController < ApplicationController
     @event = Event.find(params[:event_id])
     respond_to do |format|
       if @event.create_round_of_matches
+        AuditLog.audit!(:create_round_of_matches, @event, payload: @event.attributes)
         format.html { redirect_to event_matches_url(params[:event_id]), notice: "Round created successfully!" }
         format.json { render :show, status: :ok, location: @event }
       else
@@ -101,5 +105,14 @@ class MatchesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def match_params
       params.require(:match).permit(:event_id, :playerOne, :pointsOne, :playerTwo, :pointsTwo, :playerThree, :pointsThree, :playerFour, :pointsFour, :round)
+    end
+    def check_user_role    
+      case current_user.role        
+        when "Player"
+          respond_to do |format|
+            format.html { redirect_to dashboard_player_path(current_user.player_id), notice: "...redirected to the dashboard page!"  }
+            format.json { head :no_content }
+          end
+      end
     end
 end
