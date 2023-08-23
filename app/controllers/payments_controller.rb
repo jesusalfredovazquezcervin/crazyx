@@ -26,7 +26,7 @@ class PaymentsController < ApplicationController
   # POST /payments or /payments.json
   def create
     @payment = Payment.new(payment_params)
-
+    audit! :create_payment, @payment, payload: payment_params
     respond_to do |format|
       if @payment.save
         format.html { redirect_to payment_url(@payment), notice: "Payment was successfully created." }
@@ -51,6 +51,7 @@ class PaymentsController < ApplicationController
       params[:payment][:payment_date] = final_date.strftime("%Y-%m-%d %H:%M:%S")
 
       if @payment.update(payment_params)
+        audit! :update_payment, @payment, payload: payment_params
         format.html { redirect_to event_payments_path(@payment.event.id), notice: "Payment was successfully updated." }
         format.json { render :show, status: :ok, location: @payment }
       else
@@ -63,7 +64,7 @@ class PaymentsController < ApplicationController
   # DELETE /payments/1 or /payments/1.json
   def destroy
     @payment.destroy
-
+    audit! :delete_payment, @payment, payload: @payment.attributes
     respond_to do |format|
       format.html { redirect_to payments_url, notice: "Payment was successfully destroyed." }
       format.json { head :no_content }
