@@ -17,7 +17,7 @@
                         <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Event Name:</strong> &nbsp; [<%=@event.id%>]&nbsp;<%=@event.name.titleize%>&nbsp;
                             <span class="badge badge-pill badge-lg bg-gradient-danger"><%="CLOSED" if @event.status.upcase == "CLOSED"%></span>
                         </li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp; <%=local_time(@event.target, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%></li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date:</strong> &nbsp; <%=local_time(@event.target, %"%d/%m/%Y") %> at <%=@event.timeIni.strftime("%H:%M")%> - <%=@event.timeEnd.strftime("%H:%M")%> Hrs</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Couples:</strong> &nbsp; <%=(@event.mixed? ? "MIXED":"FIXED" ) %>&nbsp;
                               <strong class="text-dark">Category:</strong>&nbsp; <%=@event.level.ordinalize%>&nbsp;
                               <strong class="text-dark">Max Players:</strong>&nbsp; <%=@event.people%>
