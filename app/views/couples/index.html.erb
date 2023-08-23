@@ -11,14 +11,19 @@
                             <li>
                               <% if @event.try(:status).try(:upcase) != "CLOSED"%>                                
                                 <%= link_to(new_couple_path(@event), class: "dropdown-item") do %>
-                                  <i class="fa fa-plus-square"></i> New Couple
+                                  New Couple&nbsp;&nbsp;<i class="fa fa-plus-square"></i> 
                                 <%end%>
                               <%end%>
                             </li>                              
                             <li>                            
                             <%= link_to(players_enrolled_path(@event), class: "dropdown-item") do %>
-                                  <i class="fa fa-users"></i> Event players
+                                  Event players&nbsp;&nbsp;<i class="fa fa-users"></i> 
                                 <%end%>
+                            </li>
+                            <li>
+                              <%= link_to(event_matches_path(@event), class:"dropdown-item border-radius-md") do%>
+                              Matches&nbsp;&nbsp;<i class="fa fa-sitemap"></i>
+                              <%end%>
                             </li>
                           </ul>
                   </div>                
