@@ -90,8 +90,12 @@ class EventsController < ApplicationController
     #if Business.exists?(user_id: current_user.id)
     @event.match_player.each{|mp|
       if !Payment.exists?(event_id: @event.id, player_id: mp.player.id )
-        Payment.create(event_id: @event.id, player_id: mp.player.id)
+        
+        if Payment.create(event_id: @event.id, player_id: mp.player.id)
+          AuditLog.audit!(:create_payments_event, @event, payload: {event_id: @event.id, player_id: mp.player.id})
+        end
       end
+      
     }    
 
 
