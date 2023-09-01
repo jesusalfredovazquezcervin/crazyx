@@ -99,7 +99,7 @@ class MatchPlayersController < ApplicationController
     @match_player.destroy
     audit! :delete_match_player, @match_player, payload: @match_player.attributes
     respond_to do |format|
-      format.html { redirect_to match_players_url, notice: "Match player was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Match player was successfully destroyed." }
       format.json { head :no_content }
     end
   end
