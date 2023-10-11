@@ -13,6 +13,7 @@ class MatchesController < ApplicationController
     else
       @round = params[:round]
     end
+    flash[:alert]= "Not enough couples" if !@event.mixed? && !(@event.couples.count == @event.people/2)
   end
   def player_matches
     @event = Event.find(params[:event_id])
