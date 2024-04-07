@@ -8,7 +8,7 @@
                         <div class="card-body px-5 z-index-1 bg-cover">
                             <div class="row">
                                 <div class="col-lg-4 col-12 my-auto">
-                                    <h4 class="text-body opacity-9 text-center">Welcome to FEMAC</h4>                                    
+                                    <h4 class="text-body opacity-9 text-center">Welcome to CRAZYX</h4>
                                         <hr class="horizontal light mt-1 mb-3">
                                             <div class="d-flex justify-content-center">
                                                 <div>
@@ -18,7 +18,7 @@
                                             </div>                                    
                                 </div>
                                 <div class="col-lg-4 col-12 text-center">
-                                    <%= image_tag("logofemac.jpg", class: "w-45")%>
+                                    <!-- <%= image_tag("logofemac.jpg", class: "w-45")%> -->
 
                                     <div class="d-flex align-items-center">
                                         <h4 class="text-body opacity-7 ms-0 ms-md-auto">Upcomming events</h4>
@@ -173,7 +173,7 @@
                                                             <p class="text-white text-xs mb-0 text-uppercase font-weight-bold opacity-7"><%= event.timeIni.strftime("%R")%>-<%= event.timeEnd.strftime("%R")%> hrs</p>
                                                             <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.level.ordinalize%> Category</h6> 
                                                             <%if event.match_player.count < event.people%>
-                                                                <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h4>                                                                        
+                                                                <h6 class="text-white text-xs font-weight-bolder mb-0"><%=event.people - event.match_player.count%> seats</h6>
                                                             <%else%>
                                                                 <h6 class="text-white text-xs font-weight-bolder mb-0">Event is full</h6>
                                                             <%end%>
