@@ -101,3 +101,7 @@ gem "aws-sdk-s3", require: false
 gem "mailtrap"
 gem "requestjs-rails"
 gem "audit-log", "~> 1.2"
+
+group :production do
+  gem "mysql2"
+end
