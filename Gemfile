@@ -103,5 +103,5 @@ gem "requestjs-rails"
 gem "audit-log", "~> 1.2"
 
 group :production do
-  gem 'mysql2', '~> 0.5.6'
+  #gem 'mysql2', '~> 0.5.6'
 end
