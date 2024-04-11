@@ -1,0 +1,31 @@
+psql -U deploy -W -h 127.0.0.1 -d crazyx
+tail -f -n 100 crazyx/current/log/production.log 
+sudo tail -f -n 100 /var/log/nginx/error.log
+sudo chmod 777 local_env.yml
+cp local_env.yml crazyx/current/config/
+sudo chmod 777 crazy/current/config/local_env.yml
+EDITOR=nano rails credentials:edit
+cp production.key crazyx/current/config/credentials/
+bundle exec rake db:seed RAILS_ENV=production 
+./bin/rails generate stimulus clipboard
+
+
+#Configuraciones manuales para la aplicacion de padel
+#Copiar hacia el server los siguientes archivos (usando sftp deploy@ipserver y luego con put file_name)
+	#local_env.yml que contiene las credenciales de twilio para envio de mensajes
+	#config/credentials/* o sea -production.key y production.yml.enc
+#Crear la carpeta crendentials debajo de config y meter ahi los archivos production.key y el yml.enc
+#Modificar los permisos del archivo local_env.yml con sudo chmod 777 local_env.yml
+#IMPORTANTE!.- Reiniciar el server con-> sudo service nginx restart
+
+cp local_env.yml crazyx/current/config/
+sudo chmod 777 crazyx/current/config/local_env.yml
+cp production.key crazyx/current/config/credentials/
+sudo service nginx restart
+
+
+sudo ./scripts/final_steps.sh
+
+
+#Ruta de archivo de configuracion de pg para aceptar conexiones de nuestra ip remota
+sudo nano /etc/postgresql/10/main/pg_hba.conf 
