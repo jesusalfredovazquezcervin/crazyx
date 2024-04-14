@@ -36,7 +36,7 @@ class MatchPlayer < ApplicationRecord
 
   def send_sms_status_change
     event = Event.find(self.event_id)    
-    message = "FEMAC PADEL RETAS - Hello #{@player.name.titleize}, You are now OnBoard! for the Padel event: #{event.name} on #{event.eventDate.strftime('%d/%m/%Y')} from #{event.timeIni.strftime('%H:%M')} to #{event.timeEnd.strftime('%H:%M')}"
+    message = "SEISLOCO.APP - Hello #{@player.name.titleize}, You are now OnBoard! for the Padel event: #{event.name} on #{event.eventDate.strftime('%d/%m/%Y')} from #{event.timeIni.strftime('%H:%M')} to #{event.timeEnd.strftime('%H:%M')}"
     sms = Message.new(number: @player.cellphone, body: message, action: "send_sms_status_change", controller: "match_player.rb")
     result = sms.send_sms
     sms.error = result.error_message

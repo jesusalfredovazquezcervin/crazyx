@@ -49,13 +49,13 @@ class MatchPlayersController < ApplicationController
     @verification_code = VerificationCode.create(code: SecureRandom.random_number(1000..9999), player_id: @match_player.player_id, event_id: @match_player.event_id)
     
     #We must send the verification code to the cellphone
-    message = "FEMAC PADEL RETAS - This is your verification code: " << @verification_code.code.to_s
+    message = "SEISLOCO.APP - This is your verification code: " << @verification_code.code.to_s
     sms = Message.new(number: @match_player.player.cellphone, body: message, action: "edit_verification_code", controller: "MatchPlayersController")
     result = sms.send_sms
     sms.error = result.error_message
     sms.save!
 
-    flash.now[:notice] = "FEMAC PADEL RETAS - We've send you another code, please check your messages!'" if params[:resend] == "true"
+    flash.now[:notice] = "SEISLOCO.APP - We've send you another code, please check your messages!'" if params[:resend] == "true"
     #logger.debug "------------- Hello there resend = True #{params[:resend]}    ------------"
     AuditLog.audit!(:edit_match_player, @match_player, payload: @match_player.attributes)
     AuditLog.audit!(:edit_match_player, @verification_code, payload: @verification_code.attributes)

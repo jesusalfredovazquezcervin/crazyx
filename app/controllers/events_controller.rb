@@ -107,7 +107,7 @@ class EventsController < ApplicationController
   def send_sms_to_winner
     url = show_closed_event_url(@event.id)        
     @event.score.where(position: 1).each{|winner|
-      message = "FEMAC PADEL RETAS - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
+      message = "SEISLOCO.APP - Congratulations #{winner.player.name.titleize}, You won the event '#{@event.name}'. See the results here:  #{url}"
       sms = Message.new(number: winner.player.cellphone, body: message, action: "send_sms_to_winner", controller: "events_controller.rb")
       result = sms.send_sms
       sms.error = result.error_message
@@ -128,7 +128,7 @@ class EventsController < ApplicationController
     @event.match_player.where(confirmed: nil, status: "OnBoard").or(@event.match_player.where(confirmed: false, status: "OnBoard")).each{|mp|
       #Send sms
       url = event_confirmed_url(@event.id, mp.player_id)
-      message = "FEMAC PADEL - Confirmation: #{mp.player.name.titleize}, please confirm your asistence to the event for #{@event.target.strftime("%d/%m/%Y %H:%M")}. Click here to confirm:  #{url}"
+      message = "SEISLOCO.APP - Confirmation: #{mp.player.name.titleize}, please confirm your asistence to the event for #{@event.target.strftime("%d/%m/%Y %H:%M")}. Click here to confirm:  #{url}"
       sms = Message.new(number: mp.player.cellphone, body: message, action: "send_request_confirmation_sms", controller: "events_controller.rb")
       result = sms.send_sms
       sms.error = result.error_message
